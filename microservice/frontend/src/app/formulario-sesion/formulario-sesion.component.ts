@@ -1,26 +1,42 @@
 import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Workout } from '../workout';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-formulario-sesion',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule,],
   templateUrl: './formulario-sesion.component.html',
   styleUrl: './formulario-sesion.component.css',
-  providers: [DatePipe]
+  providers: [DatePipe, NgbActiveModal]
 })
 export class FormularioSesionComponent {  //Reactive form
 
   //Attributes
   WorkoutForm : FormGroup;
 
+  sesion: Workout = {
+    start_date: new Date(), 
+    end_date: new Date(),
+    exercise_completed: '',
+    comments: '',
+    isInPerson: true,
+    beat: '',
+    weight: '',
+    burned_calories: '',
+    video: undefined,
+    photo: undefined,
+    id: undefined,
+  };
+
   //Default values
   private currentDate : string | null = '';
   private currentTime : string | null = '';
   private cTimePlusHour : string | null = '';
 
-  constructor(private fb: FormBuilder,private datePipe: DatePipe) {
+  constructor(private fb: FormBuilder,private datePipe: DatePipe, public modal: NgbActiveModal) {
 
     let currentDateAndTime = new Date();
     let tmpOneMoreHour = new Date();
@@ -39,6 +55,10 @@ export class FormularioSesionComponent {  //Reactive form
 
   ngOnInit() {
     
+  }
+
+  closeForm(): void {
+    this.modal.close(this.sesion);
   }
 
   private checkIfEndTimeAfterStartTime (c: AbstractControl) {
@@ -71,3 +91,45 @@ export class FormularioSesionComponent {  //Reactive form
     return this.WorkoutForm.controls;
   }
 }
+
+
+/*
+import { Component } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Workout } from '../workout';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+@Component({
+  selector: 'app-formulario-sesion',
+  standalone: true,
+  templateUrl: './formulario-sesion.component.html',
+  styleUrl: './formulario-sesion.component.css'
+})
+export class FormularioSesionComponent {
+  accion?: 'Enviar' | 'Cerrar'; // | 'Borrador' ?
+  sesion: Workout = {
+    start_date: new Date(), 
+    end_date: new Date(),
+    exercise_completed: '',
+    comments: '',
+    isInPerson: true,
+    beat: '',
+    weight: '',
+    burned_calories: '',
+    video: undefined,
+    photo: undefined,
+    id: undefined,
+  };
+
+  constructor(public modal: NgbActiveModal) {
+  }
+  
+  closeForm(): void {
+    this.modal.close(this.sesion);
+  }
+
+}
+*/
+
+/*
+*/

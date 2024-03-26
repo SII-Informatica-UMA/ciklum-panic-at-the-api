@@ -1,0 +1,36 @@
+<div>
+    <h5>Informe de la sesión realizada</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
+</div>
+
+<div id="main-div">
+    <form [formGroup]="WorkoutForm" method="post">
+        <label>Fecha de inicio</label>
+        <input type="date" id="startdate" formControlName="startdate" name="startdate" min="2000-01-01" max="2038-12-31" />
+        <input type="time" id="starttime" formControlName="starttime" name="starttime" min="00:00" max ="23:59">
+        <input type="time" id="endtime" formControlName="endtime" name="endtime" min="00:00" max ="23:59">
+        <div *ngIf="form.errors?.['invalidEndTime']">
+            End time error!!!
+        </div>
+        <!--Falta poner la fecha de fin-->
+        <label for="workout_desc">Ejercicios completados</label>
+        <input type="text" id="workout_desc" formControlName="workout_desc" name="workout_desc" placeholder="Introduzca los ejercicios realizados" rows="4" cols="50">
+        <label for="comments">Comentarios</label>
+        <input type="text" id="comments" formControlName="comments" name="comments" placeholder="Introduzca una descripción de la sesión de entrenamiento">
+        <label for="inPerson">¿Fue presencial?</label>
+        <input type="checkbox" id="inPerson" formControlName="inPerson" name="inPerson">
+        <label for="beat">Pulsaciones</label>
+        <input type="text" id="beat" formControlName="beat" name="beat" placeholder="Escriba la media de sus pulsaciones">
+        <label for="weight">Peso</label>
+        <input type="text" id="weight" formControlName="weight" name="weight" placeholder="Escriba su peso corporal">
+        <label for="burned calories">Calorías quemadas</label>
+        <input type="text" id="burned calories" formControlName="burned calories" name="burned calories" placeholder="Escriba las calorías quemadas en la sesión de entrenamiento">
+        <label for="video">Enviar vídeo</label>
+        <input type="file" id="video" formControlName="video" name="video">
+        <label for="photo">Enviar foto</label>
+        <input type="file" id="foto" formControlName="foto" name="foto">
+
+        <button type="submit" id="sendForm" method="post">Enviar</button>
+    </form>
+</div>
+
