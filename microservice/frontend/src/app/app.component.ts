@@ -4,13 +4,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {FormularioSesionComponent} from './formulario-sesion/formulario-sesion.component';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
     FormularioSesionComponent,
-    NgbModule,
+    NgbModule, 
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
