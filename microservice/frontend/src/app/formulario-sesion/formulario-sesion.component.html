@@ -1,10 +1,9 @@
-<div>
-    <h5>Informe de la sesión realizada</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
-</div>
 
-<div id="main-div">
-    <form [formGroup]="WorkoutForm" method="post">
+<div>
+    <form formGroupName="workoutForm">
+        <div>
+            <h5>Informe de la sesión realizada</h5>
+        </div>
         <label>Fecha de inicio</label>
         <input type="date" id="startdate" formControlName="startdate" name="startdate" min="2000-01-01" max="2038-12-31" />
         <input type="time" id="starttime" formControlName="starttime" name="starttime" min="00:00" max ="23:59">
@@ -12,7 +11,21 @@
         <div *ngIf="form.errors?.['invalidEndTime']">
             End time error!!!
         </div>
-        <!--Falta poner la fecha de fin-->
+    </form>
+</div>
+
+
+
+
+        <!--
+        <label>Fecha de inicio</label>
+        <input type="date" id="startdate" formControlName="startdate" name="startdate" min="2000-01-01" max="2038-12-31" />
+        <input type="time" id="starttime" formControlName="starttime" name="starttime" min="00:00" max ="23:59">
+        <input type="time" id="endtime" formControlName="endtime" name="endtime" min="00:00" max ="23:59">
+        <div *ngIf="form.errors?.['invalidEndTime']">
+            End time error!!!
+        </div>
+        Falta poner la fecha de fin
         <label for="workout_desc">Ejercicios completados</label>
         <input type="text" id="workout_desc" formControlName="workout_desc" name="workout_desc" placeholder="Introduzca los ejercicios realizados" rows="4" cols="50">
         <label for="comments">Comentarios</label>
@@ -30,7 +43,6 @@
         <label for="photo">Enviar foto</label>
         <input type="file" id="foto" formControlName="foto" name="foto">
 
-        <button type="submit" id="sendForm" method="post">Enviar</button>
-    </form>
-</div>
+        <button type="button" class="btn btn-secondary" aria-label="Close" (click)="closeForm()">Cancelar</button>
+        -->
 
