@@ -1,6 +1,6 @@
 
 <div>
-    <form [formGroup]="workoutForm">
+    <form [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
         <div>
             <h5>Informe de la sesión realizada</h5>
         </div>
@@ -11,6 +11,8 @@
         <div *ngIf="form.errors?.['invalidEndTime']">
             End time error!!!
         </div>
+
+        <button type="submit" id="submitbutton">Submit</button>
     </form>
 </div>
 

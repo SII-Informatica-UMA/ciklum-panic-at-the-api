@@ -12,7 +12,9 @@ import { CommonModule, DatePipe } from '@angular/common';
   styleUrl: './formulario-sesion.component.css',
   providers: [DatePipe, NgbActiveModal]
 })
+
 export class FormularioSesionComponent {  //Reactive form
+
   /***********************************DATE ATTRIBUTES***********************************/
   private currentDate : string | null = '';
   private currentTime : string | null = '';
@@ -70,16 +72,22 @@ export class FormularioSesionComponent {  //Reactive form
     return this.workoutForm.get('endtime');
   }
 
+  /*************************************************************************************/
+
   get form(){
     return this.workoutForm;
   }
   get fcontrols(){
     return this.workoutForm.controls;
   }
-  /*************************************************************************************/
-
-
     
+  ngOnInit() {
+    
+  }
+
+  onSubmit(){
+    console.log('submitted!! :3');
+  }
 }
 
 
