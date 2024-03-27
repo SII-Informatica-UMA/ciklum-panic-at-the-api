@@ -21,13 +21,16 @@ export class AppComponent {
   constructor(private modalService: NgbModal) {
   }
 
+  public open(modal: any): void {
+    this.modalService.open(modal);
+  }
+
   addForm(): void{
     this.modalService.open(FormularioSesionComponent);
   }
 
-  public open(modal: any): void {
-    this.modalService.open(modal);
-  }
+
+ 
 }
 
 /*
