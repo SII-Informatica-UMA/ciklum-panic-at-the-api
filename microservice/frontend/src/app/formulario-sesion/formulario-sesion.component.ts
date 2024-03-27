@@ -19,6 +19,7 @@ export class FormularioSesionComponent {  //Reactive form
   private cTimePlusHour : string | null = '';
   /*************************************************************************************/
   
+  workoutForm : FormGroup;
 
   constructor(private fb: FormBuilder, private datePipe: DatePipe) {
     let currentDateAndTime = new Date();
@@ -27,6 +28,23 @@ export class FormularioSesionComponent {  //Reactive form
     this.currentDate = this.datePipe.transform(currentDateAndTime, 'yyyy-MM-dd'); //Default start date value
     this.currentTime = this.datePipe.transform(currentDateAndTime, 'HH:mm');  //Default start time value
     this.cTimePlusHour = this.datePipe.transform(tmpOneMoreHour, 'HH:mm');  //Default end time value
+    this.workoutForm = this.fb.group({
+      startdate: [this.currentDate, Validators.required],
+      starttime: [this.currentTime, Validators.required],
+      endtime: [this.cTimePlusHour, Validators.required],
+      exercise_completed: '',
+      comments: ['', Validators.maxLength(300)],
+      isInPerson: false,
+      workoutRegister : this.fb.group({
+        beats: '',
+        weight: '',
+        burned_calories: ['', Validators.maxLength(5)],
+      }),
+      //Falta añadir video y foto. Tal vez ID?
+    }, 
+    {
+      validators: [this.checkIfEndTimeAfterStartTime] //We need to validate that the end time is later than the start time
+    });
   }
 
   /***********************************DATE FUNCTIONS***********************************/
@@ -61,23 +79,7 @@ export class FormularioSesionComponent {  //Reactive form
   /*************************************************************************************/
 
 
-  workoutForm = this.fb.group({
-    startdate: [this.currentDate, Validators.required],
-    starttime: [this.currentTime, Validators.required],
-    endtime: [this.cTimePlusHour, Validators.required],
-    exercise_completed: '',
-    comments: ['', Validators.maxLength(300)],
-    isInPerson: false,
-    workoutRegister : this.fb.group({
-      beats: '',
-      weight: '',
-      burned_calories: ['', Validators.maxLength(5)],
-    }),
-    //Falta añadir video y foto. Tal vez ID?
-  }, 
-  {
-    validators: [this.checkIfEndTimeAfterStartTime] //We need to validate that the end time is later than the start time
-  });  
+    
 }
 
 
