@@ -1,0 +1,171 @@
+<form class="tabla-form-sesion" [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+    <h2>Informe de la sesión realizada</h2>
+  </div>
+
+  <mat-form-field class="ancho-tabla" appearance="fill">
+    <mat-label>Fecha de inicio</mat-label>
+    <input matInput type="date" id="startdate" formControlName="startdate" min="2000-01-01" max="2038-12-31" />
+  </mat-form-field>
+  
+  <table class="ancho-tabla">
+    <tr>
+      <td>
+        <mat-form-field>
+          <mat-label>Hora de inicio</mat-label>
+          <input matInput type="time" id="starttime" formControlName="starttime" min="00:00" max ="23:59">
+        </mat-form-field>
+      </td>
+
+      <td>
+        <mat-form-field>
+          <mat-label>Hora de finalización</mat-label>
+          <input matInput type="time" id="endtime" formControlName="endtime" min="00:00" max ="23:59">
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <div *ngIf="form.errors?.['invalidEndTime']" class="cross-validation-error-message alert alert-danger">
+        <p>Fecha de finalización errónea. Por favor, escriba una posterior a la inicial o cancele el formulario.</p>
+      </div>
+    </tr>
+  </table>
+
+  <p>
+    <mat-form-field class="ancho-tabla" appearance="outline">
+      <mat-label>Ejercicios completados</mat-label>
+      <!--placeholder="Escriba aquí los ejercicios que ha completado para guardarlos en la sesión"-->
+      <textarea matInput formControlName="exercise_completed"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="ancho-tabla" appearance="outline">
+      <mat-label>Comentarios</mat-label>
+      <textarea matInput #comments formControlName="comments"></textarea>
+      <mat-hint align="end">{{comments.value.length}} / 300</mat-hint>
+    </mat-form-field>
+  </p>
+  
+  <table class="ancho-tabla">
+    <tr>
+      <td>
+        <span>
+          <mat-checkbox formControlName="isInPerson">¿Fue presencial?</mat-checkbox>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Pulsaciones</mat-label>
+          <input matInput type="text" formControlName="beats" placeholder="0">
+          <span matTextSuffix>lpm</span>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Calorias quemadas estimadas</mat-label>
+          <input matInput type="text" formControlName="burned_calories" placeholder="0">
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Peso Corporal</mat-label>
+          <input matInput type="text" class="example-right-align" placeholder="0">
+          <span matTextSuffix>kg</span>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+  <div class="modal-footer">
+    <button type="submit" id="submitbutton" class="btn btn-primary">Enviar</button>
+    <button type="button" class="btn btn-secondary" aria-label="Close" (click)='closeForm()'>Cancelar</button>
+  </div>
+
+</form>
+
+  
+
+<!--
+
+    div class="modal-header">
+        <h4 class="modal-title">Informe de la sesión realizada</h4>
+    </div>
+    
+    <form [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
+
+        <label for="startdate">Fecha de inicio</label>
+        <input type="date" id="startdate" formControlName="startdate" class="form-control" min="2000-01-01" max="2038-12-31" />
+        <input type="time" id="starttime" formControlName="starttime" min="00:00" max ="23:59">
+        <input type="time" id="endtime" formControlName="endtime" min="00:00" max ="23:59">
+        <div *ngIf="form.errors?.['invalidEndTime']" class="cross-validation-error-message alert alert-danger">
+            <p>Fecha de finalización errónea. </p>
+            <p>Por favor, escriba una posterior a la inicial o cancele el formulario.</p>
+        </div>
+
+        <!--<label for="exercise_completed">Ejercicios completados</label>--
+        <input type=text id="exercise_completed" formControlName = "exercise_completed" class="form-control" placeholder="Ejercicios completados">
+
+        <!--<label for="comments">Comentarios</label>--
+        <input type=text id="comments" formControlName = "comments" class="form-control" placeholder="Comentarios de la sesión">
+
+        <label for="isInPerson">¿Es presencial?</label>
+        <input type="checkbox" id="isInPerson" formControlName="isInPerson">
+
+        <div formGroupName="workoutRegister" class="form-row">
+            <p>Datos del entrenamiento</p>
+
+            <!--<label for="beats">Pulsaciones</label>--
+            <input class="" type="text" id="beats" formControlName="beats" placeholder="Pulsaciones">
+
+            <!--<label for="weight">Peso</label>--
+            <input type="text" id="weight" formControlName="weight" placeholder="Peso corporal">
+
+            <!--<label for="burned_calories">Calorías quemadas estimadas</label>--
+            <input type="text" id="burned_calories" formControlName="burned_calories"  class="form-control" placeholder="Calorías quemadas estimadas">
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" id="submitbutton" class="btn btn-primary">Enviar</button>
+            <button type="button" class="btn btn-secondary" aria-label="Close" (click)='closeForm()'>Cancelar</button>
+        </div>
+
+    </form>
+
+-->
+
+
+
+
+        <!--
+        <label>Fecha de inicio</label>
+        <input type="date" id="startdate" formControlName="startdate" name="startdate" min="2000-01-01" max="2038-12-31" />
+        <input type="time" id="starttime" formControlName="starttime" name="starttime" min="00:00" max ="23:59">
+        <input type="time" id="endtime" formControlName="endtime" name="endtime" min="00:00" max ="23:59">
+        <div *ngIf="form.errors?.['invalidEndTime']">
+            End time error!!!
+        </div>
+        Falta poner la fecha de fin
+        <label for="workout_desc">Ejercicios completados</label>
+        <input type="text" id="workout_desc" formControlName="workout_desc" name="workout_desc" placeholder="Introduzca los ejercicios realizados" rows="4" cols="50">
+        <label for="comments">Comentarios</label>
+        <input type="text" id="comments" formControlName="comments" name="comments" placeholder="Introduzca una descripción de la sesión de entrenamiento">
+        <label for="inPerson">¿Fue presencial?</label>
+        <input type="checkbox" id="inPerson" formControlName="inPerson" name="inPerson">
+        <label for="beat">Pulsaciones</label>
+        <input type="text" id="beat" formControlName="beat" name="beat" placeholder="Escriba la media de sus pulsaciones">
+        <label for="weight">Peso</label>
+        <input type="text" id="weight" formControlName="weight" name="weight" placeholder="Escriba su peso corporal">
+        <label for="burned calories">Calorías quemadas</label>
+        <input type="text" id="burned calories" formControlName="burned calories" name="burned calories" placeholder="Escriba las calorías quemadas en la sesión de entrenamiento">
+        <label for="video">Enviar vídeo</label>
+        <input type="file" id="video" formControlName="video" name="video">
+        <label for="photo">Enviar foto</label>
+        <input type="file" id="foto" formControlName="foto" name="foto">
+
+        <button type="button" class="btn btn-secondary" aria-label="Close" (click)="closeForm()">Cancelar</button>
+        -->
+

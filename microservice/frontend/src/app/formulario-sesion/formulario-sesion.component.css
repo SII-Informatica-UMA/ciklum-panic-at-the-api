@@ -1,0 +1,14 @@
+.tabla-form-sesion {
+    padding: 8px 8px;
+    min-width: 250px;
+    max-width: 750px;
+    width: 100%;
+  }
+  
+  .ancho-tabla {
+    width: 100%;
+  }
+  
+  td {
+    padding-right: 8px;
+  }
