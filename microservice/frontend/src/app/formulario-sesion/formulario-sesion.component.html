@@ -1,14 +1,14 @@
-<form class="example-form" [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
+<form class="tabla-form-sesion" [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
   <div class="modal-header">
     <h2>Informe de la sesión realizada</h2>
   </div>
 
-  <mat-form-field class="example-full-width" appearance="fill">
+  <mat-form-field class="ancho-tabla" appearance="fill">
     <mat-label>Fecha de inicio</mat-label>
     <input matInput type="date" id="startdate" formControlName="startdate" min="2000-01-01" max="2038-12-31" />
   </mat-form-field>
   
-  <table class="example-full-width">
+  <table class="ancho-tabla">
     <tr>
       <td>
         <mat-form-field>
@@ -32,20 +32,20 @@
   </table>
 
   <p>
-    <mat-form-field class="example-full-width" appearance="outline">
+    <mat-form-field class="ancho-tabla" appearance="outline">
       <mat-label>Ejercicios completados</mat-label>
       <!--placeholder="Escriba aquí los ejercicios que ha completado para guardarlos en la sesión"-->
       <textarea matInput formControlName="exercise_completed"></textarea>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width" appearance="outline">
+    <mat-form-field class="ancho-tabla" appearance="outline">
       <mat-label>Comentarios</mat-label>
       <textarea matInput #comments formControlName="comments"></textarea>
       <mat-hint align="end">{{comments.value.length}} / 300</mat-hint>
     </mat-form-field>
   </p>
   
-  <table class="example-full-width">
+  <table class="ancho-tabla">
     <tr>
       <td>
         <span>
