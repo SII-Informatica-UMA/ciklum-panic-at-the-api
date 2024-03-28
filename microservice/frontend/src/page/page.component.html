@@ -1,1 +1,9 @@
-<p>page works!</p>
+<div>
+    <p>Selecciona un plan para añadir sesión de entrenamiento:</p>
+    <div *ngFor="let plan of planList">
+        {{plan.id}}
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="button" (click)="addForm()">Agregar informe de sesión realizada</button>
+    </div>
+</div>

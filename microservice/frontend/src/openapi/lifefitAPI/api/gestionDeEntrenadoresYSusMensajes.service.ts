@@ -65,10 +65,10 @@ export class GestionDeEntrenadoresYSusMensajesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public actualizarEntrenador(body: EntrenadorDTO, observe?: 'body', reportProgress?: boolean): Observable<EntrenadorDTO>;
-    public actualizarEntrenador(body: EntrenadorDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<EntrenadorDTO>>;
-    public actualizarEntrenador(body: EntrenadorDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<EntrenadorDTO>>;
-    public actualizarEntrenador(body: EntrenadorDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public actualizarEntrenador(body: EntrenadorDTO, idEntrenador: number, observe?: 'body', reportProgress?: boolean): Observable<EntrenadorDTO>;
+    public actualizarEntrenador(body: EntrenadorDTO, idEntrenador: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<EntrenadorDTO>>;
+    public actualizarEntrenador(body: EntrenadorDTO, idEntrenador: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<EntrenadorDTO>>;
+    public actualizarEntrenador(body: EntrenadorDTO, idEntrenador: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling actualizarEntrenador.');
