@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormularioSesionComponent } from '../app/formulario-sesion/formulario-sesion.component';
 import { GestinDeEntrenamientosService, PlanDTO } from '../openapi/lifefitAPI';
 import { CommonModule } from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-page',
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     FormularioSesionComponent,
     NgbModule, 
+    MatButtonModule,
   ],
   providers: [
     GestinDeEntrenamientosService
