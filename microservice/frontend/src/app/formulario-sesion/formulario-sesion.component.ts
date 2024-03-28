@@ -5,11 +5,12 @@ import { CommonModule, DatePipe } from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
 
 @Component({
   selector: 'app-formulario-sesion',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule],
+  imports: [CommonModule,ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatCheckboxModule],
   templateUrl: './formulario-sesion.component.html',
   styleUrl: './formulario-sesion.component.css',
   providers: [DatePipe, NgbActiveModal]
@@ -43,11 +44,14 @@ export class FormularioSesionComponent {  //Reactive form
       exercise_completed: '',
       comments: ['', Validators.maxLength(300)],
       isInPerson: false,
-      workoutRegister : this.fb.group({
+      beats: '',
+      weight: '',
+      burned_calories: ['', Validators.maxLength(5)],
+      /*healthRegister : this.fb.group({
         beats: '',
         weight: '',
         burned_calories: ['', Validators.maxLength(5)],
-      }),
+      }),*/
       //Falta añadir video y foto. Tal vez ID?
     }, 
     {
@@ -101,6 +105,7 @@ export class FormularioSesionComponent {  //Reactive form
     this.modal.close(this.workoutForm); //Esto guarda el formulario (creo)
     //this.modal.dismiss(this.workoutForm);
   }*/
+
   closeForm(): void {
     //this.modal.close(this.workoutForm);
     this.modal.dismiss(this);

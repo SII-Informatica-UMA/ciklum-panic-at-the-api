@@ -1,44 +1,91 @@
-<form class="example-form">
+<form class="example-form" [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+    <h2>Informe de la sesión realizada</h2>
+  </div>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Fecha de inicio</mat-label>
+    <input matInput type="date" id="startdate" formControlName="startdate" min="2000-01-01" max="2038-12-31" />
+  </mat-form-field>
   
-    <table class="example-full-width" cellspacing="0"><tr>
-      <td><mat-form-field class="example-full-width">
-        <mat-label>First name</mat-label>
-        <input matInput>
-      </mat-form-field></td>
-      <td><mat-form-field class="example-full-width">
-        <mat-label>Long Last Name That Will Be Truncated</mat-label>
-        <input matInput>
-      </mat-form-field></td>
-    </tr></table>
+  <table class="example-full-width">
+    <tr>
+      <td>
+        <mat-form-field>
+          <mat-label>Hora de inicio</mat-label>
+          <input matInput type="time" id="starttime" formControlName="starttime" min="00:00" max ="23:59">
+        </mat-form-field>
+      </td>
+
+      <td>
+        <mat-form-field>
+          <mat-label>Hora de finalización</mat-label>
+          <input matInput type="time" id="endtime" formControlName="endtime" min="00:00" max ="23:59">
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <div *ngIf="form.errors?.['invalidEndTime']" class="cross-validation-error-message alert alert-danger">
+        <p>Fecha de finalización errónea. Por favor, escriba una posterior a la inicial o cancele el formulario.</p>
+      </div>
+    </tr>
+  </table>
+
+  <p>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Ejercicios completados</mat-label>
+      <!--placeholder="Escriba aquí los ejercicios que ha completado para guardarlos en la sesión"-->
+      <textarea matInput formControlName="exercise_completed"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Comentarios</mat-label>
+      <textarea matInput #comments formControlName="comments"></textarea>
+      <mat-hint align="end">{{comments.value.length}} / 300</mat-hint>
+    </mat-form-field>
+  </p>
   
-    <p>
-      <mat-form-field class="example-full-width">
-        <mat-label>Address</mat-label>
-        <textarea matInput placeholder="Ex. 100 Main St">1600 Amphitheatre Pkwy</textarea>
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <mat-label>Address 2</mat-label>
-        <textarea matInput></textarea>
-      </mat-form-field>
-    </p>
-  
-    <table class="example-full-width" cellspacing="0"><tr>
-      <td><mat-form-field class="example-full-width">
-        <mat-label>City</mat-label>
-        <input matInput placeholder="Ex. San Francisco">
-      </mat-form-field></td>
-      <td><mat-form-field class="example-full-width">
-        <mat-label>State</mat-label>
-        <input matInput placeholder="Ex. California">
-      </mat-form-field></td>
-      <td><mat-form-field class="example-full-width">
-        <mat-label>Postal Code</mat-label>
-        <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="94043">
-        <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-      </mat-form-field></td>
-    </tr></table>
-  </form>
-  
+  <table class="example-full-width">
+    <tr>
+      <td>
+        <span>
+          <mat-checkbox formControlName="isInPerson">¿Fue presencial?</mat-checkbox>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Pulsaciones</mat-label>
+          <input matInput type="text" formControlName="beats" placeholder="0">
+          <span matTextSuffix>lpm</span>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Calorias quemadas estimadas</mat-label>
+          <input matInput type="text" formControlName="burned_calories" placeholder="0">
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="outline">
+          <mat-label>Peso Corporal</mat-label>
+          <input matInput type="text" class="example-right-align" placeholder="0">
+          <span matTextSuffix>kg</span>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+  <div class="modal-footer">
+    <button type="submit" id="submitbutton" class="btn btn-primary">Enviar</button>
+    <button type="button" class="btn btn-secondary" aria-label="Close" (click)='closeForm()'>Cancelar</button>
+  </div>
+
+</form>
+
   
 
 <!--
