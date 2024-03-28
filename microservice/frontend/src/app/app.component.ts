@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {FormularioSesionComponent} from './formulario-sesion/formulario-sesion.component';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @Component({
@@ -12,6 +13,7 @@ import {FormularioSesionComponent} from './formulario-sesion/formulario-sesion.c
     RouterOutlet,
     FormularioSesionComponent,
     NgbModule, 
+    MatButtonModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -31,7 +33,7 @@ export class AppComponent {
   }
 
 
- 
+
 }
 
 /*
