@@ -1,6 +1,6 @@
 <form class="tabla-form-sesion" [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
   <div class="modal-header">
-    <h2>Informe de la sesión realizada</h2>
+    <h2>Informe de la sesión</h2>
   </div>
 
   <mat-form-field class="ancho-tabla" appearance="fill">
@@ -34,7 +34,6 @@
   <p>
     <mat-form-field class="ancho-tabla" appearance="outline">
       <mat-label>Ejercicios completados</mat-label>
-      <!--placeholder="Escriba aquí los ejercicios que ha completado para guardarlos en la sesión"-->
       <textarea matInput formControlName="exercise_completed"></textarea>
     </mat-form-field>
 
@@ -49,7 +48,7 @@
     <tr>
       <td>
         <span>
-          <mat-checkbox formControlName="isInPerson">¿Fue presencial?</mat-checkbox>
+          <mat-checkbox formControlName="isInPerson">Presencial</mat-checkbox>
         </span>
       </td>
     </tr>
