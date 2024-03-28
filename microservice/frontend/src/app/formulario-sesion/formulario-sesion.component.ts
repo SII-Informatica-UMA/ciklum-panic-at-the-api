@@ -13,7 +13,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   imports: [CommonModule,ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatCheckboxModule],
   templateUrl: './formulario-sesion.component.html',
   styleUrl: './formulario-sesion.component.css',
-  providers: [DatePipe, NgbActiveModal]
+  providers: [DatePipe]
 })
 
 export class FormularioSesionComponent {  //Reactive form
@@ -98,6 +98,7 @@ export class FormularioSesionComponent {  //Reactive form
   onSubmit(){
     console.log('submitted!! :3');
     console.log(this.workoutForm.value);
+    this.modal.dismiss(this);
   }
 
   /*
