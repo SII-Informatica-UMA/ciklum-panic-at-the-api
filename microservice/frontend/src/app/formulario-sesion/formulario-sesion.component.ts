@@ -6,8 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {SesionDTO} from '../../openapi/lifefitAPI/model/sesionDTO';
-import { url } from 'inspector';
+import {SesionNuevaDTO} from '../../openapi/lifefitAPI/model/sesionNuevaDTO';
 
 @Component({
   selector: 'app-formulario-sesion',
@@ -27,7 +26,6 @@ export class FormularioSesionComponent {  //Reactive form
   /*************************************************************************************/
   
   workoutForm : FormGroup;
-  //sesion: SesionDTO;
 
   constructor(private fb: FormBuilder, private datePipe: DatePipe, public modal: NgbActiveModal) {
     
@@ -41,13 +39,15 @@ export class FormularioSesionComponent {  //Reactive form
     
     /****WORKOUT SESSION*****/
     this.workoutForm = this.fb.group({
+      idPlan: undefined,
       inicio: [this.currentDate, Validators.required],
       fin: [this.currentDate, Validators.required],
       trabajoRealizado: '',
-      descripcion: '',
+      decripcion: '',
       multimedia: this.fb.array([]),
       presencial: false,
       datosSalud: this.fb.array([]),
+      //id: undefined,
     }, 
     {
       validators: [this.checkIfEndTimeAfterStartTime] //We need to validate that the end time is later than the start time
@@ -92,6 +92,22 @@ export class FormularioSesionComponent {  //Reactive form
     
   }
 
+  convertirFormASesion(): SesionNuevaDTO{
+    const formulario = this.workoutForm.value;
+    const sesion: SesionNuevaDTO ={
+      idPlan: formulario.idPlan,
+      inicio: formulario.inicio,
+      fin: formulario.fin,
+      trabajoRealizado: formulario.trabajoRealizado,
+      multimedia: formulario.multimedia,
+      decripcion: formulario.decripcion,
+      presencial: formulario.presencial,
+      datosSalud: formulario.datosSalud,
+      //id: formulario.id
+    };
+    return sesion;
+  }
+
   agregarMultimedia(): void{
     const url = this.fb.group({
       video: '',
@@ -122,7 +138,8 @@ export class FormularioSesionComponent {  //Reactive form
 
   onSubmit(){
     //this.agregarDatosSalud();
-    console.log(this.workoutForm.value);
+    //console.log(this.workoutForm.value);
+    console.log(this.convertirFormASesion());
     this.modal.close(this.workoutForm);
   }
 

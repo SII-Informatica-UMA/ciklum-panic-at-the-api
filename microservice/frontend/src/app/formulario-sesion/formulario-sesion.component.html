@@ -1,6 +1,6 @@
 <form class="tabla-form-sesion" [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
   <div class="modal-header">
-    <h2>Informe de la sesión</h2>
+    <h2>Datos de la sesión</h2>
   </div>
 
   <mat-form-field class="ancho-tabla" appearance="fill">
@@ -13,7 +13,6 @@
     <input matInput type="date" formControlName="fin" min="2000-01-01" max="2038-12-31" />
   </mat-form-field>
   
-
   <p>
     <mat-form-field class="ancho-tabla" appearance="outline">
       <mat-label>Ejercicios completados</mat-label>
@@ -21,8 +20,8 @@
     </mat-form-field>
 
     <mat-form-field class="ancho-tabla" appearance="outline">
-      <mat-label>Descripcion</mat-label>
-      <textarea matInput #decripcion formControlName="descripcion"></textarea>
+      <mat-label>Descripción</mat-label>
+      <textarea matInput #decripcion formControlName="decripcion"></textarea>
       <mat-hint align="end">{{decripcion.value.length}} / 300</mat-hint>
     </mat-form-field>
   </p>
@@ -30,73 +29,61 @@
   <div formArrayName="multimedia">
     <div *ngFor = "let multimedia of multimedia.controls; let index = index">
       <div [formGroupName]="index">
-        <p>
-          <mat-form-field class="ancho-tabla" appearance="outline">
-            <mat-label>Video</mat-label>
-            <input matInput formControlName="video">
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field class="ancho-tabla" appearance="outline">
-            <mat-label>Foto</mat-label>
-            <input matInput formControlName="foto">
-          </mat-form-field>
-        </p>
+        <table class="ancho-tabla">
+          <tr>
+            <td>
+              <mat-form-field class="ancho-tabla" appearance="outline">
+                <mat-label>URL del Video</mat-label>
+                <input matInput formControlName="video">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="ancho-tabla" appearance="outline">
+                <mat-label>URL de la Foto</mat-label>
+                <input matInput formControlName="foto">
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
+
+  <span>
+    <mat-checkbox formControlName="presencial">Presencial</mat-checkbox>
+  </span>
+
   
-  <table class="ancho-tabla">
-    <tr>
-      <td>
-        <span>
-          <mat-checkbox formControlName="presencial">Presencial</mat-checkbox>
-        </span>
-      </td>
-    </tr>
-    <!--<tr>
-      <td>
-        <mat-form-field appearance="outline">
-          <mat-label>Pulsaciones</mat-label>
-          <input matInput type="text" formControlName="beats" placeholder="0">
-          <span matTextSuffix>lpm</span>
-        </mat-form-field>
-      </td>
-      <td>
-        <mat-form-field appearance="outline">
-          <mat-label>Calorias quemadas estimadas</mat-label>
-          <input matInput type="text" formControlName="burned_calories" placeholder="0">
-        </mat-form-field>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <mat-form-field appearance="outline">
-          <mat-label>Peso Corporal</mat-label>
-          <input matInput type="text" class="example-right-align" placeholder="0">
-          <span matTextSuffix>kg</span>
-        </mat-form-field>
-      </td>
-    </tr>-->
-  </table>
 
   <div formArrayName="datosSalud">
     <div *ngFor = "let datosSalud of datosSalud.controls; let index = index">
       <div [formGroupName]="index">
-        <mat-form-field class="ancho-tabla" appearance="outline">
-          <mat-label>Peso</mat-label>
-          <input matInput formControlName="peso">
-        </mat-form-field>
-    
-        <mat-form-field class="ancho-tabla" appearance="outline">
-          <mat-label>Calorias quemadas</mat-label>
-          <input matInput formControlName="calorias">
-        </mat-form-field>
-    
-        <mat-form-field class="ancho-tabla" appearance="outline">
-          <mat-label>Pulsaciones</mat-label>
-          <input matInput formControlName="pulsaciones">
-        </mat-form-field>
+        <table class="ancho-tabla">
+          <tr>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-label>Peso</mat-label>
+                <input matInput formControlName="peso" placeholder="0">
+                <span matTextSuffix>kg</span>
+              </mat-form-field>
+            </td>
+            <td>  
+              <mat-form-field appearance="outline">
+                <mat-label>Calorias quemadas</mat-label>
+                <input matInput formControlName="calorias">
+              </mat-form-field>
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <mat-form-field appearance="outline">
+              <mat-label>Pulsaciones</mat-label>
+              <input matInput formControlName="pulsaciones" placeholder="0">
+              <span matTextSuffix>lpm</span>
+            </mat-form-field>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
@@ -158,36 +145,4 @@
     </form>
 
 -->
-
-
-
-
-        <!--
-        <label>Fecha de inicio</label>
-        <input type="date" id="startdate" formControlName="startdate" name="startdate" min="2000-01-01" max="2038-12-31" />
-        <input type="time" id="starttime" formControlName="starttime" name="starttime" min="00:00" max ="23:59">
-        <input type="time" id="endtime" formControlName="endtime" name="endtime" min="00:00" max ="23:59">
-        <div *ngIf="form.errors?.['invalidEndTime']">
-            End time error!!!
-        </div>
-        Falta poner la fecha de fin
-        <label for="workout_desc">Ejercicios completados</label>
-        <input type="text" id="workout_desc" formControlName="workout_desc" name="workout_desc" placeholder="Introduzca los ejercicios realizados" rows="4" cols="50">
-        <label for="comments">Comentarios</label>
-        <input type="text" id="comments" formControlName="comments" name="comments" placeholder="Introduzca una descripción de la sesión de entrenamiento">
-        <label for="inPerson">¿Fue presencial?</label>
-        <input type="checkbox" id="inPerson" formControlName="inPerson" name="inPerson">
-        <label for="beat">Pulsaciones</label>
-        <input type="text" id="beat" formControlName="beat" name="beat" placeholder="Escriba la media de sus pulsaciones">
-        <label for="weight">Peso</label>
-        <input type="text" id="weight" formControlName="weight" name="weight" placeholder="Escriba su peso corporal">
-        <label for="burned calories">Calorías quemadas</label>
-        <input type="text" id="burned calories" formControlName="burned calories" name="burned calories" placeholder="Escriba las calorías quemadas en la sesión de entrenamiento">
-        <label for="video">Enviar vídeo</label>
-        <input type="file" id="video" formControlName="video" name="video">
-        <label for="photo">Enviar foto</label>
-        <input type="file" id="foto" formControlName="foto" name="foto">
-
-        <button type="button" class="btn btn-secondary" aria-label="Close" (click)="closeForm()">Cancelar</button>
-        -->
 
