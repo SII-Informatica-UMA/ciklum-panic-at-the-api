@@ -5,54 +5,56 @@
 
   <mat-form-field class="ancho-tabla" appearance="fill">
     <mat-label>Fecha de inicio</mat-label>
-    <input matInput type="date" id="startdate" formControlName="startdate" min="2000-01-01" max="2038-12-31" />
+    <input matInput type="date" formControlName="inicio" min="2000-01-01" max="2038-12-31" />
+  </mat-form-field>
+
+  <mat-form-field class="ancho-tabla" appearance="fill">
+    <mat-label>Fecha de fin</mat-label>
+    <input matInput type="date" formControlName="fin" min="2000-01-01" max="2038-12-31" />
   </mat-form-field>
   
-  <table class="ancho-tabla">
-    <tr>
-      <td>
-        <mat-form-field>
-          <mat-label>Hora de inicio</mat-label>
-          <input matInput type="time" id="starttime" formControlName="starttime" min="00:00" max ="23:59">
-        </mat-form-field>
-      </td>
-
-      <td>
-        <mat-form-field>
-          <mat-label>Hora de finalización</mat-label>
-          <input matInput type="time" id="endtime" formControlName="endtime" min="00:00" max ="23:59">
-        </mat-form-field>
-      </td>
-    </tr>
-    <tr>
-      <div *ngIf="form.errors?.['invalidEndTime']" class="cross-validation-error-message alert alert-danger">
-        <p>Fecha de finalización errónea. Por favor, escriba una posterior a la inicial o cancele el formulario.</p>
-      </div>
-    </tr>
-  </table>
 
   <p>
     <mat-form-field class="ancho-tabla" appearance="outline">
       <mat-label>Ejercicios completados</mat-label>
-      <textarea matInput formControlName="exercise_completed"></textarea>
+      <textarea matInput formControlName="trabajoRealizado"></textarea>
     </mat-form-field>
 
     <mat-form-field class="ancho-tabla" appearance="outline">
-      <mat-label>Comentarios</mat-label>
-      <textarea matInput #comments formControlName="comments"></textarea>
-      <mat-hint align="end">{{comments.value.length}} / 300</mat-hint>
+      <mat-label>Descripcion</mat-label>
+      <textarea matInput #decripcion formControlName="descripcion"></textarea>
+      <mat-hint align="end">{{decripcion.value.length}} / 300</mat-hint>
     </mat-form-field>
   </p>
+
+  <div formArrayName="multimedia">
+    <div *ngFor = "let multimedia of multimedia.controls; let index = index">
+      <div [formGroupName]="index">
+        <p>
+          <mat-form-field class="ancho-tabla" appearance="outline">
+            <mat-label>Video</mat-label>
+            <input matInput formControlName="video">
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="ancho-tabla" appearance="outline">
+            <mat-label>Foto</mat-label>
+            <input matInput formControlName="foto">
+          </mat-form-field>
+        </p>
+      </div>
+    </div>
+  </div>
   
   <table class="ancho-tabla">
     <tr>
       <td>
         <span>
-          <mat-checkbox formControlName="isInPerson">Presencial</mat-checkbox>
+          <mat-checkbox formControlName="presencial">Presencial</mat-checkbox>
         </span>
       </td>
     </tr>
-    <tr>
+    <!--<tr>
       <td>
         <mat-form-field appearance="outline">
           <mat-label>Pulsaciones</mat-label>
@@ -75,8 +77,29 @@
           <span matTextSuffix>kg</span>
         </mat-form-field>
       </td>
-    </tr>
+    </tr>-->
   </table>
+
+  <div formArrayName="datosSalud">
+    <div *ngFor = "let datosSalud of datosSalud.controls; let index = index">
+      <div [formGroupName]="index">
+        <mat-form-field class="ancho-tabla" appearance="outline">
+          <mat-label>Peso</mat-label>
+          <input matInput formControlName="peso">
+        </mat-form-field>
+    
+        <mat-form-field class="ancho-tabla" appearance="outline">
+          <mat-label>Calorias quemadas</mat-label>
+          <input matInput formControlName="calorias">
+        </mat-form-field>
+    
+        <mat-form-field class="ancho-tabla" appearance="outline">
+          <mat-label>Pulsaciones</mat-label>
+          <input matInput formControlName="pulsaciones">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
 
   <div class="modal-footer">
     <button type="submit" id="submitbutton" class="btn btn-primary">Enviar</button>

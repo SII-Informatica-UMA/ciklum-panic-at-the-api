@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {SesionDTO} from '../../openapi/lifefitAPI/model/sesionDTO';
+import { url } from 'inspector';
 
 @Component({
   selector: 'app-formulario-sesion',
@@ -25,6 +27,7 @@ export class FormularioSesionComponent {  //Reactive form
   /*************************************************************************************/
   
   workoutForm : FormGroup;
+  //sesion: SesionDTO;
 
   constructor(private fb: FormBuilder, private datePipe: DatePipe, public modal: NgbActiveModal) {
     
@@ -38,25 +41,19 @@ export class FormularioSesionComponent {  //Reactive form
     
     /****WORKOUT SESSION*****/
     this.workoutForm = this.fb.group({
-      startdate: [this.currentDate, Validators.required],
-      starttime: [this.currentTime, Validators.required],
-      endtime: [this.cTimePlusHour, Validators.required],
-      exercise_completed: '',
-      comments: ['', Validators.maxLength(300)],
-      isInPerson: false,
-      beats: '',
-      weight: '',
-      burned_calories: ['', Validators.maxLength(5)],
-      /*healthRegister : this.fb.group({
-        beats: '',
-        weight: '',
-        burned_calories: ['', Validators.maxLength(5)],
-      }),*/
-      //Falta añadir video y foto. Tal vez ID?
+      inicio: [this.currentDate, Validators.required],
+      fin: [this.currentDate, Validators.required],
+      trabajoRealizado: '',
+      descripcion: '',
+      multimedia: this.fb.array([]),
+      presencial: false,
+      datosSalud: this.fb.array([]),
     }, 
     {
       validators: [this.checkIfEndTimeAfterStartTime] //We need to validate that the end time is later than the start time
     });
+    this.agregarMultimedia(); 
+    this.agregarDatosSalud();
   }
 
   /***********************************DATE FUNCTIONS***********************************/
@@ -95,14 +92,41 @@ export class FormularioSesionComponent {  //Reactive form
     
   }
 
+  agregarMultimedia(): void{
+    const url = this.fb.group({
+      video: '',
+      foto: ''
+    })
+    this.multimedia.push(url);
+  }
+
+  get multimedia(){
+    return this.workoutForm.controls["multimedia"] as FormArray;
+  }
+
+  
+  agregarDatosSalud(): void{
+    const salud = this.fb.group({
+      peso: '',
+      calorias: '',
+      pulsaciones: ''
+    });
+
+    this.datosSalud.push(salud);
+
+  }
+  
+  get datosSalud(){
+    return this.workoutForm.controls["datosSalud"] as FormArray;
+  }
+
   onSubmit(){
-    console.log('submitted!! :3');
+    //this.agregarDatosSalud();
     console.log(this.workoutForm.value);
-    this.modal.dismiss(this);
+    this.modal.close(this.workoutForm);
   }
 
   closeForm(): void {
-    //this.modal.close(this.workoutForm);
     this.modal.dismiss(this);
   }
 }
