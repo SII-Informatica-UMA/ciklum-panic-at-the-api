@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { PageComponent } from '../page/page.component';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { HomeComponent } from './pages/home/home.component';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import {GestinDeInformacinDeSesionesDeLosClientesService} from '../openapi/lifefitAPI/api/gestinDeInformacinDeSesionesDeLosClientes.service';
+
 
 @Component({
   selector: 'app-root',
@@ -9,42 +11,28 @@ import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http'
   imports: [
     HttpClientModule,
     RouterOutlet,
-    PageComponent
+    HomeComponent,
+    RouterLink   
   ],
-  providers: [HttpClient,],
+  providers: 
+  [HttpClient, GestinDeInformacinDeSesionesDeLosClientesService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'frontend';
+export class AppComponent implements OnInit {
+  title = 'Ciklum';
+  option: string = '';
+  constructor(private servicioSesiones: GestinDeInformacinDeSesionesDeLosClientesService){}
+
+  ngOnInit(): void {
+    
+  }
+
+  opcion(opt : string){
+
+  }
+
+
+  
 }
 
-/*
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormularioSesionComponent } from '../formulario-sesion/formulario-sesion.component';
-
-@Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, FormularioSesionComponent, NgbModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
-})
-export class AppComponent {
-  title = 'frontend';
-
-  constructor(private modalService: NgbModal) {
-  }
-
-  addForm(): void{
-    this.modalService.open(FormularioSesionComponent);
-  }
-
-  public open(modal: any): void {
-    this.modalService.open(modal);
-  }
-}
-*/

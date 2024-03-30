@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormularioSesionComponent } from '../app/formulario-sesion/formulario-sesion.component';
-import { GestinDeEntrenamientosService, PlanDTO } from '../openapi/lifefitAPI';
+import { FormularioSesionComponent } from '../../formulario-sesion/formulario-sesion.component';
+import { GestinDeEntrenamientosService, PlanDTO } from '../../../openapi/lifefitAPI';
+import {GestinDeInformacinDeSesionesDeLosClientesService} from '../../../openapi/lifefitAPI/api/gestinDeInformacinDeSesionesDeLosClientes.service';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 
 @Component({
-  selector: 'app-page',
+  selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
@@ -18,15 +19,15 @@ import {MatButtonModule} from '@angular/material/button';
   providers: [
     GestinDeEntrenamientosService
   ],
-  templateUrl: './page.component.html',
-  styleUrl: './page.component.css'
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
 })
-export class PageComponent {
-  title = 'frontend';
+export class HomeComponent {
   planList : PlanDTO[] = [];
 
 
-  constructor(private modalService: NgbModal, private planService: GestinDeEntrenamientosService) {
+  constructor(private modalService: NgbModal, private planService: GestinDeEntrenamientosService
+    , private servicioSesiones: GestinDeInformacinDeSesionesDeLosClientesService) {
     
   }
 
@@ -59,5 +60,5 @@ export class PageComponent {
       idRutina: 3,
       id: 2};
     this.planList.push(plan);
-  }
+  } 
 }
