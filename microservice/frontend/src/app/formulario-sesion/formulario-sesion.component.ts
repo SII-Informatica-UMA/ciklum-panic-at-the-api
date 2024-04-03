@@ -11,7 +11,12 @@ import {SesionNuevaDTO} from '../../openapi/lifefitAPI/model/sesionNuevaDTO';
 @Component({
   selector: 'app-formulario-sesion',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatCheckboxModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule, 
+    MatFormFieldModule, MatInputModule, MatIconModule, MatCheckboxModule,
+    
+  ],
   templateUrl: './formulario-sesion.component.html',
   styleUrl: './formulario-sesion.component.css',
   providers: [DatePipe]
