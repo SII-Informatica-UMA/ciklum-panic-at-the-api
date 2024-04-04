@@ -23,6 +23,7 @@ export class FormularioSesionComponent {  //Reactive form
   private currentDate : string | null = '';
   private currentTime : string | null = '';
   private cTimePlusHour : string | null = '';
+  planId: number | undefined;
   /*************************************************************************************/
   
   workoutForm : FormGroup;
@@ -89,7 +90,6 @@ export class FormularioSesionComponent {  //Reactive form
   }
     
   ngOnInit() {
-    
   }
 
   convertirFormASesion(): SesionNuevaDTO{
@@ -146,6 +146,7 @@ export class FormularioSesionComponent {  //Reactive form
   closeForm(): void {
     this.modal.dismiss(this);
   }
+
 }
 
 

@@ -6,18 +6,18 @@ import {GestinDeInformacinDeSesionesDeLosClientesService} from '../openapi/lifef
 
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    HttpClientModule,
-    RouterOutlet,
-    HomeComponent,
-    RouterLink   
-  ],
-  providers: 
-  [HttpClient, GestinDeInformacinDeSesionesDeLosClientesService],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    standalone: true,
+    providers: [HttpClient, GestinDeInformacinDeSesionesDeLosClientesService],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    imports: [
+        HttpClientModule,
+        RouterOutlet,
+        HomeComponent,
+        RouterLink,
+
+    ]
 })
 export class AppComponent implements OnInit {
   title = 'Ciklum';

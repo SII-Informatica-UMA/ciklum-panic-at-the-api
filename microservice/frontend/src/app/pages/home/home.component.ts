@@ -6,6 +6,7 @@ import { GestinDeEntrenamientosService, PlanDTO } from '../../../openapi/lifefit
 import {GestinDeInformacinDeSesionesDeLosClientesService} from '../../../openapi/lifefitAPI/api/gestinDeInformacinDeSesionesDeLosClientes.service';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ import {MatButtonModule} from '@angular/material/button';
     FormularioSesionComponent,
     NgbModule, 
     MatButtonModule,
+    MatButtonToggleModule, 
   ],
   providers: [
     GestinDeEntrenamientosService
@@ -24,19 +26,22 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class HomeComponent {
   planList : PlanDTO[] = [];
+  #showButton : boolean;
+  private selectedPlanId : undefined| number;
 
 
   constructor(private modalService: NgbModal, private planService: GestinDeEntrenamientosService
     , private servicioSesiones: GestinDeInformacinDeSesionesDeLosClientesService) {
-    
+    this.#showButton = false;
   }
 
   public open(modal: any): void {
-    this.modalService.open(modal);
+    const modalRef = this.modalService.open(modal);
   }
 
   addForm(): void{
-    this.modalService.open(FormularioSesionComponent);
+    const modalRef = this.modalService.open(FormularioSesionComponent);
+    modalRef.componentInstance.planId = this.selectedPlanId;
   }
 
   ngOnInit() {
@@ -61,4 +66,17 @@ export class HomeComponent {
       id: 2};
     this.planList.push(plan);
   } 
+
+  set showButton(doShow: boolean){
+    this.#showButton = doShow;
+  }
+
+  get showButton(){
+    return this.#showButton;
+  }
+
+  pressedButton(id : undefined | number){
+    this.#showButton = true;
+    this.selectedPlanId = id;
+  }
 }
