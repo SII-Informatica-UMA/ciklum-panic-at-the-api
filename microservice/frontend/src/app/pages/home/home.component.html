@@ -7,5 +7,8 @@
     <div *ngIf="showButton" class="d-flex justify-content-center">
         <button type="button" mat-flat-button color="accent" (click)="addForm()">Agregar informe de sesión</button>
     </div>
+    <div *ngIf="displayNotificationAdded" class="d-flex justify-content-center">
+        Sesión añadida con éxito!
+    </div>
 </div>
 

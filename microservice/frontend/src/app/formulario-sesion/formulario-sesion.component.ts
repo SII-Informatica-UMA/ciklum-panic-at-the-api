@@ -146,6 +146,7 @@ export class FormularioSesionComponent {  //Reactive form
     //console.log(this.workoutForm.value);
     console.log(this.convertirFormASesion());
     this.modal.close(this.workoutForm);
+
   }
 
   closeForm(): void {

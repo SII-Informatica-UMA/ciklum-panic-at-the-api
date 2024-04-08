@@ -27,12 +27,14 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 export class HomeComponent {
   planList : PlanDTO[] = [];
   #showButton : boolean;
+  displayNotificationAdded : boolean;
   private selectedPlanId : undefined| number;
 
 
   constructor(private modalService: NgbModal, private planService: GestinDeEntrenamientosService
     , private servicioSesiones: GestinDeInformacinDeSesionesDeLosClientesService) {
     this.#showButton = false;
+    this.displayNotificationAdded = false;
   }
 
   public open(modal: any): void {
@@ -42,6 +44,17 @@ export class HomeComponent {
   addForm(): void{
     const modalRef = this.modalService.open(FormularioSesionComponent);
     modalRef.componentInstance.planId = this.selectedPlanId;
+    modalRef.result.then((result) => {
+      if(result){
+        this.notifyAddedSession();
+      }
+    });
+  }
+
+  testBackend(): void{
+    this.planService.getPlan(0).subscribe(plan =>{
+      console.log(plan);
+    });
   }
 
   ngOnInit() {
@@ -79,4 +92,11 @@ export class HomeComponent {
     this.#showButton = true;
     this.selectedPlanId = id;
   }
+
+  notifyAddedSession() {
+    this.displayNotificationAdded = true;
+    setTimeout(() => {
+        this.displayNotificationAdded = false;
+    }, 3000);
+}
 }
