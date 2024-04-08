@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, Form, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -45,7 +45,7 @@ export class FormularioSesionComponent {  //Reactive form
     
     /****WORKOUT SESSION*****/
     this.workoutForm = this.fb.group({
-      idPlan: undefined,
+      idPlan: 0,
       inicio: [this.currentDate, Validators.required],
       fin: [this.currentDate, Validators.required],
       trabajoRealizado: '',
@@ -144,7 +144,18 @@ export class FormularioSesionComponent {  //Reactive form
   onSubmit(){
     //this.agregarDatosSalud();
     //console.log(this.workoutForm.value);
-    console.log(this.convertirFormASesion());
+    const obj = this.workoutForm.get('multimedia') as FormArray;
+
+    obj.controls.forEach((control: AbstractControl<any, any>) => {
+      // Accede a los valores individuales de cada FormGroup dentro del FormArray
+      const videoValue = (control as FormGroup).get('video')?.value;
+      const fotoValue = (control as FormGroup).get('foto')?.value;
+    
+      // Haz lo que necesites con los valores
+      console.log(typeof 'Video:', videoValue);
+      console.log(typeof 'Foto:', fotoValue);
+    });
+    //console.log(this.convertirFormASesion().multimedia?.at(0));
     this.modal.close(this.workoutForm);
   }
 
