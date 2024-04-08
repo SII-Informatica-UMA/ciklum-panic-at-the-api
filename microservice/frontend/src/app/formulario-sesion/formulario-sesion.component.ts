@@ -99,15 +99,15 @@ export class FormularioSesionComponent {  //Reactive form
 
   convertirFormASesion(): SesionNuevaDTO{
     const formulario = this.workoutForm.value;
-    const sesion: SesionNuevaDTO ={
+    const sesion: SesionNuevaDTO = {
       idPlan: formulario.idPlan,
       inicio: formulario.inicio,
       fin: formulario.fin,
       trabajoRealizado: formulario.trabajoRealizado,
-      multimedia: formulario.multimedia,
+      multimedia: this.convertirMultimediaToString(),
       decripcion: formulario.decripcion,
       presencial: formulario.presencial,
-      datosSalud: formulario.datosSalud,
+      datosSalud: this.convertirDatosSaludToString(),
       //id: formulario.id
     };
     return sesion;
@@ -142,26 +142,43 @@ export class FormularioSesionComponent {  //Reactive form
   }
 
   onSubmit(){
-    //this.agregarDatosSalud();
-    //console.log(this.workoutForm.value);
-    const obj = this.workoutForm.get('multimedia') as FormArray;
-
-    obj.controls.forEach((control: AbstractControl<any, any>) => {
-      // Accede a los valores individuales de cada FormGroup dentro del FormArray
-      const videoValue = (control as FormGroup).get('video')?.value;
-      const fotoValue = (control as FormGroup).get('foto')?.value;
-    
-      // Haz lo que necesites con los valores
-      console.log(typeof 'Video:', videoValue);
-      console.log(typeof 'Foto:', fotoValue);
-    });
-    //console.log(this.convertirFormASesion().multimedia?.at(0));
-    this.modal.close(this.workoutForm);
+    let local = new Date().toLocaleString();
+    console.log(local)
+    console.log(this.convertirFormASesion());
+    this.modal.close(this);
   }
 
   closeForm(): void {
     this.modal.dismiss(this);
   }
+
+  convertirMultimediaToString(): Array<string> {
+    const obj = this.workoutForm.get('multimedia') as FormArray;
+    let arrURL: Array<string> = []
+    obj.controls.forEach((control: AbstractControl<any, any>) => {
+      const video = (control as FormGroup).get('video')?.value;
+      const foto = (control as FormGroup).get('foto')?.value;
+      arrURL.push(video)
+      arrURL.push(foto)
+    });
+    return arrURL;
+  }
+
+  convertirDatosSaludToString(): Array<string> {
+    const obj = this.workoutForm.get('datosSalud') as FormArray;
+    let arr: Array<string> = []
+    obj.controls.forEach((control: AbstractControl<any, any>) => {
+      const peso = (control as FormGroup).get('peso')?.value;
+      const calorias = (control as FormGroup).get('calorias')?.value;
+      const pulsaciones = (control as FormGroup).get('pulsaciones')?.value;
+      arr.push(peso)
+      arr.push(calorias)
+      arr.push(pulsaciones)
+    });
+    return arr;
+  }
+
+
 
 }
 
