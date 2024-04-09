@@ -7,6 +7,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SesionNuevaDTO} from '../../openapi/lifefitAPI/model/sesionNuevaDTO';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-formulario-sesion',

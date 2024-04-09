@@ -1,18 +1,15 @@
 <form class="tabla-form-sesion" [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
   <div class="modal-header">
     <h2>Datos de la sesión</h2>
-    <h2>TEMPORARY TEMPORARY DELETE THIS Plan id: {{planId}}</h2>
   </div>
+  
+  <div class="ancho-tabla">
+    <label for="fecha_inicio">Fecha de incio</label>
+    <input id="fecha_inicio" type="date" formControlName="inicio" class="form-control espacio-fecha"/>
 
-  <mat-form-field class="ancho-tabla" appearance="fill">
-    <mat-label>Fecha de inicio</mat-label>
-    <input matInput type="date" formControlName="inicio" min="2000-01-01" max="2038-12-31" />
-  </mat-form-field>
-
-  <mat-form-field class="ancho-tabla" appearance="fill">
-    <mat-label>Fecha de fin</mat-label>
-    <input matInput type="date" formControlName="fin" min="2000-01-01" max="2038-12-31" />
-  </mat-form-field>
+    <label for="fecha_fin">Fecha de fin</label>
+    <input id ="fecha_fin" type="date" formControlName="inicio" class="form-control espacio-fecha"/>
+  </div>
   
   <p>
     <mat-form-field class="ancho-tabla" appearance="outline">

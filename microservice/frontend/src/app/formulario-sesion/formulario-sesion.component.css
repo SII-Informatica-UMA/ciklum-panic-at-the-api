@@ -8,6 +8,10 @@
   .ancho-tabla {
     width: 100%;
   }
+
+.espacio-fecha{
+    margin-bottom: 15px;
+  }
   
   td {
     padding-right: 8px;
