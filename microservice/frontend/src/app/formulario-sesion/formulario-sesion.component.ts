@@ -25,78 +25,36 @@ import {MatSelectModule} from '@angular/material/select';
 
 export class FormularioSesionComponent {  //Reactive form
 
-  /***********************************DATE ATTRIBUTES***********************************/
-  private currentDate : string | null = '';
-  private currentTime : string | null = '';
-  private cTimePlusHour : string | null = '';
   planId: number | undefined;
-  /*************************************************************************************/
+
   
   workoutForm : FormGroup;
 
-  constructor(private fb: FormBuilder, private datePipe: DatePipe, public modal: NgbActiveModal) {
-    
-    /****DATE*****/
-    let currentDateAndTime = new Date();
-    let tmpOneMoreHour = new Date();
-    tmpOneMoreHour.setTime(tmpOneMoreHour.getTime() + 60*60*1000);  //We add one hour to the start date
-    this.currentDate = this.datePipe.transform(currentDateAndTime, 'yyyy-MM-dd'); //Default start date value
-    this.currentTime = this.datePipe.transform(currentDateAndTime, 'HH:mm');  //Default start time value
-    this.cTimePlusHour = this.datePipe.transform(tmpOneMoreHour, 'HH:mm');  //Default end time value
-    
-    /****WORKOUT SESSION*****/
+  constructor(private fb: FormBuilder, public modal: NgbActiveModal) {
+    /****WORKOUT SESSION-FORM*****/
     this.workoutForm = this.fb.group({
       idPlan: 0,
-      inicio: [this.currentDate, Validators.required],
-      fin: [this.currentDate, Validators.required],
-      trabajoRealizado: '',
-      decripcion: '',
+      inicio: ['', Validators.required],
+      fin: ['', Validators.required],
+      trabajoRealizado: ['', [Validators.maxLength(255)]],
+      decripcion: ['', [Validators.maxLength(255)]],
       multimedia: this.fb.array([]),
       presencial: false,
       datosSalud: this.fb.array([]),
-      //id: undefined,
-    }, 
-    {
-      validators: [this.checkIfEndTimeAfterStartTime] //We need to validate that the end time is later than the start time
     });
     this.agregarMultimedia(); 
     this.agregarDatosSalud();
   }
 
-  /***********************************DATE FUNCTIONS***********************************/
-  private checkIfEndTimeAfterStartTime (c: AbstractControl) {
-    //Safety check
-    if (!c.get('starttime')?.value || !c.get('endtime')?.value) { return null }
-    //If the values are valid we need to return null
-    //Otherwise we will set the error flag 'invalidEndTime' as true
-    if(c.get('endtime')?.value > c.get('starttime')?.value){
-      return null;
-    }else{
-      return {invalidEndTime: true}
-    }
-  }
-
-  get startdate(){
-    return this.workoutForm.get('startdate');
-  }
-  get starttime(){
-    return this.workoutForm.get('starttime');
-  }
-  get endtime(){
-    return this.workoutForm.get('endtime');
-  }
-
-  /*************************************************************************************/
 
   get form(){
     return this.workoutForm;
   }
+
   get fcontrols(){
     return this.workoutForm.controls;
   }
-    
-  ngOnInit() {
-  }
+
 
   convertirFormASesion(): SesionNuevaDTO{
     const formulario = this.workoutForm.value;
@@ -143,9 +101,8 @@ export class FormularioSesionComponent {  //Reactive form
   }
 
   onSubmit(){
-    let local = new Date().toLocaleString();
-    console.log(local)
-    console.log(this.convertirFormASesion());
+    const sesionCreada: SesionNuevaDTO = this.convertirFormASesion();
+    console.log(sesionCreada);
     this.modal.close(this);
   }
 
@@ -179,7 +136,9 @@ export class FormularioSesionComponent {  //Reactive form
     return arr;
   }
 
-
+  campoRequerido(control: string): boolean{
+    return this.form.controls[control].touched && this.form.controls[control].invalid
+  }
 
 }
 

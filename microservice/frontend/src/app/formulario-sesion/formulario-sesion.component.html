@@ -4,25 +4,37 @@
   </div>
   
   <div class="ancho-tabla">
-    <label for="fecha_inicio">Fecha de incio</label>
-    <input id="fecha_inicio" type="date" formControlName="inicio" class="form-control espacio-fecha"/>
-
-    <label for="fecha_fin">Fecha de fin</label>
-    <input id ="fecha_fin" type="date" formControlName="inicio" class="form-control espacio-fecha"/>
+    <label for="fecha_inicio">Fecha de incio*</label>
+    <input id="fecha_inicio" type="datetime-local" formControlName="inicio" class="form-control espacio-fecha"/>
+    @if(campoRequerido('inicio')){
+      <p class="cross-validation-error-message alert alert-danger">Este campo es obligatorio.</p>
+    }
+    <label for="fecha_fin">Fecha de fin*</label>
+    <input id ="fecha_fin" type="datetime-local" formControlName="fin" class="form-control espacio-fecha"/>
+    @if(campoRequerido('fin')){
+      <p class="cross-validation-error-message alert alert-danger">Este campo es obligatorio.</p>
+    }
+    
   </div>
-  
-  <p>
-    <mat-form-field class="ancho-tabla" appearance="outline">
-      <mat-label>Ejercicios completados</mat-label>
-      <textarea matInput formControlName="trabajoRealizado"></textarea>
-    </mat-form-field>
 
-    <mat-form-field class="ancho-tabla" appearance="outline">
-      <mat-label>Descripción</mat-label>
-      <textarea matInput #decripcion formControlName="decripcion"></textarea>
-      <mat-hint align="end">{{decripcion.value.length}} / 300</mat-hint>
-    </mat-form-field>
-  </p>
+  <div>
+    <p>
+      <mat-form-field class="ancho-tabla" appearance="outline">
+        <mat-label>Ejercicios completados</mat-label>
+        <textarea matInput #trabajoRealizado formControlName="trabajoRealizado"></textarea>
+        <mat-hint align="end">{{trabajoRealizado.value.length}} / 255</mat-hint>
+      </mat-form-field>
+  
+      <mat-form-field class="ancho-tabla" appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput #decripcion formControlName="decripcion"></textarea>
+        <mat-hint align="end">{{decripcion.value.length}} / 255</mat-hint>
+      </mat-form-field>
+    </p>
+    @if(trabajoRealizado.value.length > 255 || decripcion.value.length > 255){
+      <p class="alert alert-warning" role="alert">Excedido tamaño de comentario</p>
+    }
+  </div>
 
   <div formArrayName="multimedia">
     <div *ngFor = "let multimedia of multimedia.controls; let index = index">
@@ -48,18 +60,25 @@
   <div formArrayName="datosSalud">
     <div *ngFor = "let datosSalud of datosSalud.controls; let index = index">
       <div [formGroupName]="index">
+        @if(datosSalud.invalid){
+          <p class="alert alert-danger" role="alert">
+            Los datos de salud <strong>no pueden contener símbolos, signos o letras.
+            </strong>
+            También podría haber excedido el <strong>tamaño</strong> de un campo
+          </p>
+        }
         <table class="ancho-tabla"><tr>
             <td>
               <mat-form-field appearance="outline">
                 <mat-label>Peso</mat-label>
-                <input matInput formControlName="peso" placeholder="0">
+                <input matInput formControlName="peso" placeholder="0" pattern="[0-9]{0,3}">
                 <span matTextSuffix>kg</span>
               </mat-form-field>
             </td>
             <td>  
               <mat-form-field appearance="outline">
                 <mat-label>Calorias quemadas</mat-label>
-                <input matInput formControlName="calorias">
+                <input matInput formControlName="calorias" pattern="[0-9]{0,5}">
               </mat-form-field>
             </td>
             <td>
@@ -68,14 +87,14 @@
           <tr>
             <mat-form-field appearance="outline">
               <mat-label>Pulsaciones</mat-label>
-              <input matInput formControlName="pulsaciones" placeholder="0">
+              <input matInput formControlName="pulsaciones" placeholder="0" pattern="[0-9]{0,3}">
               <span matTextSuffix>lpm</span>
             </mat-form-field>
           </tr></table></div></div>
   </div>
 
   <div class="modal-footer">
-    <button type="submit" id="submitbutton" class="btn btn-primary">Enviar</button>
+    <button type="submit" id="submitbutton" class="btn btn-primary" [disabled]="workoutForm.invalid">Enviar</button>
     <button type="button" class="btn btn-secondary" aria-label="Close" (click)='closeForm()'>Cancelar</button>
   </div>
 
