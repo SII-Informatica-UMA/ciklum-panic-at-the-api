@@ -3,16 +3,21 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { UsuariosService } from '../services/usuarios.service';
-import { PlanComponent } from "../../pages/plan/plan.component";
+
 import { HttpClientModule } from '@angular/common/http';
+
+
 
 @Component({
     selector: 'app-users',
     standalone: true,
     templateUrl: './users.component.html',
     styleUrl: './users.component.css',
-    imports: [HttpClientModule, RouterOutlet, CommonModule, RouterLink, FormsModule, TitleCasePipe, PlanComponent],
+
+    imports: [HttpClientModule, RouterOutlet, CommonModule, RouterLink, FormsModule, TitleCasePipe],
     providers: [ HttpClientModule]
+
+
 })
 export class UsersComponent {
   _rolIndex: number = 0

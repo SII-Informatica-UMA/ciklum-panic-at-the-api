@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet , RouterLinkActive} from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { PlanComponent } from './pages/plan/plan.component';
+//import { PlanComponent } from './pages/plan/plan.component';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import {GestinDeInformacinDeSesionesDeLosClientesService} from '../openapi/lifefitAPI/api/gestinDeInformacinDeSesionesDeLosClientes.service';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,6 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     RouterOutlet, RouterLink, RouterLinkActive,
     HomeComponent,
-    PlanComponent
   ],
   providers: 
   [HttpClientModule, HttpClient, GestinDeInformacinDeSesionesDeLosClientesService],

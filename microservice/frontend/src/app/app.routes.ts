@@ -1,6 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { PlanComponent } from './pages/plan/plan.component';
+//import { PlanComponent } from './pages/plan/plan.component';
 import { FormularioSesionComponent } from './formulario-sesion/formulario-sesion.component';
 import { NgModule } from '@angular/core';
 import { LoginComponent } from './sistema-usuario/login/login.component';
@@ -13,7 +13,7 @@ import { UsersComponent } from './sistema-usuario/users/users.component';
 export const routes: Routes = [
     //{path: '', component: PlanComponent},
     {path: '', component: UsersComponent},
-    {path: 'plan', component: PlanComponent},
+    //{path: 'plan', component: PlanComponent},
     {path: 'home', component: HomeComponent},   // {path: '*', redirectTo: '', pathMatch: 'full'}
     {
         path: 'login',
