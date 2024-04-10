@@ -9,10 +9,11 @@ import { ResetPasswordComponent } from './sistema-usuario/reset-password/reset-p
 import { ListadoUsuarioComponent } from './sistema-usuario/listado-usuario/listado-usuario.component';
 import { PrincipalComponent } from './sistema-usuario/principal/principal.component';
 import { UsersComponent } from './sistema-usuario/users/users.component';
+import { InitComponent } from './pages/init/init.component';
 
 export const routes: Routes = [
     //{path: '', component: PlanComponent},
-    {path: '', component: UsersComponent},
+    {path: '', component: InitComponent},
     //{path: 'plan', component: PlanComponent},
     {path: 'home', component: HomeComponent},   // {path: '*', redirectTo: '', pathMatch: 'full'}
     {
