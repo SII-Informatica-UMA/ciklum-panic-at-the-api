@@ -19,5 +19,5 @@ export interface SesionDTO {
     descripcion?: string;
     presencial?: boolean;
     datosSalud?: Array<string>;
-    id?: number;
+    id: number;
 }
