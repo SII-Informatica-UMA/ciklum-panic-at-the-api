@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     RouterOutlet, RouterLink, RouterLinkActive,
     HomeComponent,
-    PlanComponent  
+    PlanComponent
   ],
   providers: 
   [HttpClientModule, HttpClient, GestinDeInformacinDeSesionesDeLosClientesService],

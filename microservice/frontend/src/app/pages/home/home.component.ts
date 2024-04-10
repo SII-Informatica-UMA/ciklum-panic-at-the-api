@@ -10,6 +10,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { RouterLink, RouterOutlet , RouterLinkActive} from '@angular/router';
 
 import { UsuariosService } from '../../sistema-usuario/services/usuarios.service';
+import { UsersComponent } from '../../sistema-usuario/users/users.component';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,8 @@ import { UsuariosService } from '../../sistema-usuario/services/usuarios.service
     FormularioSesionComponent,
     NgbModule, 
     MatButtonModule,
-    MatButtonToggleModule, RouterLink, RouterOutlet , RouterLinkActive
+    MatButtonToggleModule, RouterLink, RouterOutlet , RouterLinkActive,
+    UsersComponent
   ],
   providers: [
     GestinDeEntrenamientosService
