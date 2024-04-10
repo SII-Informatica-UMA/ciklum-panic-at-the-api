@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormularioSesionComponent } from '../../formulario-sesion/formulario-sesion.component';
-import { GestinDeEntrenamientosService, PlanDTO } from '../../../openapi/lifefitAPI';
+import { AsignacionEntrenamientoDTO, GestinDeEntrenamientosService, GestionDeCentrosYGerentesService, PlanDTO } from '../../../openapi/lifefitAPI';
 import {GestinDeInformacinDeSesionesDeLosClientesService} from '../../../openapi/lifefitAPI/api/gestinDeInformacinDeSesionesDeLosClientes.service';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { RouterLink, RouterOutlet , RouterLinkActive} from '@angular/router';
 
+import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-home',
@@ -29,12 +30,14 @@ import { RouterLink, RouterOutlet , RouterLinkActive} from '@angular/router';
 export class HomeComponent {
   planList : PlanDTO[] = [];
   #showButton : boolean;
+  displayNotificationAdded : boolean;
   private selectedPlanId : undefined| number;
 
 
-  constructor(private modalService: NgbModal, private planService: GestinDeEntrenamientosService
+  constructor(private modalService: NgbModal, private usuarioService: UsuariosService, private servicioEntrenamiento: GestinDeEntrenamientosService
     , private servicioSesiones: GestinDeInformacinDeSesionesDeLosClientesService) {
     this.#showButton = false;
+    this.displayNotificationAdded = false;
   }
 
   public open(modal: any): void {
@@ -44,9 +47,38 @@ export class HomeComponent {
   addForm(): void{
     const modalRef = this.modalService.open(FormularioSesionComponent);
     modalRef.componentInstance.planId = this.selectedPlanId;
+    modalRef.result.then((result) => {
+      if(result){
+        this.notifyAddedSession();
+      }
+    });
   }
 
-  ngOnInit() {
+  testBackend(): void{
+    this.servicioEntrenamiento.getPlan(0).subscribe(plan =>{
+      console.log(plan);
+    });
+  }
+
+  getPlans(): PlanDTO[]{
+    let plans : PlanDTO[] = [];
+    let user_sesion = this.usuarioService.getUsuarioSesion();
+    let user_id = user_sesion?.id;
+    let asignaciones:AsignacionEntrenamientoDTO[] = [];
+    this.servicioEntrenamiento.obtenerAsignaciones1(user_id).subscribe(asig => {
+      asignaciones = asig;
+    });
+    for(let as of asignaciones){
+      if(as.planes != undefined){
+        for(let plan_as of as.planes){
+          plans.push(plan_as);
+        }
+      }
+    }
+    return plans;
+  }
+
+  getFakePlans(): void{
     let plan : PlanDTO = {fechaInicio: new Date(),
       fechaFin: new Date(),
       reglaRecurrencia: "",
@@ -67,6 +99,12 @@ export class HomeComponent {
       idRutina: 3,
       id: 2};
     this.planList.push(plan);
+  }
+
+  ngOnInit() {
+
+    this.getFakePlans();
+    
   } 
 
   set showButton(doShow: boolean){
@@ -81,4 +119,11 @@ export class HomeComponent {
     this.#showButton = true;
     this.selectedPlanId = id;
   }
+
+  notifyAddedSession() {
+    this.displayNotificationAdded = true;
+    setTimeout(() => {
+        this.displayNotificationAdded = false;
+    }, 3000);
+}
 }

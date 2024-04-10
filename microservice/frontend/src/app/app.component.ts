@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
     PlanComponent  
   ],
   providers: 
-  [HttpClient, GestinDeInformacinDeSesionesDeLosClientesService],
+  [HttpClientModule, HttpClient, GestinDeInformacinDeSesionesDeLosClientesService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

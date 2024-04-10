@@ -21,6 +21,7 @@ import { CentroDTO } from '../model/centroDTO';
 import { CentroNuevoDTO } from '../model/centroNuevoDTO';
 import { GerenteDTO } from '../model/gerenteDTO';
 import { GerenteNuevoDTO } from '../model/gerenteNuevoDTO';
+import { IdGerenteDTO } from '../model/idGerenteDTO';
 import { MensajeDTO } from '../model/mensajeDTO';
 import { MensajeNuevoDTO } from '../model/mensajeNuevoDTO';
 
@@ -166,7 +167,59 @@ export class GestionDeCentrosYGerentesService {
 
     /**
      * 
-     * Permite crear un centro nuevo a un adminitrador. 
+     * Permite añadir una asociación entre un centro y un gerente.
+     * @param body 
+     * @param idCentro 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public asociarCentroGerente(body: IdGerenteDTO, idCentro: number, observe?: 'body', reportProgress?: boolean): Observable<CentroDTO>;
+    public asociarCentroGerente(body: IdGerenteDTO, idCentro: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CentroDTO>>;
+    public asociarCentroGerente(body: IdGerenteDTO, idCentro: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CentroDTO>>;
+    public asociarCentroGerente(body: IdGerenteDTO, idCentro: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling asociarCentroGerente.');
+        }
+
+        if (idCentro === null || idCentro === undefined) {
+            throw new Error('Required parameter idCentro was null or undefined when calling asociarCentroGerente.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<CentroDTO>('put',`${this.basePath}/centro/${encodeURIComponent(String(idCentro))}/gerente`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * Permite crear un centro nuevo a un administrador. 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -307,6 +360,54 @@ export class GestionDeCentrosYGerentesService {
         return this.httpClient.request<MensajeDTO>('post',`${this.basePath}/mensaje/centro`,
             {
                 body: body,
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * Permite eliminar una asociación entre un centro y un gerente.
+     * @param idCentro 
+     * @param gerente 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public eliminarAsociacionCentroGerente(idCentro: number, gerente?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public eliminarAsociacionCentroGerente(idCentro: number, gerente?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public eliminarAsociacionCentroGerente(idCentro: number, gerente?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public eliminarAsociacionCentroGerente(idCentro: number, gerente?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (idCentro === null || idCentro === undefined) {
+            throw new Error('Required parameter idCentro was null or undefined when calling eliminarAsociacionCentroGerente.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (gerente !== undefined && gerente !== null) {
+            queryParameters = queryParameters.set('gerente', <any>gerente);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/centro/${encodeURIComponent(String(idCentro))}/gerente`,
+            {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

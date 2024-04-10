@@ -18,9 +18,9 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { ForgottenPasswordDTO } from '../model/forgottenPasswordDTO';
+import { JwtDTO } from '../model/jwtDTO';
 import { LoginDTO } from '../model/loginDTO';
 import { PasswordResetDTO } from '../model/passwordResetDTO';
-import { RespuestaJWTDTO } from '../model/respuestaJWTDTO';
 import { UsuarioDTO } from '../model/usuarioDTO';
 import { UsuarioNuevoDTO } from '../model/usuarioNuevoDTO';
 
@@ -68,10 +68,10 @@ export class GestinDeUsuariosService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public actualizarUsuario(body: UsuarioNuevoDTO, idUsuario: number, observe?: 'body', reportProgress?: boolean): Observable<UsuarioDTO>;
-    public actualizarUsuario(body: UsuarioNuevoDTO, idUsuario: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UsuarioDTO>>;
-    public actualizarUsuario(body: UsuarioNuevoDTO, idUsuario: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UsuarioDTO>>;
-    public actualizarUsuario(body: UsuarioNuevoDTO, idUsuario: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public actualizarUsuario(body: UsuarioDTO, idUsuario: number, observe?: 'body', reportProgress?: boolean): Observable<UsuarioDTO>;
+    public actualizarUsuario(body: UsuarioDTO, idUsuario: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UsuarioDTO>>;
+    public actualizarUsuario(body: UsuarioDTO, idUsuario: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UsuarioDTO>>;
+    public actualizarUsuario(body: UsuarioDTO, idUsuario: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling actualizarUsuario.');
@@ -206,9 +206,9 @@ export class GestinDeUsuariosService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public forgottenPassword(body: ForgottenPasswordDTO, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public forgottenPassword(body: ForgottenPasswordDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public forgottenPassword(body: ForgottenPasswordDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public forgottenPassword(body: ForgottenPasswordDTO, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public forgottenPassword(body: ForgottenPasswordDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public forgottenPassword(body: ForgottenPasswordDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
     public forgottenPassword(body: ForgottenPasswordDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
@@ -219,6 +219,7 @@ export class GestinDeUsuariosService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -234,7 +235,7 @@ export class GestinDeUsuariosService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/forgottenpassword`,
+        return this.httpClient.request<string>('post',`${this.basePath}/forgottenpassword`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -293,9 +294,9 @@ export class GestinDeUsuariosService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public login(body: LoginDTO, observe?: 'body', reportProgress?: boolean): Observable<RespuestaJWTDTO>;
-    public login(body: LoginDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RespuestaJWTDTO>>;
-    public login(body: LoginDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RespuestaJWTDTO>>;
+    public login(body: LoginDTO, observe?: 'body', reportProgress?: boolean): Observable<JwtDTO>;
+    public login(body: LoginDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<JwtDTO>>;
+    public login(body: LoginDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<JwtDTO>>;
     public login(body: LoginDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
@@ -322,7 +323,7 @@ export class GestinDeUsuariosService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<RespuestaJWTDTO>('post',`${this.basePath}/login`,
+        return this.httpClient.request<JwtDTO>('post',`${this.basePath}/login`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -384,9 +385,9 @@ export class GestinDeUsuariosService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public passwordReset(body: PasswordResetDTO, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public passwordReset(body: PasswordResetDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public passwordReset(body: PasswordResetDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public passwordReset(body: PasswordResetDTO, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public passwordReset(body: PasswordResetDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public passwordReset(body: PasswordResetDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
     public passwordReset(body: PasswordResetDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
@@ -397,6 +398,7 @@ export class GestinDeUsuariosService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -412,7 +414,7 @@ export class GestinDeUsuariosService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/passwordreset`,
+        return this.httpClient.request<string>('post',`${this.basePath}/passwordreset`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

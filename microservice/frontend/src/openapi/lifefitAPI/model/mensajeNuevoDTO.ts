@@ -16,5 +16,6 @@ export interface MensajeNuevoDTO {
     destinatarios?: Array<DestinatarioDTO>;
     copia?: Array<DestinatarioDTO>;
     copiaOculta?: Array<DestinatarioDTO>;
+    remitente?: DestinatarioDTO;
     contenido?: string;
 }

@@ -31,11 +31,7 @@ export const routes: Routes = [
         path: 'usuarios',
         component: ListadoUsuarioComponent
       },
-      {
-        path: '',
-        component: PrincipalComponent
-      }
-   
+      { path: '**', redirectTo: '' }
 ];  
 
 NgModule({

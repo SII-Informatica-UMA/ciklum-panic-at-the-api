@@ -16,7 +16,7 @@ export interface SesionDTO {
     fin?: Date;
     trabajoRealizado?: string;
     multimedia?: Array<string>;
-    decripcion?: string;
+    descripcion?: string;
     presencial?: boolean;
     datosSalud?: Array<string>;
     id?: number;
