@@ -7,6 +7,8 @@ import {GestinDeInformacinDeSesionesDeLosClientesService} from '../../../openapi
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { RouterLink, RouterOutlet , RouterLinkActive} from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -16,7 +18,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     FormularioSesionComponent,
     NgbModule, 
     MatButtonModule,
-    MatButtonToggleModule, 
+    MatButtonToggleModule, RouterLink, RouterOutlet , RouterLinkActive
   ],
   providers: [
     GestinDeEntrenamientosService

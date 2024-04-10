@@ -1,4 +1,13 @@
-<div routerLink="['/home']">
+<div class="container">
+    <div class="row">
+      <h3 class="col-8">Gestión de entrenamientos deportivos</h3>
+      <div class="col-2 m-1">
+        <button type="button" class = "btn btn-primary" routerLink="/login">Iniciar sesión</button>
+      </div>
+    </div>
+</div>
+
+<div>
     <p>Selecciona un plan para añadir sesión de entrenamiento:</p>
     <mat-button-toggle-group #toggleBtn="matButtonToggleGroup">
             <mat-button-toggle *ngFor="let plan of planList" value="Toggle Button 1" type="button" (click)="this.pressedButton(plan.id)">Plan {{plan.id}}</mat-button-toggle>
