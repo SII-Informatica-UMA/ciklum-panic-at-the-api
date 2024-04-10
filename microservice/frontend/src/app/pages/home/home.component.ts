@@ -51,6 +51,8 @@ export class HomeComponent {
       if(result){
         this.notifyAddedSession();
       }
+    }).catch((error)=>{
+      console.log('Formulario rechazado')
     });
   }
 
