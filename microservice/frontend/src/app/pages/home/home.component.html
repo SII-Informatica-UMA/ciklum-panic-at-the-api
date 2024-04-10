@@ -1,47 +1,58 @@
 <!--NAVBAR USUARIO-->
 <app-users></app-users>
 <!--PLANES & SESIONES-->
-<table class="table table-bordered">
-    <!--<caption>Lista de planes del usuario</caption>-->
-    <thead>
-        <tr>
-            <th scope="col">PLAN</th>
-            <th>Fecha de inicio</th>
-            <th>Fecha de fin</th>
-            <th>Trabajo realizado</th>
-            <th>Video</th>
-            <th>Foto</th>
-            <th>Descripción</th>
-            <th>Presencial</th>
-            <th>Peso</th>
-            <th>Calorías quemadas</th>
-            <th>Pulsaciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let sesion of sesiones">
-            <td>{{sesion.idPlan}}</td>
-            <td>{{sesion.inicio}}</td>
-            <td>{{sesion.fin}}</td>
-            <td>{{sesion.trabajoRealizado}}</td>
-            <td>{{sesion.multimedia?.at(0)}}</td>
-            <td>{{sesion.multimedia?.at(1)}}</td>
-            <td>{{sesion.descripcion}}</td>
-            <td>{{sesion.presencial}}</td>
-            <td>{{sesion.datosSalud?.at(0)}}</td>
-            <td>{{sesion.datosSalud?.at(1)}}</td>
-            <td>{{sesion.datosSalud?.at(2)}}</td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+<!--
 
 
-<span *ngIf="showButton">
-    <button type="button" mat-flat-button color="accent" (click)="addForm()">Agregar</button>
-</span>
-
-<div *ngIf="displayNotificationAdded">
-    <p class="alert alert-sucess">Sesión añadida con éxito!</p>
-</div>
+    
+-->
+<div class="d-flex justify-content-center">
+    <div>
+        <div>
+            <h1 class="align-middle">Lista</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">PLAN</th>
+                        <th>Fecha de inicio</th>
+                        <th>Fecha de fin</th>
+                        <th>Trabajo realizado</th>
+                        <th>Video</th>
+                        <th>Foto</th>
+                        <th>Descripción</th>
+                        <th>Presencial</th>
+                        <th>Peso</th>
+                        <th>Calorías quemadas</th>
+                        <th>Pulsaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sesion of sesiones">
+                        <td>{{sesion.idPlan}}</td>
+                        <td>{{sesion.inicio}}</td>
+                        <td>{{sesion.fin}}</td>
+                        <td>{{sesion.trabajoRealizado}}</td>
+                        <td>{{sesion.multimedia?.at(0)}}</td>
+                        <td>{{sesion.multimedia?.at(1)}}</td>
+                        <td>{{sesion.descripcion}}</td>
+                        <td>{{sesion.presencial}}</td>
+                        <td>{{sesion.datosSalud?.at(0)}}</td>
+                        <td>{{sesion.datosSalud?.at(1)}}</td>
+                        <td>{{sesion.datosSalud?.at(2)}}</td>
+                        <!--
+                            <td>Botones de editar y eliminar</td>
+                        -->
+                    </tr>
+                </tbody>
+            </table>
+            <span *ngIf="showButton">
+                <button type="button" mat-flat-button color="accent" (click)="addForm()">Agregar</button>
+            </span>
+            
+            <div *ngIf="displayNotificationAdded">
+                <p class="alert alert-sucess">Sesión añadida con éxito!</p>
+            </div>
+        </div>
+    </div>
+    </div>
 
