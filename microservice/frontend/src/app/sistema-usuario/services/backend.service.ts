@@ -4,6 +4,7 @@ import { Usuario } from "../entities/usuario";
 import { HttpClient } from "@angular/common/http";
 import { BACKEND_URI } from "../../config/config";
 import { JwtResponse } from "../entities/login";
+import { SesionDTO, SesionNuevaDTO } from "../../../openapi/lifefitAPI";
 
 // Este servicio usa el backend real
 
@@ -45,5 +46,25 @@ export class BackendService {
 
   resetPassword(token: string, password: string): Observable<void> {
     return this.httpClient.post<void>(BACKEND_URI + '/passwordreset', {token: token, password: password});
+  }
+  /*******SESION*******/
+  getSesion(idSesion: number): Observable<SesionDTO> {
+    return this.httpClient.get<SesionDTO>(BACKEND_URI + '/sesion' + idSesion);
+  }
+
+  putSesion(sesion: SesionDTO): Observable<SesionDTO>{
+    return this.httpClient.put<SesionDTO>(BACKEND_URI + '/sesion' + sesion.id, sesion);
+  }
+
+  deleteSesion(sesion: SesionDTO): Observable<SesionDTO>{
+    return this.httpClient.delete<SesionDTO>(BACKEND_URI + '/sesion' + sesion.id);
+  }
+
+  getSesiones(idPlan: number) : Observable<SesionDTO[]> {
+    return this.httpClient.get<SesionDTO[]>(BACKEND_URI + '/sesion?plan=' + idPlan)
+  }
+
+  postSesion(sesion: SesionNuevaDTO) : Observable<SesionDTO> {
+    return this.httpClient.post<SesionDTO>(BACKEND_URI + '/sesion?plan=' + sesion.idPlan, sesion)
   }
 }
