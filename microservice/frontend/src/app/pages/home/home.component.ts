@@ -9,7 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { RouterLink, RouterOutlet , RouterLinkActive} from '@angular/router';
 
-import { UsuariosService } from '../../services/usuarios.service';
+import { UsuariosService } from '../../sistema-usuario/services/usuarios.service';
 
 @Component({
   selector: 'app-home',

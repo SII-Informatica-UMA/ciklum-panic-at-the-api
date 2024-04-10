@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { UsuariosService } from '../services/usuarios.service';
-import { PlanComponent } from "../pages/plan/plan.component";
+import { PlanComponent } from "../../pages/plan/plan.component";
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, map, of } from "rxjs";
 import { Usuario } from "../entities/usuario";
 import { HttpClient } from "@angular/common/http";
-import { BACKEND_URI } from "../config/config";
+import { BACKEND_URI } from "../../config/config";
 import { JwtResponse } from "../entities/login";
 
 // Este servicio usa el backend real
