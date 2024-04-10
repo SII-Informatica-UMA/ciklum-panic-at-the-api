@@ -62,6 +62,7 @@ export class GestionDeEntrenadoresYSusMensajesService {
      * 
      * Actualiza un entrenador
      * @param body 
+     * @param idEntrenador 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -72,6 +73,10 @@ export class GestionDeEntrenadoresYSusMensajesService {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling actualizarEntrenador.');
+        }
+
+        if (idEntrenador === null || idEntrenador === undefined) {
+            throw new Error('Required parameter idEntrenador was null or undefined when calling actualizarEntrenador.');
         }
 
         let headers = this.defaultHeaders;
@@ -390,13 +395,13 @@ export class GestionDeEntrenadoresYSusMensajesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public obtenerClientes(centro: number, observe?: 'body', reportProgress?: boolean): Observable<Array<EntrenadorDTO>>;
-    public obtenerClientes(centro: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<EntrenadorDTO>>>;
-    public obtenerClientes(centro: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<EntrenadorDTO>>>;
-    public obtenerClientes(centro: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public obtenerEntrenadores(centro: number, observe?: 'body', reportProgress?: boolean): Observable<Array<EntrenadorDTO>>;
+    public obtenerEntrenadores(centro: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<EntrenadorDTO>>>;
+    public obtenerEntrenadores(centro: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<EntrenadorDTO>>>;
+    public obtenerEntrenadores(centro: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (centro === null || centro === undefined) {
-            throw new Error('Required parameter centro was null or undefined when calling obtenerClientes.');
+            throw new Error('Required parameter centro was null or undefined when calling obtenerEntrenadores.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});

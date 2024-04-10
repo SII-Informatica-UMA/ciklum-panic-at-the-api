@@ -313,13 +313,13 @@ export class GestionDeClientesYMensajesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCliene(idCliente: number, observe?: 'body', reportProgress?: boolean): Observable<ClienteDTO>;
-    public getCliene(idCliente: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ClienteDTO>>;
-    public getCliene(idCliente: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ClienteDTO>>;
-    public getCliene(idCliente: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getCliente(idCliente: number, observe?: 'body', reportProgress?: boolean): Observable<ClienteDTO>;
+    public getCliente(idCliente: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ClienteDTO>>;
+    public getCliente(idCliente: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ClienteDTO>>;
+    public getCliente(idCliente: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (idCliente === null || idCliente === undefined) {
-            throw new Error('Required parameter idCliente was null or undefined when calling getCliene.');
+            throw new Error('Required parameter idCliente was null or undefined when calling getCliente.');
         }
 
         let headers = this.defaultHeaders;
@@ -395,13 +395,13 @@ export class GestionDeClientesYMensajesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public obtenerClientes1(centro: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ClienteDTO>>;
-    public obtenerClientes1(centro: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ClienteDTO>>>;
-    public obtenerClientes1(centro: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ClienteDTO>>>;
-    public obtenerClientes1(centro: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public obtenerClientes(centro: number, observe?: 'body', reportProgress?: boolean): Observable<Array<ClienteDTO>>;
+    public obtenerClientes(centro: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ClienteDTO>>>;
+    public obtenerClientes(centro: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ClienteDTO>>>;
+    public obtenerClientes(centro: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (centro === null || centro === undefined) {
-            throw new Error('Required parameter centro was null or undefined when calling obtenerClientes1.');
+            throw new Error('Required parameter centro was null or undefined when calling obtenerClientes.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});

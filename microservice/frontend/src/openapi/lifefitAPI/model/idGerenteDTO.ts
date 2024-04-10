@@ -10,6 +10,6 @@
  * Do not edit the class manually.
  */
 
-export interface RespuestaJWTDTO { 
-    jwt?: string;
+export interface IdGerenteDTO { 
+    idGerente?: number;
 }

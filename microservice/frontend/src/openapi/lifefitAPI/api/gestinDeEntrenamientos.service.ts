@@ -442,23 +442,25 @@ export class GestinDeEntrenamientosService {
 
     /**
      * 
-     * Permite consultar los clientes que entrena un entrenador. Solo lo puede hacer el entrenador y el gerente del centro donde trabaja.
+     * Permite consultar los clientes que entrena un entrenador o el entrenador que entrena a un cliente. O bien el entrenador o el cliente hay que aportarlos, pero no se pueden aportar los dos.
      * @param entrenador 
+     * @param cliente 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public obtenerAsignaciones1(entrenador: number, observe?: 'body', reportProgress?: boolean): Observable<Array<AsignacionEntrenamientoDTO>>;
-    public obtenerAsignaciones1(entrenador: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AsignacionEntrenamientoDTO>>>;
-    public obtenerAsignaciones1(entrenador: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AsignacionEntrenamientoDTO>>>;
-    public obtenerAsignaciones1(entrenador: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public obtenerAsignaciones1(entrenador?: number, cliente?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<AsignacionEntrenamientoDTO>>;
+    public obtenerAsignaciones1(entrenador?: number, cliente?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AsignacionEntrenamientoDTO>>>;
+    public obtenerAsignaciones1(entrenador?: number, cliente?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AsignacionEntrenamientoDTO>>>;
+    public obtenerAsignaciones1(entrenador?: number, cliente?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (entrenador === null || entrenador === undefined) {
-            throw new Error('Required parameter entrenador was null or undefined when calling obtenerAsignaciones1.');
-        }
+
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (entrenador !== undefined && entrenador !== null) {
             queryParameters = queryParameters.set('entrenador', <any>entrenador);
+        }
+        if (cliente !== undefined && cliente !== null) {
+            queryParameters = queryParameters.set('cliente', <any>cliente);
         }
 
         let headers = this.defaultHeaders;

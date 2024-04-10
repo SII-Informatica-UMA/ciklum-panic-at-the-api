@@ -105,7 +105,7 @@ export class FormularioSesionComponent {  //Reactive form
       fin: formulario.fin,
       trabajoRealizado: formulario.trabajoRealizado,
       multimedia: formulario.multimedia,
-      decripcion: formulario.decripcion,
+      descripcion: formulario.descripcion,
       presencial: formulario.presencial,
       datosSalud: formulario.datosSalud,
       //id: formulario.id
@@ -141,12 +141,17 @@ export class FormularioSesionComponent {  //Reactive form
     return this.workoutForm.controls["datosSalud"] as FormArray;
   }
 
+  submitSesionToBackend(){
+    //NOTHING HERE YET
+  }
+
   onSubmit(){
     //this.agregarDatosSalud();
     //console.log(this.workoutForm.value);
     console.log(this.convertirFormASesion());
+    //REALIZAR ENVIO DE FORMULARIO AL BACKEND AQUI
+    this.submitSesionToBackend();
     this.modal.close(this.workoutForm);
-
   }
 
   closeForm(): void {

@@ -10,12 +10,6 @@
  * Do not edit the class manually.
  */
 
-export interface UsuarioDTO { 
-    nombre?: string;
-    apellido1?: string;
-    apellido2?: string;
-    email?: string;
-    password?: string;
-    administrador?: boolean;
-    id?: number;
+export interface JwtDTO { 
+    jwt?: string;
 }

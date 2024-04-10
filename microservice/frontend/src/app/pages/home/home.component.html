@@ -1,5 +1,5 @@
 <div routerLink="['/home']">
-    <p>Selecciona un plan para añadir sesión de entrenamiento:</p>
+    <p>Selecciona un plan para añadir una sesión de entrenamiento:</p>
     <mat-button-toggle-group #toggleBtn="matButtonToggleGroup">
             <mat-button-toggle *ngFor="let plan of planList" value="Toggle Button 1" type="button" (click)="this.pressedButton(plan.id)">Plan {{plan.id}}</mat-button-toggle>
     </mat-button-toggle-group>

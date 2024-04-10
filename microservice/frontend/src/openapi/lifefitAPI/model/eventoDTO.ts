@@ -19,5 +19,13 @@ export interface EventoDTO {
     inicio?: Date;
     reglaRecurrencia?: string;
     idCliente?: number;
+    tipo?: EventoDTO.TipoEnum;
     id?: number;
+}
+export namespace EventoDTO {
+    export type TipoEnum = 'DISPONIBILIDAD' | 'CITA';
+    export const TipoEnum = {
+        DISPONIBILIDAD: 'DISPONIBILIDAD' as TipoEnum,
+        CITA: 'CITA' as TipoEnum
+    };
 }

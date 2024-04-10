@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormularioSesionComponent } from '../../formulario-sesion/formulario-sesion.component';
-import { GestinDeEntrenamientosService, PlanDTO } from '../../../openapi/lifefitAPI';
+import { AsignacionEntrenamientoDTO, GestinDeEntrenamientosService, GestionDeCentrosYGerentesService, PlanDTO } from '../../../openapi/lifefitAPI';
 import {GestinDeInformacinDeSesionesDeLosClientesService} from '../../../openapi/lifefitAPI/api/gestinDeInformacinDeSesionesDeLosClientes.service';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,7 @@ export class HomeComponent {
   private selectedPlanId : undefined| number;
 
 
-  constructor(private modalService: NgbModal, private planService: GestinDeEntrenamientosService
+  constructor(private modalService: NgbModal, private usuarioService: UsuariosService, private servicioEntrenamiento: GestinDeEntrenamientosService
     , private servicioSesiones: GestinDeInformacinDeSesionesDeLosClientesService) {
     this.#showButton = false;
     this.displayNotificationAdded = false;
@@ -52,12 +53,30 @@ export class HomeComponent {
   }
 
   testBackend(): void{
-    this.planService.getPlan(0).subscribe(plan =>{
+    this.servicioEntrenamiento.getPlan(0).subscribe(plan =>{
       console.log(plan);
     });
   }
 
-  ngOnInit() {
+  getPlans(): PlanDTO[]{
+    let plans : PlanDTO[] = [];
+    let user_sesion = this.usuarioService.getUsuarioSesion();
+    let user_id = user_sesion?.id;
+    let asignaciones:AsignacionEntrenamientoDTO[] = [];
+    this.servicioEntrenamiento.obtenerAsignaciones1(user_id).subscribe(asig => {
+      asignaciones = asig;
+    });
+    for(let as of asignaciones){
+      if(as.planes != undefined){
+        for(let plan_as of as.planes){
+          plans.push(plan_as);
+        }
+      }
+    }
+    return plans;
+  }
+
+  getFakePlans(): void{
     let plan : PlanDTO = {fechaInicio: new Date(),
       fechaFin: new Date(),
       reglaRecurrencia: "",
@@ -78,6 +97,12 @@ export class HomeComponent {
       idRutina: 3,
       id: 2};
     this.planList.push(plan);
+  }
+
+  ngOnInit() {
+
+    this.getFakePlans();
+    
   } 
 
   set showButton(doShow: boolean){
