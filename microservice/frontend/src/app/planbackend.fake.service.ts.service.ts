@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SesionDTO } from '../openapi/lifefitAPI';
+import { PlanDTO, SesionDTO, SesionNuevaDTO } from '../openapi/lifefitAPI';
 import { Observable, of } from 'rxjs';
 
 
@@ -9,10 +9,10 @@ const sesionesC: SesionDTO [] = [
     inicio: new Date("2003-08-20T08:00"),
     fin: new Date("2003-08-20T09:00"),
     trabajoRealizado: "mucho",
-    multimedia: [],
-    descripcion: "null",
+    multimedia: ['https://youtu.be/AhvkKR0ero8?t=50', 'https://cdn.pixabay.com/photo/2023/06/15/15/01/ai-image-8065787_1280.jpg'],
+    descripcion: "Hacía mucha calor, no se puede entrenar a estas horas",
     presencial: true,
-    datosSalud: new Array<string>(),
+    datosSalud: new Array<string>('90', '100', '12'),
     id: 0
   },
   {
@@ -20,8 +20,8 @@ const sesionesC: SesionDTO [] = [
     inicio: new Date("2024-08-20T08:00"),
     fin: new Date("2024-08-20T09:00"),
     trabajoRealizado: "nada",
-    multimedia: [],
-    descripcion: "null",
+    multimedia: ['https://youtu.be/2ZxdOeXUiJ0', 'https://cdn0.ecologiaverde.com/es/posts/7/4/9/reproduccion_del_cangrejo_cocotero_3947_3_600.jpg'],
+    descripcion: "Y, viéndole don Quijote de aquella manera, con muestras de tanta tristeza, le dijo: Sábete, Sancho, que no es un hombre más que otro si no hace más que otro. Todas estas borrascas que nos suceden son.",
     presencial: false,
     datosSalud: new Array<string>(),
     id: 1
@@ -31,7 +31,7 @@ const sesionesC: SesionDTO [] = [
     inicio: new Date("2024-04-10T13:35"),
     fin: new Date("2024-04-11T23:59"),
     trabajoRealizado: "lo de angular",
-    multimedia: [],
+    multimedia: ['https://youtube.com', 'nada'],
     descripcion: "demasiado trabajo :(",
     presencial: true,
     datosSalud: new Array<string>(),
@@ -63,8 +63,12 @@ export class PlanbackendFakeServiceTsService {
     return of(this.sesiones);
   }
 
+  getListaSesiones(): SesionDTO[]{
+    return this.sesiones;
+  }
+
   //AÑADIR SESION
-  postUsuario(sesion: SesionDTO): Observable<SesionDTO> {
+  postSesion(sesion: SesionDTO): Observable<SesionDTO> {
     let u = this.sesiones.find(u => u.id == sesion.id);
     if (!sesion.id) {
       return new Observable<SesionDTO>(observer => {
@@ -107,5 +111,24 @@ export class PlanbackendFakeServiceTsService {
     this.sesiones.splice(i, 1);
     this.guardarSesionesEnLocalStorage();
     return of();
+  }
+
+  convertirSesion(sesionNueva: SesionNuevaDTO): SesionDTO{
+    let sesion: SesionDTO = {
+      idPlan: sesionNueva.idPlan,
+      inicio: sesionNueva.inicio,
+      fin: sesionNueva.fin,
+      trabajoRealizado: sesionNueva.trabajoRealizado,
+      multimedia: sesionNueva.multimedia,
+      descripcion: sesionNueva.descripcion,
+      presencial: sesionNueva.presencial,
+      datosSalud: sesionNueva.datosSalud,
+      id: 0
+    }
+    return sesion;
+  }
+
+  sortByIDPlan(s0: SesionDTO, s1: SesionDTO){
+    //return (s0?.idPlan < s1?.idPlan) ? -1 : (s1?.idPlan > s0?.idPlan) ? 1 : 0; Da errores de undefined, no se me ocurre cómo quitarlo
   }
 }

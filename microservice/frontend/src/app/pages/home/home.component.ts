@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormularioSesionComponent } from '../../formulario-sesion/formulario-sesion.component';
-import { AsignacionEntrenamientoDTO, GestinDeEntrenamientosService, GestionDeCentrosYGerentesService, PlanDTO } from '../../../openapi/lifefitAPI';
+import { AsignacionEntrenamientoDTO, GestinDeEntrenamientosService, GestionDeCentrosYGerentesService, PlanDTO, SesionDTO } from '../../../openapi/lifefitAPI';
 import {GestinDeInformacinDeSesionesDeLosClientesService} from '../../../openapi/lifefitAPI/api/gestinDeInformacinDeSesionesDeLosClientes.service';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
@@ -11,6 +11,8 @@ import { RouterLink, RouterOutlet , RouterLinkActive} from '@angular/router';
 
 import { UsuariosService } from '../../sistema-usuario/services/usuarios.service';
 import { UsersComponent } from '../../sistema-usuario/users/users.component';
+import { PlanbackendFakeServiceTsService } from '../../planbackend.fake.service.ts.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -31,21 +33,29 @@ import { UsersComponent } from '../../sistema-usuario/users/users.component';
 })
 export class HomeComponent {
   planList : PlanDTO[] = [];
+  //sesiones: Observable<SesionDTO[]>;
+  sesiones: SesionDTO[] = [];
   #showButton : boolean;
   displayNotificationAdded : boolean;
   private selectedPlanId : undefined| number;
 
 
   constructor(private modalService: NgbModal, private usuarioService: UsuariosService, private servicioEntrenamiento: GestinDeEntrenamientosService
-    , private servicioSesiones: GestinDeInformacinDeSesionesDeLosClientesService) {
-    this.#showButton = false;
+    , private servicioSesiones: GestinDeInformacinDeSesionesDeLosClientesService, private planesService: PlanbackendFakeServiceTsService) {
+    this.#showButton = true;
     this.displayNotificationAdded = false;
+    //this.sesiones = new Observable<SesionDTO[]>();
   }
 
   public open(modal: any): void {
     const modalRef = this.modalService.open(modal);
   }
 
+  ngOnInit() {
+    this.sesiones = this.planesService.getListaSesiones();
+    this.getFakePlans();
+    
+  } 
   addForm(): void{
     const modalRef = this.modalService.open(FormularioSesionComponent);
     modalRef.componentInstance.planId = this.selectedPlanId;
@@ -56,6 +66,7 @@ export class HomeComponent {
     }).catch((error)=>{
       console.log('Formulario rechazado')
     });
+    this.planesService.postSesion
   }
 
   testBackend(): void{
@@ -105,11 +116,6 @@ export class HomeComponent {
     this.planList.push(plan);
   }
 
-  ngOnInit() {
-
-    this.getFakePlans();
-    
-  } 
 
   set showButton(doShow: boolean){
     this.#showButton = doShow;
