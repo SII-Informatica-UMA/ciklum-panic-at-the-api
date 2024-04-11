@@ -24,7 +24,7 @@ import { PlanbackendFakeServiceTsService } from '../planbackend.fake.service.ts.
 export class EditarSesionComponent {
   planId: number | undefined;
   sesionInput: SesionDTO | undefined;
-  
+  sesionId: number = -1;
   workoutForm : FormGroup;
 
   constructor(private fb: FormBuilder, public modal: NgbActiveModal, private planesService: PlanbackendFakeServiceTsService) {
@@ -66,21 +66,41 @@ export class EditarSesionComponent {
       fin: sesion.fin?.toString().slice(0,-5),
       trabajoRealizado: sesion.trabajoRealizado,
       decripcion: sesion.descripcion,
-      multimedia: sesion.multimedia,
       presencial: sesion.presencial,
     });
-    if(sesion.datosSalud != undefined){ //NO FUNCIONA ESTO AAAAAA
-      console.log('test');
-      this.form.patchValue({
-        datosSalud: [...sesion.datosSalud]
+    if(sesion.multimedia != undefined){
+      let multForm = this.workoutForm.controls["multimedia"] as FormArray;
+      multForm.controls.forEach((control: AbstractControl<any, any>) => {
+        if(sesion.multimedia != undefined && sesion.multimedia[0] != undefined){
+          (control as FormGroup).get('video')?.setValue(sesion.multimedia[0]);
+        }
+        if(sesion.multimedia != undefined && sesion.multimedia[1] != undefined){
+          (control as FormGroup).get('foto')?.setValue(sesion.multimedia[1]);
+        }
       });
-    }                                   //AAAAAAAAAA
+
+    }  
+    if(sesion.datosSalud != undefined){
+      let saludForm = this.workoutForm.controls["datosSalud"] as FormArray;
+      saludForm.controls.forEach((control: AbstractControl<any, any>) => {
+        if(sesion.datosSalud != undefined && sesion.datosSalud[0] != undefined){
+          (control as FormGroup).get('peso')?.setValue(sesion.datosSalud[0]);
+        }
+        if(sesion.datosSalud != undefined && sesion.datosSalud[1] != undefined){
+          (control as FormGroup).get('calorias')?.setValue(sesion.datosSalud[1]);
+        }
+        if(sesion.datosSalud != undefined && sesion.datosSalud[1] != undefined){
+          (control as FormGroup).get('pulsaciones')?.setValue(sesion.datosSalud[2]);
+        }
+      });
+
+    }                            
     
   }
 
-  convertirFormASesion(): SesionNuevaDTO{
+  convertirFormASesion(): SesionDTO{
     const formulario = this.workoutForm.value;
-    const sesion: SesionNuevaDTO = {
+    const sesion: SesionDTO = {
       idPlan: formulario.idPlan,
       inicio: formulario.inicio,
       fin: formulario.fin,
@@ -89,7 +109,7 @@ export class EditarSesionComponent {
       descripcion: formulario.decripcion,
       presencial: formulario.presencial,
       datosSalud: this.convertirDatosSaludToString(),
-      //id: formulario.id
+      id: this.sesionId
     };
     return sesion;
   }
@@ -123,7 +143,8 @@ export class EditarSesionComponent {
   }
 
   submitSesionToBackend(){
-    //NOTHING HERE YET
+    let sesionEditada = this.convertirFormASesion();
+    this.planesService.putSesion(sesionEditada);
   }
 
   onSubmit(){

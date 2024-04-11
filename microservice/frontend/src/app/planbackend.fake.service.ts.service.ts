@@ -90,8 +90,10 @@ export class PlanbackendFakeServiceTsService {
 
   //EDITAR SESION
   putSesion(sesion: SesionDTO): Observable<SesionDTO> {
+    console.log(sesion);
     let u = this.sesiones.find(u => u.id == sesion.id);
     if (!u) {
+      console.log("iderror");
       return new Observable<SesionDTO>(observer => {
         observer.error('La sesion no existe');
       });

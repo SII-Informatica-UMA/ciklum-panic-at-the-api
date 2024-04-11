@@ -104,7 +104,6 @@ export class FormularioSesionComponent {  //Reactive form
   submitSesionToBackend(){
     let sesionNueva = this.convertirFormASesion();
     this.planesService.postSesion(sesionNueva);
-    console.log('submitted');
   }
 
   onSubmit(){

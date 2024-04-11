@@ -152,6 +152,7 @@ export class HomeComponent {
   pressedEditar(sesion: SesionDTO){
     const modalRef = this.modalService.open(EditarSesionComponent);
     modalRef.componentInstance.sesionInput = sesion;
+    modalRef.componentInstance.sesionId = sesion.id;
     modalRef.result.then((result) => {
       if(result){
         
