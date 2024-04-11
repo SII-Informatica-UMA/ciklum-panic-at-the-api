@@ -5,7 +5,19 @@
 
 
 .navbar-custom {
-    background-color: white; 
+    /*hay que arreglarlo*/
+    background-color: rgb(71, 129, 246);
+
+    display: inline-block;
+    padding: 20px 30px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 2px black;
+    cursor: pointer;
+    align-items: center; /* Centra verticalmente los elementos hijos */
+
+    margin-left: 250px;
     
 }
 
@@ -21,7 +33,7 @@
 
 
 .boton {
-    display: inline-block;
+   /* display: center;*/
     padding: 10px 20px;
     background-color: blue;
     color: white;
@@ -31,7 +43,7 @@
     border: none;
     cursor: pointer;
     font-size: 16px;
-    margin-left: 10px; 
+    align-items: center; /* Centra verticalmente los elementos hijos */
   }
   
   .boton:hover {

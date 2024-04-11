@@ -13,6 +13,7 @@
     background-color: #33d9f7; /* Color de fondo alternativo */
     margin-left: 50px; /* Espaciado interno */
     margin-right:50px;
+    margin-bottom:30px;
     
     border: 5px solid #000000; /* Borde sólido de 5px de color negro */
     /*overflow: hidden; /* Asegura que el contenido dentro de la tabla no se extienda más allá de las esquinas curvas */
@@ -34,7 +35,17 @@
 }
 
 .boton{
-    border-collapse: collapse;
+    border-radius: 5px;
     background-color: #0e35a9;/* Color de fondo para filas impares */
     color:ghostwhite;
+    margin: 2px;
 }
+
+.lista{
+    font-family: "Roboto", sans-serif; /* Utiliza la fuente Roboto o una fuente sans-serif como alternativa */
+    font-size: 24px; /* Tamaño de la fuente */
+    color: #333; /* Color del texto */
+    margin-bottom: 10px;
+    margin-top: 50px;
+}
+

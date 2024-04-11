@@ -1,0 +1,6 @@
+.title{
+    text-align: center; /* Centra horizontalmente el texto */
+    font-family: "Roboto", sans-serif; /* Utiliza la fuente Roboto o una fuente sans-serif como alternativa */
+    font-size: 24px; /* Tamaño de la fuente */
+    color: #333; /* Color del texto */
+}
