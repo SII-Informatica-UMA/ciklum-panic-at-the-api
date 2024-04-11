@@ -55,8 +55,8 @@ export class HomeComponent {
   }
 
   ngOnInit() {
-    this.sesiones = this.planesService.getListaSesiones();
-    this.getFakePlans();
+    this.sesiones = this.planesService.getListaSesiones();  //SUSTITUIR POR PETICION REAL DE SESIONES PARA CONECTAR CON EL BACKEND REAL
+    this.getFakePlans();  //SUSTITUIR POR GETPLANS PARA REALES
     
   } 
   addForm(): void{
