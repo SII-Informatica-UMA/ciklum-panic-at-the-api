@@ -130,6 +130,6 @@ export class PlanbackendFakeServiceTsService {
   }
 
   sortByIDPlan(s0: SesionDTO, s1: SesionDTO){
-    //return (s0?.idPlan < s1?.idPlan) ? -1 : (s1?.idPlan > s0?.idPlan) ? 1 : 0; Da errores de undefined, no se me ocurre cómo quitarlo
+    return (s0?.idPlan < s1?.idPlan) ? -1 : (s1?.idPlan > s0?.idPlan) ? 1 : 0; 
   }
 }
