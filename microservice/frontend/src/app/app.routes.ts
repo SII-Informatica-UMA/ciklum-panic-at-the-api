@@ -15,6 +15,8 @@ export const routes: Routes = [
     //{path: '', component: PlanComponent},
     {path: '', component: InitComponent},
     //{path: 'plan', component: PlanComponent},
+
+
     {path: 'home', component: HomeComponent},   // {path: '*', redirectTo: '', pathMatch: 'full'}
     {
         path: 'login',

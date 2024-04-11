@@ -35,7 +35,7 @@ const sesionesC: SesionDTO [] = [
     descripcion: "demasiado trabajo :(",
     presencial: true,
     datosSalud: new Array<string>(),
-    id: 1
+    id: 2
   },
 ];
 
@@ -52,6 +52,7 @@ export class PlanbackendFakeServiceTsService {
       this.sesiones = JSON.parse(_sesiones);
     } else {
       this.sesiones = [...sesionesC];
+      this.guardarSesionesEnLocalStorage();
     }
   }
 
@@ -89,8 +90,10 @@ export class PlanbackendFakeServiceTsService {
 
   //EDITAR SESION
   putSesion(sesion: SesionDTO): Observable<SesionDTO> {
+    console.log(sesion);
     let u = this.sesiones.find(u => u.id == sesion.id);
     if (!u) {
+      console.log("iderror");
       return new Observable<SesionDTO>(observer => {
         observer.error('La sesion no existe');
       });
@@ -129,6 +132,6 @@ export class PlanbackendFakeServiceTsService {
   }
 
   sortByIDPlan(s0: SesionDTO, s1: SesionDTO){
-    //return (s0?.idPlan < s1?.idPlan) ? -1 : (s1?.idPlan > s0?.idPlan) ? 1 : 0; Da errores de undefined, no se me ocurre cómo quitarlo
+    return (s0?.idPlan < s1?.idPlan) ? -1 : (s1?.idPlan > s0?.idPlan) ? 1 : 0; 
   }
 }

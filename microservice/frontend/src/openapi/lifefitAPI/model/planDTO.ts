@@ -15,5 +15,5 @@ export interface PlanDTO {
     fechaFin?: Date;
     reglaRecurrencia?: string;
     idRutina?: number;
-    id?: number;
+    id: number;
 }

@@ -8,33 +8,29 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SesionNuevaDTO} from '../../openapi/lifefitAPI/model/sesionNuevaDTO';
 import {MatSelectModule} from '@angular/material/select';
+import { SesionDTO } from '../../openapi/lifefitAPI';
 import { PlanbackendFakeServiceTsService } from '../planbackend.fake.service.ts.service';
-import { SesionDTO } from '../../openapi/lifefitAPI/model/sesionDTO';
 
 @Component({
-  selector: 'app-formulario-sesion',
+  selector: 'app-editar-sesion',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     ReactiveFormsModule, 
-    MatFormFieldModule, MatInputModule, MatIconModule, MatCheckboxModule,
-    
-  ],
-  templateUrl: './formulario-sesion.component.html',
-  styleUrl: './formulario-sesion.component.css',
+    MatFormFieldModule, MatInputModule, MatIconModule, MatCheckboxModule,],
+  templateUrl: './editar-sesion.component.html',
+  styleUrl: './editar-sesion.component.css',
   providers: [DatePipe]
 })
-
-export class FormularioSesionComponent {  //Reactive form
-
-  planId: number = 0;
-
-  
+export class EditarSesionComponent {
+  planId: number | undefined;
+  sesionInput: SesionDTO | undefined;
+  sesionId: number = -1;
   workoutForm : FormGroup;
 
-  constructor(private fb: FormBuilder, public modal: NgbActiveModal,private planesService: PlanbackendFakeServiceTsService) {
+  constructor(private fb: FormBuilder, public modal: NgbActiveModal, private planesService: PlanbackendFakeServiceTsService) {
     /****WORKOUT SESSION-FORM*****/
     this.workoutForm = this.fb.group({
+      idPlan: 0,
       inicio: ['', Validators.required],
       fin: ['', Validators.required],
       trabajoRealizado: ['', [Validators.maxLength(255)]],
@@ -47,6 +43,9 @@ export class FormularioSesionComponent {  //Reactive form
     this.agregarDatosSalud();
   }
 
+  ngOnInit(): void {
+    this.convertirSesionAForm(this.sesionInput);
+  }
 
   get form(){
     return this.workoutForm;
@@ -56,11 +55,53 @@ export class FormularioSesionComponent {  //Reactive form
     return this.workoutForm.controls;
   }
 
+  convertirSesionAForm(sesion: SesionDTO | undefined): void{
+    if(sesion == undefined){
+      return;
+    }
+    console.log(sesion.datosSalud)
+    this.form.patchValue({
+      idPlan: sesion.idPlan,
+      inicio: sesion.inicio?.toString().slice(0,-5),
+      fin: sesion.fin?.toString().slice(0,-5),
+      trabajoRealizado: sesion.trabajoRealizado,
+      decripcion: sesion.descripcion,
+      presencial: sesion.presencial,
+    });
+    if(sesion.multimedia != undefined){
+      let multForm = this.workoutForm.controls["multimedia"] as FormArray;
+      multForm.controls.forEach((control: AbstractControl<any, any>) => {
+        if(sesion.multimedia != undefined && sesion.multimedia[0] != undefined){
+          (control as FormGroup).get('video')?.setValue(sesion.multimedia[0]);
+        }
+        if(sesion.multimedia != undefined && sesion.multimedia[1] != undefined){
+          (control as FormGroup).get('foto')?.setValue(sesion.multimedia[1]);
+        }
+      });
+
+    }  
+    if(sesion.datosSalud != undefined){
+      let saludForm = this.workoutForm.controls["datosSalud"] as FormArray;
+      saludForm.controls.forEach((control: AbstractControl<any, any>) => {
+        if(sesion.datosSalud != undefined && sesion.datosSalud[0] != undefined){
+          (control as FormGroup).get('peso')?.setValue(sesion.datosSalud[0]);
+        }
+        if(sesion.datosSalud != undefined && sesion.datosSalud[1] != undefined){
+          (control as FormGroup).get('calorias')?.setValue(sesion.datosSalud[1]);
+        }
+        if(sesion.datosSalud != undefined && sesion.datosSalud[1] != undefined){
+          (control as FormGroup).get('pulsaciones')?.setValue(sesion.datosSalud[2]);
+        }
+      });
+
+    }                            
+    
+  }
 
   convertirFormASesion(): SesionDTO{
     const formulario = this.workoutForm.value;
     const sesion: SesionDTO = {
-      idPlan: this.planId,
+      idPlan: formulario.idPlan,
       inicio: formulario.inicio,
       fin: formulario.fin,
       trabajoRealizado: formulario.trabajoRealizado,
@@ -68,7 +109,7 @@ export class FormularioSesionComponent {  //Reactive form
       descripcion: formulario.decripcion,
       presencial: formulario.presencial,
       datosSalud: this.convertirDatosSaludToString(),
-      id: 6                   //TMP TMP TMP CAMBIAR ESTO CAMBIAR ESTO!!!!!
+      id: this.sesionId
     };
     return sesion;
   }
@@ -102,8 +143,8 @@ export class FormularioSesionComponent {  //Reactive form
   }
 
   submitSesionToBackend(){
-    let sesionNueva = this.convertirFormASesion();
-    this.planesService.postSesion(sesionNueva);
+    let sesionEditada = this.convertirFormASesion();
+    this.planesService.putSesion(sesionEditada);
   }
 
   onSubmit(){
@@ -147,11 +188,4 @@ export class FormularioSesionComponent {  //Reactive form
   campoRequerido(control: string): boolean{
     return this.form.controls[control].touched && this.form.controls[control].invalid
   }
-
 }
-
-
-
-
-
- 
