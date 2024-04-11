@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { PlanDTO, SesionDTO, SesionNuevaDTO } from '../openapi/lifefitAPI';
 import { Observable, of } from 'rxjs';
 
+/**
+ *  ESTA ES NUESTRA IMPLEMENTACIÓN DE UN BACKEND FALSO PARA LAS SESIONES
+ *  PARA HACER PETICIONES AL BACKEND REAL TENEMOS TODO ESE CÓDIGO EN openapi\lifefitAPI\
+ *  QUE CONTIENE UNA IMPLEMENTACIÓN DE LAS ESPECIFICACIONES DE LOS ENDPOINTS SIGUIENDO 
+ *  EL ENLACE A SWAGGERUI QUE SE NOS HA PROPORCIONADO EN EL CAMPUS VIRTUAL
+ * 
+ */
 
 const sesionesC: SesionDTO [] = [
   {
@@ -116,6 +123,7 @@ export class PlanbackendFakeServiceTsService {
     return of();
   }
 
+  //SesionNuevaDTO a SesionDTO
   convertirSesion(sesionNueva: SesionNuevaDTO): SesionDTO{
     let sesion: SesionDTO = {
       idPlan: sesionNueva.idPlan,

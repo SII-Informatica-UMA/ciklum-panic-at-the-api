@@ -11,6 +11,12 @@ import {MatSelectModule} from '@angular/material/select';
 import { SesionDTO } from '../../openapi/lifefitAPI';
 import { PlanbackendFakeServiceTsService } from '../planbackend.fake.service.ts.service';
 
+/**
+ *  ESTE ES EL FORMULARIO QUE SE ABRE AL EDITAR LA SESION, ES MUY SIMILAR AL FORMULARIO DE CREAR UNA NUEVA
+ *  PERO TIENE VARIABLES Y FUNCIONES LIGERAMENTE DISTINTAS, FINALMENTE PARA EVITAR BUGS FUE MÁS SENCILLO IMPLEMENTARLO COMO
+ *  UN COMPONENTE DISTINTO, PERO CON MÁS TIEMPO SE PODRÍA IMPLEMENTAR AMBOS FORMULARIOS CON EL MISMO COMPONENTE
+ */
+
 @Component({
   selector: 'app-editar-sesion',
   standalone: true,

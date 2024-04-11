@@ -11,6 +11,13 @@ import {MatSelectModule} from '@angular/material/select';
 import { PlanbackendFakeServiceTsService } from '../planbackend.fake.service.ts.service';
 import { SesionDTO } from '../../openapi/lifefitAPI/model/sesionDTO';
 
+
+/**
+ *  ESTE ES EL FORMULARIO QUE SE ABRE AL CREAR UNA SESIÓN NUEVA
+ */
+
+
+
 @Component({
   selector: 'app-formulario-sesion',
   standalone: true,
