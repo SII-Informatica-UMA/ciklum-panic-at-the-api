@@ -35,7 +35,7 @@ const sesionesC: SesionDTO [] = [
     descripcion: "demasiado trabajo :(",
     presencial: true,
     datosSalud: new Array<string>(),
-    id: 1
+    id: 2
   },
 ];
 
@@ -52,6 +52,7 @@ export class PlanbackendFakeServiceTsService {
       this.sesiones = JSON.parse(_sesiones);
     } else {
       this.sesiones = [...sesionesC];
+      this.guardarSesionesEnLocalStorage();
     }
   }
 

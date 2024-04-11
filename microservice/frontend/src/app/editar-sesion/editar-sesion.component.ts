@@ -8,33 +8,29 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SesionNuevaDTO} from '../../openapi/lifefitAPI/model/sesionNuevaDTO';
 import {MatSelectModule} from '@angular/material/select';
+import { SesionDTO } from '../../openapi/lifefitAPI';
 import { PlanbackendFakeServiceTsService } from '../planbackend.fake.service.ts.service';
-import { SesionDTO } from '../../openapi/lifefitAPI/model/sesionDTO';
 
 @Component({
-  selector: 'app-formulario-sesion',
+  selector: 'app-editar-sesion',
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     ReactiveFormsModule, 
-    MatFormFieldModule, MatInputModule, MatIconModule, MatCheckboxModule,
-    
-  ],
-  templateUrl: './formulario-sesion.component.html',
-  styleUrl: './formulario-sesion.component.css',
+    MatFormFieldModule, MatInputModule, MatIconModule, MatCheckboxModule,],
+  templateUrl: './editar-sesion.component.html',
+  styleUrl: './editar-sesion.component.css',
   providers: [DatePipe]
 })
-
-export class FormularioSesionComponent {  //Reactive form
-
+export class EditarSesionComponent {
   planId: number | undefined;
-
+  sesionInput: SesionDTO | undefined;
   
   workoutForm : FormGroup;
 
-  constructor(private fb: FormBuilder, public modal: NgbActiveModal,private planesService: PlanbackendFakeServiceTsService) {
+  constructor(private fb: FormBuilder, public modal: NgbActiveModal, private planesService: PlanbackendFakeServiceTsService) {
     /****WORKOUT SESSION-FORM*****/
     this.workoutForm = this.fb.group({
+      idPlan: 0,
       inicio: ['', Validators.required],
       fin: ['', Validators.required],
       trabajoRealizado: ['', [Validators.maxLength(255)]],
@@ -47,6 +43,9 @@ export class FormularioSesionComponent {  //Reactive form
     this.agregarDatosSalud();
   }
 
+  ngOnInit(): void {
+    this.convertirSesionAForm(this.sesionInput);
+  }
 
   get form(){
     return this.workoutForm;
@@ -56,11 +55,33 @@ export class FormularioSesionComponent {  //Reactive form
     return this.workoutForm.controls;
   }
 
+  convertirSesionAForm(sesion: SesionDTO | undefined): void{
+    if(sesion == undefined){
+      return;
+    }
+    console.log(sesion.datosSalud)
+    this.form.patchValue({
+      idPlan: sesion.idPlan,
+      inicio: sesion.inicio?.toString().slice(0,-5),
+      fin: sesion.fin?.toString().slice(0,-5),
+      trabajoRealizado: sesion.trabajoRealizado,
+      decripcion: sesion.descripcion,
+      multimedia: sesion.multimedia,
+      presencial: sesion.presencial,
+    });
+    if(sesion.datosSalud != undefined){ //NO FUNCIONA ESTO AAAAAA
+      console.log('test');
+      this.form.patchValue({
+        datosSalud: [...sesion.datosSalud]
+      });
+    }                                   //AAAAAAAAAA
+    
+  }
 
-  convertirFormASesion(): SesionDTO{
+  convertirFormASesion(): SesionNuevaDTO{
     const formulario = this.workoutForm.value;
-    const sesion: SesionDTO = {
-      idPlan: this.planId,
+    const sesion: SesionNuevaDTO = {
+      idPlan: formulario.idPlan,
       inicio: formulario.inicio,
       fin: formulario.fin,
       trabajoRealizado: formulario.trabajoRealizado,
@@ -68,7 +89,7 @@ export class FormularioSesionComponent {  //Reactive form
       descripcion: formulario.decripcion,
       presencial: formulario.presencial,
       datosSalud: this.convertirDatosSaludToString(),
-      id: 6                   //TMP TMP TMP CAMBIAR ESTO CAMBIAR ESTO!!!!!
+      //id: formulario.id
     };
     return sesion;
   }
@@ -102,9 +123,7 @@ export class FormularioSesionComponent {  //Reactive form
   }
 
   submitSesionToBackend(){
-    let sesionNueva = this.convertirFormASesion();
-    this.planesService.postSesion(sesionNueva);
-    console.log('submitted');
+    //NOTHING HERE YET
   }
 
   onSubmit(){
@@ -148,11 +167,4 @@ export class FormularioSesionComponent {  //Reactive form
   campoRequerido(control: string): boolean{
     return this.form.controls[control].touched && this.form.controls[control].invalid
   }
-
 }
-
-
-
-
-
- 

@@ -1,0 +1,18 @@
+.tabla-form-sesion {
+    padding: 8px 8px;
+    min-width: 250px;
+    max-width: 750px;
+    width: 100%;
+  }
+  
+  .ancho-tabla {
+    width: 100%;
+  }
+
+.espacio-fecha{
+    margin-bottom: 15px;
+  }
+  
+  td {
+    padding-right: 8px;
+  }

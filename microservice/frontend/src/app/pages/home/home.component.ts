@@ -13,6 +13,7 @@ import { UsuariosService } from '../../sistema-usuario/services/usuarios.service
 import { UsersComponent } from '../../sistema-usuario/users/users.component';
 import { PlanbackendFakeServiceTsService } from '../../planbackend.fake.service.ts.service';
 import { Observable } from 'rxjs';
+import { EditarSesionComponent } from '../../editar-sesion/editar-sesion.component';
 
 @Component({
   selector: 'app-home',
@@ -36,13 +37,15 @@ export class HomeComponent {
   //sesiones: Observable<SesionDTO[]>;
   sesiones: SesionDTO[] = [];
   #showButton : boolean;
+  #showPlanes : boolean;
   displayNotificationAdded : boolean;
   private selectedPlanId : undefined| number;
 
 
   constructor(private modalService: NgbModal, private usuarioService: UsuariosService, private servicioEntrenamiento: GestinDeEntrenamientosService
     , private servicioSesiones: GestinDeInformacinDeSesionesDeLosClientesService, private planesService: PlanbackendFakeServiceTsService) {
-    this.#showButton = true;
+    this.#showButton = false;
+    this.#showPlanes = false;
     this.displayNotificationAdded = false;
     //this.sesiones = new Observable<SesionDTO[]>();
   }
@@ -57,6 +60,8 @@ export class HomeComponent {
     
   } 
   addForm(): void{
+    this.#showButton = false;
+    this.#showPlanes = false;
     const modalRef = this.modalService.open(FormularioSesionComponent);
     modalRef.componentInstance.planId = this.selectedPlanId;
     modalRef.result.then((result) => {
@@ -66,7 +71,6 @@ export class HomeComponent {
     }).catch((error)=>{
       console.log('Formulario rechazado')
     });
-    this.planesService.postSesion
   }
 
   testBackend(): void{
@@ -125,9 +129,17 @@ export class HomeComponent {
     return this.#showButton;
   }
 
+  get showPlanes(){
+    return this.#showPlanes;
+  }
+
   pressedButton(id : undefined | number){
     this.#showButton = true;
     this.selectedPlanId = id;
+  }
+
+  pressedAgregar(){
+    this.#showPlanes = true;
   }
 
   notifyAddedSession() {
@@ -135,5 +147,20 @@ export class HomeComponent {
     setTimeout(() => {
         this.displayNotificationAdded = false;
     }, 3000);
-}
+  }
+
+  pressedEditar(sesion: SesionDTO){
+    const modalRef = this.modalService.open(EditarSesionComponent);
+    modalRef.componentInstance.sesionInput = sesion;
+    modalRef.result.then((result) => {
+      if(result){
+        
+      }
+    }).catch((error)=>{
+      console.log('Formulario rechazado')
+    });
+  }
+  pressedBorrar(id : number){
+    this.planesService.deleteSesion(id);
+  }
 }

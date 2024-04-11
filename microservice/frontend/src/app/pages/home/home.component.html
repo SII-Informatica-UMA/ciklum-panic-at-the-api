@@ -17,13 +17,9 @@
                         <th>Fecha de inicio</th>
                         <th>Fecha de fin</th>
                         <th>Trabajo realizado</th>
-                        <th>Video</th>
-                        <th>Foto</th>
                         <th>Descripción</th>
                         <th>Presencial</th>
-                        <th>Peso</th>
-                        <th>Calorías quemadas</th>
-                        <th>Pulsaciones</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,23 +28,30 @@
                         <td>{{sesion.inicio}}</td>
                         <td>{{sesion.fin}}</td>
                         <td>{{sesion.trabajoRealizado}}</td>
-                        <td>{{sesion.multimedia?.at(0)}}</td>
-                        <td>{{sesion.multimedia?.at(1)}}</td>
                         <td>{{sesion.descripcion}}</td>
                         <td>{{sesion.presencial}}</td>
-                        <td>{{sesion.datosSalud?.at(0)}}</td>
-                        <td>{{sesion.datosSalud?.at(1)}}</td>
-                        <td>{{sesion.datosSalud?.at(2)}}</td>
+                        <td>
+                            <button type="button" (click)="pressedEditar(sesion)">Edit</button>
+                            <button type="button" (click)="pressedBorrar(sesion.id)">Delete</button>
+                        </td>
                         <!--
                             <td>Botones de editar y eliminar</td>
                         -->
                     </tr>
                 </tbody>
             </table>
+            <span *ngIf="showPlanes==false">
+                <button type="button" mat-flat-button color="accent" (click)="pressedAgregar()">Nueva sesión</button>
+            </span>
+
+            <mat-button-toggle-group *ngIf="showPlanes" #toggleBtn="matButtonToggleGroup">
+                <mat-button-toggle *ngFor="let plan of planList" value="Toggle Button 1" type="button" (click)="this.pressedButton(plan.id)">Plan {{plan.id}}</mat-button-toggle>
+            </mat-button-toggle-group>
+
             <span *ngIf="showButton">
                 <button type="button" mat-flat-button color="accent" (click)="addForm()">Agregar</button>
             </span>
-            
+
             <div *ngIf="displayNotificationAdded">
                 <p class="alert alert-sucess">Sesión añadida con éxito!</p>
             </div>
