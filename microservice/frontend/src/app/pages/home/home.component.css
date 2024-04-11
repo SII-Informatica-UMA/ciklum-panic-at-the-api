@@ -1,0 +1,34 @@
+.general{ /*este es el diseño genérico, quiero que todos estén centrados*/
+    /*display: flex;*/
+    background-color: white;
+    text-align:center;
+    
+   
+
+}
+/*NO TOCAR*/
+.tabla {
+    border-collapse: collapse;
+    padding:20px;
+    background-color: #33d9f7; /* Color de fondo alternativo */
+    margin-left: 50px; /* Espaciado interno */
+    margin-right:50px;
+    
+    border: 5px solid #000000; /* Borde sólido de 5px de color negro */
+    /*overflow: hidden; /* Asegura que el contenido dentro de la tabla no se extienda más allá de las esquinas curvas */
+    /*box-sizing: border-box; /* Incluye el ancho del borde y el relleno en el ancho total de la tabla */
+}
+
+.tabla th, .tabla td {
+    border: 1px solid black; /* Añade un borde sólido de 1px de grosor y color negro a las celdas */
+    padding: 10px; /* Añade un espacio interno de 8px a las celdas */
+    
+}
+
+.tabla tbody tr:nth-child(even) {
+    background-color: #baeef9;  /* Color de fondo para filas pares */
+} 
+
+.tabla tbody tr:nth-child(odd) {
+    background-color: #b3f2fe;/* Color de fondo para filas impares */
+}
