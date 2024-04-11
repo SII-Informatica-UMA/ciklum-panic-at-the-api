@@ -88,9 +88,13 @@ export class PlanbackendFakeServiceTsService {
         observer.error('Ya existe una sesion con esa id');
       });
     }
-
-    sesion.id = this.sesiones.map(u => u.id).reduce((a, b) => Math.max(a, b)) + 1;
+    if(this.sesiones.length > 0){
+      sesion.id = this.sesiones.map(u => u.id).reduce((a, b) => Math.max(a, b)) + 1;
+    } else {
+      sesion.id = 0;
+    }
     this.sesiones.push(sesion);
+    this.sesiones.sort(this.sortByIDPlan);
     this.guardarSesionesEnLocalStorage();
     return of(sesion);
   }
@@ -107,6 +111,7 @@ export class PlanbackendFakeServiceTsService {
     }
 
     Object.assign(u, sesion);
+    this.sesiones.sort(this.sortByIDPlan);
     this.guardarSesionesEnLocalStorage();
     return of(u);
   }
@@ -119,6 +124,7 @@ export class PlanbackendFakeServiceTsService {
       });
     }
     this.sesiones.splice(i, 1);
+    this.sesiones.sort(this.sortByIDPlan);
     this.guardarSesionesEnLocalStorage();
     return of();
   }
