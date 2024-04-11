@@ -11,7 +11,7 @@
  */
 
 export interface SesionDTO { 
-    idPlan?: number;
+    idPlan: number;
     inicio?: Date;
     fin?: Date;
     trabajoRealizado?: string;

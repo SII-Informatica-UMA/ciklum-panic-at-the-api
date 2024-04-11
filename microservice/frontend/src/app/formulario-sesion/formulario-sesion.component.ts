@@ -27,7 +27,7 @@ import { SesionDTO } from '../../openapi/lifefitAPI/model/sesionDTO';
 
 export class FormularioSesionComponent {  //Reactive form
 
-  planId: number | undefined;
+  planId: number = 0;
 
   
   workoutForm : FormGroup;
