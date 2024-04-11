@@ -13,7 +13,8 @@
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col">PLAN</th>
+                        <th>PLAN</th>
+                        <th>ID Sesión</th>
                         <th>Fecha de inicio</th>
                         <th>Fecha de fin</th>
                         <th>Trabajo realizado</th>
@@ -25,6 +26,7 @@
                 <tbody>
                     <tr *ngFor="let sesion of sesiones">
                         <td>{{sesion.idPlan}}</td>
+                        <td>{{sesion.id}}</td>
                         <td>{{sesion.inicio}}</td>
                         <td>{{sesion.fin}}</td>
                         <td>{{sesion.trabajoRealizado}}</td>
