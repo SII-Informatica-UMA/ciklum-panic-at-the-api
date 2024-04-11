@@ -28,8 +28,8 @@
                     <tr *ngFor="let sesion of sesiones">
                         <td>{{sesion.idPlan}}</td>
                         <td>{{sesion.id}}</td>
-                        <td>{{sesion.inicio}}</td>
-                        <td>{{sesion.fin}}</td>
+                        <td>{{sesion.inicio?.toString()?.substring(0,16)}}</td>
+                        <td>{{sesion.fin?.toString()?.substring(0,16)}}</td>
                         <td>{{sesion.trabajoRealizado}}</td>
                         <td>{{sesion.descripcion}}</td>
                         <td>{{sesion.presencial}}</td>

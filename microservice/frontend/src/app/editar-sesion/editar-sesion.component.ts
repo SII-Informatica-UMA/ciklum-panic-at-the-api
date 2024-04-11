@@ -62,8 +62,8 @@ export class EditarSesionComponent {
     console.log(sesion.datosSalud)
     this.form.patchValue({
       idPlan: sesion.idPlan,
-      inicio: sesion.inicio?.toString().slice(0,-5),
-      fin: sesion.fin?.toString().slice(0,-5),
+      inicio: sesion.inicio?.toString().substring(0,16),
+      fin: sesion.fin?.toString().substring(0,16),
       trabajoRealizado: sesion.trabajoRealizado,
       decripcion: sesion.descripcion,
       presencial: sesion.presencial,
