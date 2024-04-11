@@ -15,6 +15,10 @@
     @if(campoRequerido('fin')){
       <p class="cross-validation-error-message alert alert-danger">Este campo es obligatorio.</p>
     }
+
+    @if(form.controls['fin'].value < form.controls['inicio'].value){
+      <p class="alert alert-info">Por favor, no seleccionar una fecha de finalización anterior a la de inicio. </p>
+    }
     
   </div>
 

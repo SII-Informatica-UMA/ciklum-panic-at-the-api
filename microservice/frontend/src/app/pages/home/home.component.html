@@ -35,8 +35,8 @@
                         <td>{{sesion.descripcion}}</td>
                         <td>{{sesion.presencial}}</td>
                         <td>
-                            <button class = boton type="button" (click)="pressedEditar(sesion)">Edit</button>
-                            <button class = boton type="button" (click)="pressedBorrar(sesion.id)">Delete</button>
+                            <button type="button" class="btn btn-primary" (click)="pressedEditar(sesion)">Editar/Ver</button>
+                            <button type="button" class="btn btn-danger" (click)="pressedBorrar(sesion.id)">Borrar</button>
                         </td>
                         <!--
                             <td>Botones de editar y eliminar</td>
@@ -45,7 +45,7 @@
                 </tbody>
             </table>
             <span *ngIf="showPlanes==false">
-                <button type="button" mat-flat-button color="accent" (click)="pressedAgregar()">Nueva sesión</button>
+                <button type="button" class="btn btn-success" (click)="pressedAgregar()">Nueva sesión</button>
             </span>
 
             <mat-button-toggle-group *ngIf="showPlanes" #toggleBtn="matButtonToggleGroup">
@@ -53,7 +53,7 @@
             </mat-button-toggle-group>
 
             <span *ngIf="showButton">
-                <button type="button" mat-flat-button color="accent" (click)="addForm()">Agregar</button>
+                <button type="button" class="btn btn-primary" (click)="addForm()">Agregar</button>
             </span>
 
             <div *ngIf="displayNotificationAdded">
