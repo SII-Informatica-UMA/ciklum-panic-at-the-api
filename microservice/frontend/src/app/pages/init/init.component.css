@@ -1,26 +1,41 @@
 
-/* Estilos personalizados para el componente app-users */
 .custom-app-users {
-    /* Agrega estilos personalizados aquí */
     color: black;
 }
 
-/* Estilos personalizados para la barra de navegación */
+
 .navbar-custom {
-    background-color: white; /* Color de fondo personalizado */
+    background-color: white; 
     
 }
 
-/* Estilos personalizados para los enlaces de navegación */
+
 .nav-link-custom {
-    color: black; /* Color del enlace personalizado */
+    color: black; 
 }
 
-/* Establecer el color de fondo general del HTML */
+
 .custom-background {
-    background-color: #33d9f7; /* Cambiar a tu color de fondo deseado */
+    background-color: #33d9f7;
 }
 
-/* #baeef9 */
 
-/*#b3f2fe*/
+.boton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px; 
+  }
+  
+  .boton:hover {
+    background-color: blue;
+  }
+  
+  
