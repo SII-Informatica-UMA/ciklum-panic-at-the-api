@@ -32,3 +32,9 @@
 .tabla tbody tr:nth-child(odd) {
     background-color: #b3f2fe;/* Color de fondo para filas impares */
 }
+
+.boton{
+    border-collapse: collapse;
+    background-color: #0e35a9;/* Color de fondo para filas impares */
+    color:ghostwhite;
+}
