@@ -10,11 +10,14 @@ import es.panic.sii.repositorios_spring.SesionRepository;
 public class EntidadesJpaApplication implements CommandLineRunner {
 	private SesionRepository repository;
 
+	/*Da error el constructor, mirarlo mejor
 	public EntidadesJpaApplication(SesionRepository repository){
 		this.repository = repository;
-	}
+	}*/
 	public static void main(String[] args) {
+		System.out.println("STARTING THE APPLICATION");
 		SpringApplication.run(EntidadesJpaApplication.class, args);
+		System.out.println("APPLICATION FINISHED");
 	}
 
 	@Override
