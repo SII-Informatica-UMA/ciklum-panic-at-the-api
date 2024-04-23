@@ -27,7 +27,7 @@ public class SesionDTO {
 
     @ManyToOne //Muchas sesiones pertenecen a un mismo plan
     @JoinColumn(name ="idPlan")
-    private PlanDTO plan;
+    public long idPlan;
 
     public SesionDTO(){}
 
