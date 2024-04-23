@@ -20,10 +20,10 @@ public class SesionDTO {
     private String trabajoRealizado;
     private String descripcion;
     @ElementCollection
-    private List<String> multimedia = new ArrayList<>(2); //No sé si hace falta inicializar las listas
+    private List<String> multimedia = new ArrayList<String>(2); //No sé si hace falta inicializar las listas
     private Boolean presencial;
     @ElementCollection
-    private List<String> datosSalud = new ArrayList<>(3);
+    private List<String> datosSalud = new ArrayList<String>(3);
 
     @ManyToOne //Muchas sesiones pertenecen a un mismo plan
     @JoinColumn(name ="idPlan")
