@@ -20,16 +20,20 @@ public class SesionDTO {
     private String descripcion;
     @ElementCollection
     @CollectionTable(
-            joinColumns = @JoinColumn(name = "FK_multimedia_idSesion") // Cambia aquí al nombre deseado
+            //@JoinColumn, estás especificando que la columna de clave foránea debe agregarse a una de las tablas existentes en la base de datos.
+            joinColumns = @JoinColumn(
+                    foreignKey = @ForeignKey(name = "FK_multimedia_idSesion") //le quiero cambiar el nombre a la fk del
+            )
     )
-    @ForeignKey(name = "multimedia")
+
     private List<String> multimedia = new ArrayList<String>(2);
     private Boolean presencial;
     @ElementCollection
     @CollectionTable(
-            joinColumns = @JoinColumn(name = "FK_datosSesion_idSesion") // Cambia aquí al nombre deseado
+            joinColumns = @JoinColumn(
+                    foreignKey = @ForeignKey(name = "FK_datosSesion_idSesion")
+            )
     )
-    @ForeignKey(name = "datosSalud")
     private List<String> datosSalud = new ArrayList<String>(3);
     private Long idPlan;
 
