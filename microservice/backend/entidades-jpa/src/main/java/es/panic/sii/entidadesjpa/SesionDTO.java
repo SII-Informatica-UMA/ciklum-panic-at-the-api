@@ -4,12 +4,11 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import  java.util.Date;
 import java.util.List;
-import es.panic.sii.entidadesjpa.PlanDTO;
 
 @Entity
 @Table(name="sesion")
 public class SesionDTO {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue
     public Long idSesion;
     @Column(nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -20,14 +19,11 @@ public class SesionDTO {
     private String trabajoRealizado;
     private String descripcion;
     @ElementCollection
-    private List<String> multimedia = new ArrayList<String>(2); //No sé si hace falta inicializar las listas
+    private List<String> multimedia = new ArrayList<String>(2);
     private Boolean presencial;
     @ElementCollection
     private List<String> datosSalud = new ArrayList<String>(3);
-
-    @ManyToOne //Muchas sesiones pertenecen a un mismo plan
-    @JoinColumn(name ="idPlan")
-    public long idPlan;
+    private Long idPlan;
 
     public SesionDTO(){}
 
@@ -84,7 +80,7 @@ public class SesionDTO {
         result = prime * result + ((multimedia == null) ? 0 : multimedia.hashCode());
         result = prime * result + ((presencial == null) ? 0 : presencial.hashCode());
         result = prime * result + ((datosSalud == null) ? 0 : datosSalud.hashCode());
-        result = prime * result + ((plan == null) ? 0 : plan.hashCode());
+        result = prime * result + ((idPlan == null) ? 0 : idPlan.hashCode());
         return result;
     }
 
@@ -137,10 +133,10 @@ public class SesionDTO {
                 return false;
         } else if (!datosSalud.equals(other.datosSalud))
             return false;
-        if (plan == null) {
-            if (other.plan != null)
+        if (idPlan == null) {
+            if (other.idPlan != null)
                 return false;
-        } else if (!plan.equals(other.plan))
+        } else if (!idPlan.equals(other.idPlan))
             return false;
         return true;
     }
@@ -149,7 +145,7 @@ public class SesionDTO {
     public String toString() {
         return "SesionDTO [idSesion=" + idSesion + ", inicio=" + inicio + ", fin=" + fin + ", trabajoRealizado="
                 + trabajoRealizado + ", descripcion=" + descripcion + ", multimedia=" + multimedia + ", presencial="
-                + presencial + ", datosSalud=" + datosSalud + ", plan=" + plan + "]";
+                + presencial + ", datosSalud=" + datosSalud + ", plan=" + idPlan + "]";
     }
 
     
