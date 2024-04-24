@@ -20,16 +20,16 @@ public class SesionDTO {
     private String descripcion;
     @ElementCollection
     @CollectionTable(
-            name = "multimedia",
-            joinColumns = @JoinColumn(name = "multimedia_PK") // Cambia aquí al nombre deseado
+            joinColumns = @JoinColumn(name = "FK_multimedia_idSesion") // Cambia aquí al nombre deseado
     )
+    @ForeignKey(name = "multimedia")
     private List<String> multimedia = new ArrayList<String>(2);
     private Boolean presencial;
     @ElementCollection
     @CollectionTable(
-            name = "datosSalud",
-            joinColumns = @JoinColumn(name = "datosSalud_PK") // Cambia aquí al nombre deseado
+            joinColumns = @JoinColumn(name = "FK_datosSesion_idSesion") // Cambia aquí al nombre deseado
     )
+    @ForeignKey(name = "datosSalud")
     private List<String> datosSalud = new ArrayList<String>(3);
     private Long idPlan;
 
