@@ -18,10 +18,18 @@ public class SesionDTO {
     private Date fin;
     private String trabajoRealizado;
     private String descripcion;
-    @ElementCollection(name = "multimedia")
+    @ElementCollection
+    @CollectionTable(
+            name = "multimedia",
+            joinColumns = @JoinColumn(name = "multimedia_PK") // Cambia aquí al nombre deseado
+    )
     private List<String> multimedia = new ArrayList<String>(2);
     private Boolean presencial;
-    @ElementCollection(name = "datosSalud")
+    @ElementCollection
+    @CollectionTable(
+            name = "datosSalud",
+            joinColumns = @JoinColumn(name = "datosSalud_PK") // Cambia aquí al nombre deseado
+    )
     private List<String> datosSalud = new ArrayList<String>(3);
     private Long idPlan;
 
