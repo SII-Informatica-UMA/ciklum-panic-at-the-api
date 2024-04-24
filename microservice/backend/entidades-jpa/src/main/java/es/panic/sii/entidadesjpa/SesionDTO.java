@@ -18,10 +18,10 @@ public class SesionDTO {
     private Date fin;
     private String trabajoRealizado;
     private String descripcion;
-    @ElementCollection(name = multimedia)
+    @ElementCollection(name = "multimedia")
     private List<String> multimedia = new ArrayList<String>(2);
     private Boolean presencial;
-    @ElementCollection(name = datosSalud)
+    @ElementCollection(name = "datosSalud")
     private List<String> datosSalud = new ArrayList<String>(3);
     private Long idPlan;
 
