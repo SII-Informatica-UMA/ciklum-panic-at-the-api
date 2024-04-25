@@ -29,7 +29,13 @@ public class EntidadesJPACLR implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		LOG.info("RUN: EJECUTANDO COMMAND LINE RUNNER");
+		if(args.length > 0){
+			SesionDTO pruebaArgs = new SesionDTO(Long.parseLong(args[0]), new Date(), new Date(), "trabajo ", "desc ", new ArrayList<String>(), false, new ArrayList<String>());
+			repository.save(pruebaArgs);
+			LOG.info("Sesión creada por argumento: {}", pruebaArgs.toString());
+		}
 
+		LOG.info("Número de sesiones creadas por argumento: {} ", repository.count());
 		for(Long i = 1L; i <= 5L; i++){
 			SesionDTO s = new SesionDTO(i, new Date(), new Date(), "trabajo " + i, "desc " + i, new ArrayList<String>(), false, new ArrayList<String>());
 			repository.save(s);
