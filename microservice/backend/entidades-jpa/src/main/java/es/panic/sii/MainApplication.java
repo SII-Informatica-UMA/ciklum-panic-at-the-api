@@ -1,6 +1,6 @@
 package es.panic.sii;
 
-import es.panic.sii.entidadesjpa.EntidadesJPACLR;
+import es.panic.sii.entidades.EntidadesJPACLR;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

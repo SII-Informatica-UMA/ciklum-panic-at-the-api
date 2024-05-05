@@ -1,4 +1,4 @@
-package es.panic.sii.entidadesjpa;
+package es.panic.sii.entidades;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name="sesion")
-public class SesionDTO {
+public class Sesion {
     @Id @GeneratedValue
     public Long idSesion;
     @Column(nullable=false)
@@ -37,11 +37,11 @@ public class SesionDTO {
     private List<String> datosSalud = new ArrayList<String>(3);
     private Long idPlan;
 
-    public SesionDTO(){}
+    public Sesion(){}
 
     //Tal vez este constructor no sea necesario
-    public SesionDTO(Long idSesion, Date inicio, Date fin, String trabajoRealizado, String descripcion,
-                     List<String> multimedia, Boolean presencial, List<String> datosSalud){
+    public Sesion(Long idSesion, Date inicio, Date fin, String trabajoRealizado, String descripcion,
+                  List<String> multimedia, Boolean presencial, List<String> datosSalud){
         this.idSesion = idSesion;
         this.inicio = inicio;
         this.fin = fin;
@@ -104,7 +104,7 @@ public class SesionDTO {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        SesionDTO other = (SesionDTO) obj;
+        Sesion other = (Sesion) obj;
         if (idSesion == null) {
             if (other.idSesion != null)
                 return false;

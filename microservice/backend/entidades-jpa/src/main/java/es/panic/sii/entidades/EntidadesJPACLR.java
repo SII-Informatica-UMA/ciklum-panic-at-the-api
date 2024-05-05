@@ -1,6 +1,6 @@
-package es.panic.sii.entidadesjpa;
+package es.panic.sii.entidades;
 
-import es.panic.sii.repositorios_spring.SesionRepository;
+import es.panic.sii.repositorios.SesionRepository;
 
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -30,18 +30,18 @@ public class EntidadesJPACLR implements CommandLineRunner {
 
 		LOG.info("RUN: EJECUTANDO COMMAND LINE RUNNER");
 		if(args.length > 0){
-			SesionDTO pruebaArgs = new SesionDTO(Long.parseLong(args[0]), new Date(), new Date(), "trabajo ", "desc ", new ArrayList<String>(), false, new ArrayList<String>());
+			Sesion pruebaArgs = new Sesion(Long.parseLong(args[0]), new Date(), new Date(), "trabajo ", "desc ", new ArrayList<String>(), false, new ArrayList<String>());
 			repository.save(pruebaArgs);
 			LOG.info("Sesión creada por argumento: {}", pruebaArgs.toString());
 		}
 
 		LOG.info("Número de sesiones creadas por argumento: {} ", repository.count());
 		for(Long i = 1L; i <= 5L; i++){
-			SesionDTO s = new SesionDTO(i, new Date(), new Date(), "trabajo " + i, "desc " + i, new ArrayList<String>(), false, new ArrayList<String>());
+			Sesion s = new Sesion(i, new Date(), new Date(), "trabajo " + i, "desc " + i, new ArrayList<String>(), false, new ArrayList<String>());
 			repository.save(s);
 		}
-		Iterable<SesionDTO> sesiones = repository.findAll();
-		Iterator<SesionDTO> itSesiones = sesiones.iterator();
+		Iterable<Sesion> sesiones = repository.findAll();
+		Iterator<Sesion> itSesiones = sesiones.iterator();
 		while(itSesiones.hasNext())
 			LOG.info("Sesiones actuales {}", itSesiones.next().toString());
 		//repository.save(new SesionDTO(1L, new Date(), new Date(), "2", "3", new ArrayList<String>(), false, new ArrayList<String>()));
