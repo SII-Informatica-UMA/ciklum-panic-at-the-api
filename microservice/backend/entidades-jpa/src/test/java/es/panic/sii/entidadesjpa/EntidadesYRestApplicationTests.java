@@ -1,9 +1,16 @@
 package es.panic.sii.entidadesjpa;
 
 import es.panic.sii.controladores.SesionREST;
+import es.panic.sii.entidades.Sesion;
 import es.panic.sii.repositorios.SesionRepository;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.MediaType;
@@ -13,12 +20,20 @@ import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriBuilderFactory;
 
 import java.net.URI;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
-@SpringBootTest
+
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@DisplayName("En el servicio de sesiones")
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 class EntidadesYRestApplicationTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
+	@Value(value="${local.server.port}")
+	private int port;
 	@Autowired
 	private SesionRepository sesionRepo;
 	private URI uri(String scheme, String host, int port, String ...paths) {
@@ -62,8 +77,23 @@ class EntidadesYRestApplicationTests {
 				.body(object);
 		return peticion;
 	}
-	@Test
-	void contextLoads() {
+	
+	private void compruebaCampos(Sesion expected, Sesion actual) {	
+		assertThat(actual.getIdSesion()).isEqualTo(expected.getIdSesion());
+		assertThat(actual.getInicio()).isEqualTo(expected.getInicio());
+		assertThat(actual.getFin()).isEqualTo(expected.getFin());
+		assertThat(actual.getTrabajoRealizado()).isEqualTo(expected.getTrabajoRealizado());
+		assertThat(actual.getDescripcion()).isEqualTo(expected.getDescripcion());
 	}
 
+	@Test
+	void contextLoads() {}
+
+	@Nested
+	@DisplayName("cuando la base de datos está vacía")
+	public class BaseDatosVacia {}
+
+	@Nested
+	@DisplayName("cuando la base de datos tiene datos")
+	public class BaseDatosLlena {}
 }
