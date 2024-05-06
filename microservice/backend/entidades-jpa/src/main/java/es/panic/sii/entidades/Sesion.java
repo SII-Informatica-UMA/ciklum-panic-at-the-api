@@ -8,6 +8,8 @@ import java.util.List;
 @Entity
 @Table(name="sesion")
 public class Sesion {
+
+
     @Id @GeneratedValue
     public Long idSesion;
     @Column(nullable=false)
@@ -61,6 +63,10 @@ public class Sesion {
     public void setFin(Date nueva){ this.fin = nueva; }
 
     public String getTrabajoRealizado() { return trabajoRealizado; }
+
+    public void setIdSesion(Long idSesion) {
+        this.idSesion = idSesion;
+    }
 
     public void setTrabajoRealizado(String trabajoRealizado) { this.trabajoRealizado = trabajoRealizado; }
 

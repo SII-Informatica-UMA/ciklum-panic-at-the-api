@@ -91,7 +91,9 @@ class EntidadesYRestApplicationTests {
 
 	@Nested
 	@DisplayName("cuando la base de datos está vacía")
-	public class BaseDatosVacia {}
+	public class BaseDatosVacia {
+
+	}
 
 	@Nested
 	@DisplayName("cuando la base de datos tiene datos")
