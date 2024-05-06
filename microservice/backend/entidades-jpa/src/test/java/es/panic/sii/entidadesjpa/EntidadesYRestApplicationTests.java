@@ -6,6 +6,7 @@ import es.panic.sii.repositorios.SesionRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -91,9 +92,159 @@ class EntidadesYRestApplicationTests {
 
 	@Nested
 	@DisplayName("cuando la base de datos está vacía")
-	public class BaseDatosVacia {}
+	public class BaseDatosVacia {
+		//GET/sesion/{idSesion}
+		@Test
+		@DisplayName("devuelve error cuando intenta obtener una sesion especifica sin acceso autorizado")
+		public void getSesionByIdNoAccess() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta obtener una sesion especifica que no existe")
+		public void getSesionByIdNoExist() {
+
+		}
+    	//PUT/sesion/{idSesion}
+		@Test
+		@DisplayName("devuelve error cuando intenta modificar una sesion especifica sin acceso autorizado")
+		public void putSesionByIdNoAccess() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta modificar una sesion especifica que no existe")
+		public void putSesionByIdNoExist() {
+
+		}
+    	//DELETE/sesion/{idSesion}
+		@Test
+		@DisplayName("devuelve error cuando intenta eliminar una sesion especifica sin acceso autorizado")
+		public void deleteSesionByIdNoAccess() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta eliminar una sesion especifica que no existe")
+		public void deleteSesionByIdNoExist() {
+
+		}
+    	//GET/sesion
+		@Test
+		@DisplayName("obtiene correctamente las sesiones asociadas a un plan")
+		public void getSesionByPlan() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan sin acceso autorizado")
+		public void getSesionByPlanNoAccess() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan que no existe")
+		public void getSesionByPlanNoExist() {
+
+		}
+
+    	//POST/sesion
+		@Test
+		@DisplayName("crea correctamente una sesion nueva")
+		public void postSesion() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta crear una sesion nueva sin acceso autorizado")
+		public void postSesionNoAccess() {
+
+		}
+	}
 
 	@Nested
 	@DisplayName("cuando la base de datos tiene datos")
-	public class BaseDatosLlena {}
+	public class BaseDatosLlena {
+
+		@BeforeEach
+		public void insertarDatos() {
+
+		}
+
+		//GET/sesion/{idSesion}
+		@Test
+		@DisplayName("obtiene correctamente una sesion especifica")
+		public void getSesionById() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta obtener una sesion especifica sin acceso autorizado")
+		public void getSesionByIdNoAccess() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta obtener una sesion especifica que no existe")
+		public void getSesionByIdNoExist() {
+
+		}
+    	//PUT/sesion/{idSesion}
+		@Test
+		@DisplayName("modifica correctamente una sesion especifica")
+		public void putSesionById() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta modificar una sesion especifica sin acceso autorizado")
+		public void putSesionByIdNoAccess() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta modificar una sesion especifica que no existe")
+		public void putSesionByIdNoExist() {
+
+		}
+    	//DELETE/sesion/{idSesion}
+		@Test
+		@DisplayName("elimina correctamente una sesion especifica")
+		public void deleteSesionById() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta eliminar una sesion especifica sin acceso autorizado")
+		public void deleteSesionByIdNoAccess() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta eliminar una sesion especifica que no existe")
+		public void deleteSesionByIdNoExist() {
+
+		}
+    	//GET/sesion
+		@Test
+		@DisplayName("obtiene correctamente las sesiones asociadas a un plan")
+		public void getSesionByPlan() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan sin acceso autorizado")
+		public void getSesionByPlanNoAccess() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan que no existe")
+		public void getSesionByPlanNoExist() {
+
+		}
+
+    	//POST/sesion
+		@Test
+		@DisplayName("crea correctamente una sesion nueva")
+		public void postSesion() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta crear una sesion nueva sin acceso autorizado")
+		public void postSesionNoAccess() {
+
+		}
+		@Test
+		@DisplayName("devuelve error cuando intenta crear una sesion que ya existe")
+		public void postSesionNoExist() {
+
+		}
+	}
 }
