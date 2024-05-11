@@ -14,17 +14,16 @@ import java.util.function.Function;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SesionDTO {
-    private Long idSesion;
-    private Date inicio;
-    private Date fin;
-    private String trabajoRealizado;
-    private String descripcion;
-    private List<String> multimedia;
-    private Boolean presencial;
-    private List<String> datosSalud;
-    //private Long idPlan;
+public class SesionDTO extends SesionNuevaDTO {
+    public Long idSesion;
 
+    public SesionDTO(Long idSesion, Long plan, Date inicio, Date fin, String trabajoRealizado, List<String> multimedia, String descripcion, Boolean presencial, List<String> datosSalud) {
+        super(plan, inicio, fin, trabajoRealizado,descripcion, multimedia, presencial, datosSalud);
+        this.idSesion = idSesion;
+    }
+
+
+    //Métodos que podrían servir para el controlador REST
     public static SesionDTO fromSesion (Sesion s, Function<Long, URI> uriBuilder){
         var dto = new SesionDTO();
         dto.setIdSesion(s.getIdSesion());
@@ -35,22 +34,8 @@ public class SesionDTO {
         dto.setMultimedia(s.getMultimedia());
         dto.setPresencial(s.getPresencial());
         dto.setDatosSalud(s.getDatosSalud());
-
+        dto.setPlan(s.getPlan());
         return dto;
     }
 
-    public Sesion sesion(){
-        var s = new Sesion();
-        
-        s.setIdSesion(idSesion);
-        s.setInicio(inicio);
-        s.setFin(fin);
-        s.setTrabajoRealizado(trabajoRealizado);
-        s.setDescripcion(descripcion);
-        s.setMultimedia(multimedia);
-        s.setPresencial(presencial);
-        s.setDatosSalud(datosSalud);
-
-        return s;
-    }
 }

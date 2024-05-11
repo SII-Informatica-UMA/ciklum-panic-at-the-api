@@ -22,9 +22,8 @@ public class Sesion {
     private String descripcion;
     @ElementCollection
     @CollectionTable(
-            //@JoinColumn, estás especificando que la columna de clave foránea debe agregarse a una de las tablas existentes en la base de datos.
             joinColumns = @JoinColumn(
-                    foreignKey = @ForeignKey(name = "FK_multimedia_idSesion") //le quiero cambiar el nombre a la fk del
+                    foreignKey = @ForeignKey(name = "FK_multimedia_idSesion")
             )
     )
 
@@ -41,7 +40,6 @@ public class Sesion {
 
     public Sesion(){}
 
-    //Tal vez este constructor no sea necesario
     public Sesion(Long idSesion, Date inicio, Date fin, String trabajoRealizado, String descripcion,
                   List<String> multimedia, Boolean presencial, List<String> datosSalud){
         this.idSesion = idSesion;
@@ -52,7 +50,6 @@ public class Sesion {
         this.multimedia = multimedia;
         this.presencial = presencial;
         this.datosSalud = datosSalud;
-        //No sé si los arrays dan problemas de esta manera, si los diera habría que copiarlos y ya
     }
 
     public Long getIdSesion(){ return this.idSesion; }
@@ -85,6 +82,14 @@ public class Sesion {
     public List<String> getDatosSalud() { return datosSalud; }
 
     public void setDatosSalud(List<String> datosSalud) { this.datosSalud = datosSalud; }
+
+    public Long getPlan() {
+        return plan;
+    }
+
+    public void setPlan(Long plan) {
+        this.plan = plan;
+    }
 
     @Override
     public int hashCode() {
@@ -161,7 +166,7 @@ public class Sesion {
 
     @Override
     public String toString() {
-        return "SesionDTO [idSesion=" + idSesion + ", inicio=" + inicio + ", fin=" + fin + ", trabajoRealizado="
+        return "Sesion [idSesion=" + idSesion + ", inicio=" + inicio + ", fin=" + fin + ", trabajoRealizado="
                 + trabajoRealizado + ", descripcion=" + descripcion + ", multimedia=" + multimedia + ", presencial="
                 + presencial + ", datosSalud=" + datosSalud + ", plan=" + plan + "]";
     }
