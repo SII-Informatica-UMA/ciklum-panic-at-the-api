@@ -37,7 +37,7 @@ public class Sesion {
             )
     )
     private List<String> datosSalud = new ArrayList<String>(3);
-    private Long idPlan;
+    private Long plan;
 
     public Sesion(){}
 
@@ -98,7 +98,7 @@ public class Sesion {
         result = prime * result + ((multimedia == null) ? 0 : multimedia.hashCode());
         result = prime * result + ((presencial == null) ? 0 : presencial.hashCode());
         result = prime * result + ((datosSalud == null) ? 0 : datosSalud.hashCode());
-        result = prime * result + ((idPlan == null) ? 0 : idPlan.hashCode());
+        result = prime * result + ((plan == null) ? 0 : plan.hashCode());
         return result;
     }
 
@@ -151,10 +151,10 @@ public class Sesion {
                 return false;
         } else if (!datosSalud.equals(other.datosSalud))
             return false;
-        if (idPlan == null) {
-            if (other.idPlan != null)
+        if (plan == null) {
+            if (other.plan != null)
                 return false;
-        } else if (!idPlan.equals(other.idPlan))
+        } else if (!plan.equals(other.plan))
             return false;
         return true;
     }
@@ -163,7 +163,7 @@ public class Sesion {
     public String toString() {
         return "SesionDTO [idSesion=" + idSesion + ", inicio=" + inicio + ", fin=" + fin + ", trabajoRealizado="
                 + trabajoRealizado + ", descripcion=" + descripcion + ", multimedia=" + multimedia + ", presencial="
-                + presencial + ", datosSalud=" + datosSalud + ", plan=" + idPlan + "]";
+                + presencial + ", datosSalud=" + datosSalud + ", plan=" + plan + "]";
     }
 
     
