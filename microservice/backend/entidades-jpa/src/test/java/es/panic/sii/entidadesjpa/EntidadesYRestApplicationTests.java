@@ -1,6 +1,7 @@
 package es.panic.sii.entidadesjpa;
 
 import es.panic.sii.controladores.SesionREST;
+import es.panic.sii.dtos.SesionDTO;
 import es.panic.sii.entidades.Sesion;
 import es.panic.sii.repositorios.SesionRepository;
 
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.web.util.DefaultUriBuilderFactory;
@@ -30,7 +32,6 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 @DisplayName("En el servicio de sesiones")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 class EntidadesYRestApplicationTests {
-
 	@Autowired
 	private TestRestTemplate restTemplate;
 	@Value(value="${local.server.port}")
@@ -87,8 +88,6 @@ class EntidadesYRestApplicationTests {
 		assertThat(actual.getDescripcion()).isEqualTo(expected.getDescripcion());
 	}
 
-	@Test
-	void contextLoads() {}
 
 	@Nested
 	@DisplayName("cuando la base de datos está vacía")
@@ -103,7 +102,12 @@ class EntidadesYRestApplicationTests {
 		@Test
 		@DisplayName("devuelve error cuando intenta obtener una sesion especifica que no existe")
 		public void getSesionByIdNoExist() {
+			//Prueba de código para comprobar errores mediante mvn test
+			var peticion = get("http", "localhost", port, "/sesion/1");
+			var respuesta = restTemplate.exchange(peticion, new ParameterizedTypeReference<Sesion>() {
+			})	;
 
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 		}
     	//PUT/sesion/{idSesion}
 		@Test

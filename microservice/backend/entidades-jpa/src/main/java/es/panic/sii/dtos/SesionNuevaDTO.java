@@ -1,21 +1,21 @@
 package es.panic.sii.dtos;
 
 import lombok.*;
-
-import java.util.Date;
+import lombok.experimental.SuperBuilder;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @ToString
 @EqualsAndHashCode
 public class SesionNuevaDTO {
     private Long plan;
-    private Date inicio;
-    private Date fin;
+    private Timestamp inicio;
+    private Timestamp fin;
     private String trabajoRealizado;
     private String descripcion;
     private List<String> multimedia;
