@@ -14,7 +14,7 @@
 	<groupId>es.panic.sii</groupId>
 	<artifactId>entidadesYrest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>entidades-rest</name>
+	<name>entidadesYrest</name>
 
 	<properties>
 		<java.version>21</java.version>

@@ -1,5 +1,6 @@
-package es.panic.sii.entidades;
+package es.panic.sii;
 
+import es.panic.sii.entidades.Sesion;
 import es.panic.sii.repositorios.SesionRepository;
 
 import jakarta.transaction.Transactional;
@@ -29,15 +30,17 @@ public class EntidadesJPACLR implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		LOG.info("RUN: EJECUTANDO COMMAND LINE RUNNER");
+		/* DESCOMENTAR PARA PROBAR
 		if(args.length > 0){
 			Sesion pruebaArgs = new Sesion(Long.parseLong(args[0]), new Date(), new Date(), "trabajo ", "desc ", new ArrayList<String>(), false, new ArrayList<String>());
 			repository.save(pruebaArgs);
 			LOG.info("Sesión creada por argumento: {}", pruebaArgs.toString());
 		}
+		*/
 
 		LOG.info("Número de sesiones creadas por argumento: {} ", repository.count());
 		for(Long i = 1L; i <= 5L; i++){
-			Sesion s = new Sesion(i, new Date(), new Date(), "trabajo " + i, "desc " + i, new ArrayList<String>(), false, new ArrayList<String>());
+			Sesion s = new Sesion(i, new Date(), new Date(), "trabajo " + i, "desc " + i, new ArrayList<String>(), false, new ArrayList<String>(), i);
 			repository.save(s);
 		}
 		Iterable<Sesion> sesiones = repository.findAll();
@@ -49,7 +52,8 @@ public class EntidadesJPACLR implements CommandLineRunner {
 
 		repository.deleteById(1L);
 		LOG.info("Número de sesiones tras borrar la primera: {} ", repository.count());
-
+		repository.deleteAll();
+		LOG.info("Número de sesiones tras borrar todo: {} ", repository.count());
 		LOG.info("RUN: TERMINANDO COMMAND LINE RUNNER");
 	}
 }

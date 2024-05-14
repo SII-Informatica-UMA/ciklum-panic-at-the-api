@@ -8,10 +8,8 @@ import java.util.List;
 @Entity
 @Table(name="sesion")
 public class Sesion {
-
-
     @Id @GeneratedValue
-    public Long idSesion;
+    public Long id;
     @Column(nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date inicio;
@@ -36,13 +34,14 @@ public class Sesion {
             )
     )
     private List<String> datosSalud = new ArrayList<String>(3);
+    @Column(nullable = false)
     private Long plan;
 
     public Sesion(){}
 
-    public Sesion(Long idSesion, Date inicio, Date fin, String trabajoRealizado, String descripcion,
-                  List<String> multimedia, Boolean presencial, List<String> datosSalud){
-        this.idSesion = idSesion;
+    public Sesion(Long id, Date inicio, Date fin, String trabajoRealizado, String descripcion,
+                  List<String> multimedia, Boolean presencial, List<String> datosSalud, Long plan){
+        this.id = id;
         this.inicio = inicio;
         this.fin = fin;
         this.trabajoRealizado = trabajoRealizado;
@@ -50,41 +49,42 @@ public class Sesion {
         this.multimedia = multimedia;
         this.presencial = presencial;
         this.datosSalud = datosSalud;
+        this.plan = plan;
     }
 
-    public Long getIdSesion(){ return this.idSesion; }
+    public Long getId(){ return this.id; }
     public Date getInicio(){ return this.inicio; }
     public Date getFin(){ return this.fin; }
 
     public void setInicio(Date nueva){ this.inicio = nueva; }
     public void setFin(Date nueva){ this.fin = nueva; }
 
-    public String getTrabajoRealizado() { return trabajoRealizado; }
+    public String getTrabajoRealizado() { return this.trabajoRealizado; }
 
-    public void setIdSesion(Long idSesion) {
-        this.idSesion = idSesion;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setTrabajoRealizado(String trabajoRealizado) { this.trabajoRealizado = trabajoRealizado; }
 
-    public String getDescripcion() { return descripcion; }
+    public String getDescripcion() { return this.descripcion; }
 
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public Boolean getPresencial() { return presencial; }
+    public Boolean getPresencial() { return this.presencial; }
 
     public void setPresencial(Boolean presencial) { this.presencial = presencial; }
 
-    public List<String> getMultimedia() { return multimedia; }
+    public List<String> getMultimedia() { return this.multimedia; }
 
     public void setMultimedia(List<String> multimedia) { this.multimedia = multimedia; }
 
-    public List<String> getDatosSalud() { return datosSalud; }
+    public List<String> getDatosSalud() { return this.datosSalud; }
 
     public void setDatosSalud(List<String> datosSalud) { this.datosSalud = datosSalud; }
 
     public Long getPlan() {
-        return plan;
+        return this.plan;
     }
 
     public void setPlan(Long plan) {
@@ -95,7 +95,7 @@ public class Sesion {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((idSesion == null) ? 0 : idSesion.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((inicio == null) ? 0 : inicio.hashCode());
         result = prime * result + ((fin == null) ? 0 : fin.hashCode());
         result = prime * result + ((trabajoRealizado == null) ? 0 : trabajoRealizado.hashCode());
@@ -116,10 +116,10 @@ public class Sesion {
         if (getClass() != obj.getClass())
             return false;
         Sesion other = (Sesion) obj;
-        if (idSesion == null) {
-            if (other.idSesion != null)
+        if (id == null) {
+            if (other.id != null)
                 return false;
-        } else if (!idSesion.equals(other.idSesion))
+        } else if (!id.equals(other.id))
             return false;
         if (inicio == null) {
             if (other.inicio != null)
@@ -166,7 +166,7 @@ public class Sesion {
 
     @Override
     public String toString() {
-        return "Sesion [idSesion=" + idSesion + ", inicio=" + inicio + ", fin=" + fin + ", trabajoRealizado="
+        return "Sesion [idSesion=" + id + ", inicio=" + inicio + ", fin=" + fin + ", trabajoRealizado="
                 + trabajoRealizado + ", descripcion=" + descripcion + ", multimedia=" + multimedia + ", presencial="
                 + presencial + ", datosSalud=" + datosSalud + ", plan=" + plan + "]";
     }

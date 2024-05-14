@@ -11,24 +11,23 @@ import java.util.function.Function;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
 public class SesionDTO extends SesionNuevaDTO {
-    public Long idSesion;
+    public Long id;
 
     /*
     Si @SuperBuilder da problemas, eliminar annotation en ambos DTO y añadir aqui @Builder
      */
-    public SesionDTO(Long idSesion, Long plan, Timestamp inicio, Timestamp fin, String trabajoRealizado, List<String> multimedia, String descripcion, Boolean presencial, List<String> datosSalud) {
+    public SesionDTO(Long id, Long plan, Timestamp inicio, Timestamp fin, String trabajoRealizado, List<String> multimedia, String descripcion, Boolean presencial, List<String> datosSalud) {
         super(plan, inicio, fin, trabajoRealizado,descripcion, multimedia, presencial, datosSalud);
-        this.idSesion = idSesion;
+        this.id = id;
     }
 
 
     //Métodos que podrían servir para el controlador REST
     public static SesionDTO fromSesion (Sesion s, Function<Long, URI> uriBuilder){
         var dto = new SesionDTO();
-        dto.setIdSesion(s.getIdSesion());
+        dto.setId(s.getId());
         dto.setInicio((Timestamp) s.getInicio());
         dto.setFin((Timestamp) s.getFin()); //Probablemente no funcione, esto es una prueba
         dto.setTrabajoRealizado(s.getTrabajoRealizado());
