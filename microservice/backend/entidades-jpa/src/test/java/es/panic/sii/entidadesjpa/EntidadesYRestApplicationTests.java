@@ -224,7 +224,7 @@ class EntidadesYRestApplicationTests {
 			ses1.setFin(new Date(2024, 5, 12, 11, 0));
 			ses1.setDatosSalud(null);
 			ses1.setDescripcion("esta es la primera sesion");
-			ses1.setIdSesion(1L);
+			ses1.setId(1L);
 			ses1.setMultimedia(null);
 			ses1.setPresencial(true);
 			ses1.setTrabajoRealizado(null);
@@ -233,7 +233,7 @@ class EntidadesYRestApplicationTests {
 			ses2.setFin(new Date(2024, 8, 20, 11, 0));
 			ses2.setDatosSalud(null);
 			ses2.setDescripcion(null);
-			ses2.setIdSesion(2L);
+			ses2.setId(2L);
 			ses2.setMultimedia(null);
 			ses2.setPresencial(true);
 			ses2.setTrabajoRealizado(null);
@@ -242,7 +242,7 @@ class EntidadesYRestApplicationTests {
 			ses3.setFin(new Date(2024, 12, 25, 15, 0));
 			ses3.setDatosSalud(null);
 			ses3.setDescripcion(null);
-			ses3.setIdSesion(3L);
+			ses3.setId(3L);
 			ses3.setMultimedia(null);
 			ses3.setPresencial(true);
 			ses3.setTrabajoRealizado(null);
@@ -290,7 +290,7 @@ class EntidadesYRestApplicationTests {
 			tmp.setFin(new Date(2024, 3, 6, 11, 0));
 			tmp.setDatosSalud(null);
 			tmp.setDescripcion("editado con exito");
-			tmp.setIdSesion(1L);
+			tmp.setId(1L);
 			tmp.setMultimedia(null);
 			tmp.setPresencial(true);
 			tmp.setTrabajoRealizado(null);
@@ -317,7 +317,7 @@ class EntidadesYRestApplicationTests {
 			tmp.setFin(new Date(2024, 3, 6, 11, 0));
 			tmp.setDatosSalud(null);
 			tmp.setDescripcion("editado con exito");
-			tmp.setIdSesion(1L);
+			tmp.setId(1L);
 			tmp.setMultimedia(null);
 			tmp.setPresencial(true);
 			tmp.setTrabajoRealizado(null);
@@ -380,7 +380,24 @@ class EntidadesYRestApplicationTests {
 		@Test
 		@DisplayName("crea correctamente una sesion nueva")
 		public void postSesion() {
+			Sesion tmp = new Sesion();
+			tmp.setInicio(new Date(2024, 3, 5, 10, 0));
+			tmp.setFin(new Date(2024, 3, 6, 11, 0));
+			tmp.setDatosSalud(null);
+			tmp.setDescripcion("hellooo");
+			tmp.setId(4L);
+			tmp.setMultimedia(null);
+			tmp.setPresencial(true);
+			tmp.setTrabajoRealizado(null);
 
+			var peticion = post("http", "localhost", port, "/sesion", tmp);
+
+            var respuesta = restTemplate.exchange(peticion,
+                new ParameterizedTypeReference<Sesion>() {
+                });
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
+			assertThat(respuesta.getBody().getDescripcion()).isEqualTo("hellooo");
 		}
 		@Test
 		@DisplayName("devuelve error cuando intenta crear una sesion nueva sin acceso autorizado")
@@ -390,7 +407,24 @@ class EntidadesYRestApplicationTests {
 		@Test
 		@DisplayName("devuelve error cuando intenta crear una sesion que ya existe")
 		public void postSesionNoExist() {
+			Sesion tmp = new Sesion();
+			tmp.setInicio(new Date(2024, 5, 12, 10, 0));
+			tmp.setFin(new Date(2024, 5, 12, 11, 0));
+			tmp.setDatosSalud(null);
+			tmp.setDescripcion("esta es la primera sesion");
+			tmp.setId(1L);
+			tmp.setMultimedia(null);
+			tmp.setPresencial(true);
+			tmp.setTrabajoRealizado(null);
 
+			var peticion = post("http", "localhost", port, "/sesion", tmp);
+
+            var respuesta = restTemplate.exchange(peticion,
+                new ParameterizedTypeReference<Sesion>() {
+                });
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
+			assertThat(respuesta.getBody().getDescripcion()).isEqualTo("hellooo");
 		}
 	}
 
