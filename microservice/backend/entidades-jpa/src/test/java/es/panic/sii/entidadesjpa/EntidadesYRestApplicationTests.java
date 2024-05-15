@@ -212,21 +212,58 @@ class EntidadesYRestApplicationTests {
 
 		}
 	}
-	/*
+	
 	@Nested
 	@DisplayName("cuando la base de datos tiene datos")
 	public class BaseDatosLlena {
 
 		@BeforeEach
 		public void insertarDatos() {
-
+			Sesion ses1 = new Sesion();
+			ses1.setInicio(new Date(2024, 5, 12, 10, 0));
+			ses1.setFin(new Date(2024, 5, 12, 11, 0));
+			ses1.setDatosSalud(null);
+			ses1.setDescripcion("esta es la primera sesion");
+			ses1.setIdSesion(1L);
+			ses1.setMultimedia(null);
+			ses1.setPresencial(true);
+			ses1.setTrabajoRealizado(null);
+			Sesion ses2 = new Sesion();
+			ses2.setInicio(new Date(2024, 8, 20, 10, 0));
+			ses2.setFin(new Date(2024, 8, 20, 11, 0));
+			ses2.setDatosSalud(null);
+			ses2.setDescripcion(null);
+			ses2.setIdSesion(2L);
+			ses2.setMultimedia(null);
+			ses2.setPresencial(true);
+			ses2.setTrabajoRealizado(null);
+			Sesion ses3 = new Sesion();
+			ses3.setInicio(new Date(2024, 12, 25, 12, 0));
+			ses3.setFin(new Date(2024, 12, 25, 15, 0));
+			ses3.setDatosSalud(null);
+			ses3.setDescripcion(null);
+			ses3.setIdSesion(3L);
+			ses3.setMultimedia(null);
+			ses3.setPresencial(true);
+			ses3.setTrabajoRealizado(null);
+			
+			sesionRepo.save(ses1);
+			sesionRepo.save(ses2);
+			sesionRepo.save(ses3);
 		}
 
 		//GET/sesion/{idSesion}
 		@Test
 		@DisplayName("obtiene correctamente una sesion especifica")
 		public void getSesionById() {
+			var peticion = get("http", "localhost", port, "/sesion/1");
 
+            var respuesta = restTemplate.exchange(peticion,
+                new ParameterizedTypeReference<Sesion>() {
+                });
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+            assertThat(respuesta.getBody().getDescripcion()).isEqualTo("esta es la primera sesion");
 		}
 		@Test
 		@DisplayName("devuelve error cuando intenta obtener una sesion especifica sin acceso autorizado")
@@ -236,13 +273,36 @@ class EntidadesYRestApplicationTests {
 		@Test
 		@DisplayName("devuelve error cuando intenta obtener una sesion especifica que no existe")
 		public void getSesionByIdNoExist() {
+			var peticion = get("http", "localhost", port, "/sesion/5");
 
+            var respuesta = restTemplate.exchange(peticion,
+                new ParameterizedTypeReference<Sesion>() {
+                });
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 		}
     	//PUT/sesion/{idSesion}
 		@Test
 		@DisplayName("modifica correctamente una sesion especifica")
 		public void putSesionById() {
+			Sesion tmp = new Sesion();
+			tmp.setInicio(new Date(2024, 3, 5, 10, 0));
+			tmp.setFin(new Date(2024, 3, 6, 11, 0));
+			tmp.setDatosSalud(null);
+			tmp.setDescripcion("editado con exito");
+			tmp.setIdSesion(1L);
+			tmp.setMultimedia(null);
+			tmp.setPresencial(true);
+			tmp.setTrabajoRealizado(null);
 
+			var peticion = put("http", "localhost", port, "/sesion/1", tmp);
+
+            var respuesta = restTemplate.exchange(peticion,
+                new ParameterizedTypeReference<Sesion>() {
+                });
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+			assertThat(respuesta.getBody().getDescripcion()).isEqualTo("editado con exito");
 		}
 		@Test
 		@DisplayName("devuelve error cuando intenta modificar una sesion especifica sin acceso autorizado")
@@ -252,13 +312,36 @@ class EntidadesYRestApplicationTests {
 		@Test
 		@DisplayName("devuelve error cuando intenta modificar una sesion especifica que no existe")
 		public void putSesionByIdNoExist() {
+			Sesion tmp = new Sesion();
+			tmp.setInicio(new Date(2024, 3, 5, 10, 0));
+			tmp.setFin(new Date(2024, 3, 6, 11, 0));
+			tmp.setDatosSalud(null);
+			tmp.setDescripcion("editado con exito");
+			tmp.setIdSesion(1L);
+			tmp.setMultimedia(null);
+			tmp.setPresencial(true);
+			tmp.setTrabajoRealizado(null);
 
+			var peticion = put("http", "localhost", port, "/sesion/6", tmp);
+
+            var respuesta = restTemplate.exchange(peticion,
+                new ParameterizedTypeReference<Sesion>() {
+                });
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 		}
     	//DELETE/sesion/{idSesion}
 		@Test
 		@DisplayName("elimina correctamente una sesion especifica")
 		public void deleteSesionById() {
+			var peticion = delete("http", "localhost", port, "/sesion/1");
 
+            var respuesta = restTemplate.exchange(peticion,
+                new ParameterizedTypeReference<Sesion>() {
+                });
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+            assertThat(sesionRepo.count()).isEqualTo(2);
 		}
 		@Test
 		@DisplayName("devuelve error cuando intenta eliminar una sesion especifica sin acceso autorizado")
@@ -268,13 +351,19 @@ class EntidadesYRestApplicationTests {
 		@Test
 		@DisplayName("devuelve error cuando intenta eliminar una sesion especifica que no existe")
 		public void deleteSesionByIdNoExist() {
+			var peticion = delete("http", "localhost", port, "/sesion/8");
 
+            var respuesta = restTemplate.exchange(peticion,
+                new ParameterizedTypeReference<Sesion>() {
+                });
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 		}
     	//GET/sesion
 		@Test
 		@DisplayName("obtiene correctamente las sesiones asociadas a un plan")
 		public void getSesionByPlan() {
-
+			
 		}
 		@Test
 		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan sin acceso autorizado")
@@ -305,5 +394,5 @@ class EntidadesYRestApplicationTests {
 		}
 	}
 
-	 */
+	
 }
