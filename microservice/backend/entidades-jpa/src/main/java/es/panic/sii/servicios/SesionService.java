@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class SesionService {
 
-    private SesionRepository repo;
+    private SesionRepository repo; //solo hay un repositorio porque solo hay una entidad
 
-    public SesionService(SesionRepository repo) { this.repo = repo; }
+    public SesionService(SesionRepository repo) {
+        this.repo = repo;
+    } //ta perfe
 }
