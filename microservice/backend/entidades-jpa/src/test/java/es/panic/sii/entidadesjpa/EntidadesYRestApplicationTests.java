@@ -19,6 +19,8 @@ import org.springframework.http.RequestEntity;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriBuilderFactory;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.sql.Timestamp;
@@ -55,6 +57,15 @@ class EntidadesYRestApplicationTests {
 	private RequestEntity<Void> get(String scheme, String host, int port, String path) {
 		URI uri = uri(scheme, host,port, path);
 		var peticion = RequestEntity.get(uri)
+				.accept(MediaType.APPLICATION_JSON)
+				.build();
+		return peticion;
+	}
+	
+	private RequestEntity<Void> get(String scheme, String host, int port, String path, Long plan) {
+		URI uri = uri(scheme, host,port, path);
+		String urlTemplate = UriComponentsBuilder.fromHttpUrl(uri.toString()).queryParam("plan", plan).encode().toUriString();
+		var peticion = RequestEntity.get(urlTemplate)
 				.accept(MediaType.APPLICATION_JSON)
 				.build();
 		return peticion;
