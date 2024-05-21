@@ -31,8 +31,14 @@ public class SesionService {
 		}
     }
 
-    public Sesion borrarSesion(){
-        return null;
+    public Sesion borrarSesion(Sesion s){
+        if (repo.existsById(s.getId())) {
+            repo.delete(s);
+            return s;
+        }else{
+            return null;
+        }
+        
     }
     public Sesion editarSesion(){
         return null;
