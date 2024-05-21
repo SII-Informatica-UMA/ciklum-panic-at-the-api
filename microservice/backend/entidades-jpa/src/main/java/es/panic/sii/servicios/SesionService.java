@@ -40,14 +40,23 @@ public class SesionService {
         }
         
     }
-    public Sesion editarSesion(){
-        return null;
+    public Sesion editarSesion(Sesion s, Long id){ //quiero editar el id
+        if(repo.existsById(s.getId())){
+            s.id = id;
+            return s;
+        }else{
+            return null;
+        }
     }
-    public Sesion obtenerSesionPorId(){
-        return null;
+    public Sesion obtenerSesionPorId(Long id){
+        if(repo.existsById(id)){
+            return repo.getReferenceById(id);
+        }else{
+            return null;
+        }
     }
 
-    public List<Sesion> obtenerSesionPorPlan(){
-        return null;
+    public List<Sesion> obtenerSesionPorPlan(Long plan){
+        if(repo.existsById())
     }
 }
