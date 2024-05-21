@@ -57,6 +57,7 @@ public class SesionService {
     }
 
     public List<Sesion> obtenerSesionPorPlan(Long plan){
-        if(repo.existsById())
+        return repo.findSesionesByPlan(plan);
+
     }
 }
