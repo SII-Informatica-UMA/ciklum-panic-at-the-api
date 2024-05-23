@@ -29,7 +29,7 @@ public class SesionREST {
     public SesionREST(SesionService sesion){
         this.sesion = sesion;
     }
-
+    //GET
     @GetMapping("{id}")
     @ResponseStatus(code=HttpStatus.OK)
     //no estoy segura de ponerlo
@@ -46,28 +46,21 @@ public class SesionREST {
 				.build()
 				.toUri();
 	}
-
+    //PUT
     @PutMapping("{id}")
     public void actualizarSesion(@PathVariable Long id, @RequestBody SesionDTO sesiondesdeDto){
         Sesion entidadSesion = sesiondesdeDto.sesion();
 		sesion.editarSesion(entidadSesion, id);
     }
-    //TODO
-
+    //DELETE
     @DeleteMapping("{id}")
     public void eliminarSesion(@PathVariable Long id){
         sesion.borrarSesion(id);
     }
+
     /*
-    GET
-    /sesion/{idSesion}
-
-    PUT
-    /sesion/{idSesion}
-
-    DELETE
-    /sesion/{idSesion}
-
+    TODO
+    
     GET
     /sesion
 
