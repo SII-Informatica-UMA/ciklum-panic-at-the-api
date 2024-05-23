@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.function.Function;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -53,6 +54,11 @@ public class SesionREST {
 		sesion.editarSesion(entidadSesion);
     }
     //TODO
+
+    @DeleteMapping
+    public void eliminarSesion(@PathVariable Long id){
+        sesion.borrarSesion(id);
+    }
     /*
     GET
     /sesion/{idSesion}

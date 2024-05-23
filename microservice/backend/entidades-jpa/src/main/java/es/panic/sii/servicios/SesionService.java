@@ -30,13 +30,12 @@ public class SesionService {
             return null;
 		}
     }
-
-    public Sesion borrarSesion(Sesion s){
-        if (repo.existsById(s.getId())) {
-            repo.delete(s);
-            return s;
+//mejor borrarla dado un id
+    public void borrarSesion(Long id){
+        if (repo.existsById(id)) {
+            repo.deleteById(id);
         }else{
-            return null;
+            throw new SesionNoExistente();
         }
         
     }
