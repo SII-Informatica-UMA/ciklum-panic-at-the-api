@@ -55,7 +55,7 @@ public class SesionREST {
     }
     //TODO
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public void eliminarSesion(@PathVariable Long id){
         sesion.borrarSesion(id);
     }
