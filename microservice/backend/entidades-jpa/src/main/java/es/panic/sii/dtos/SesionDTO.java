@@ -39,4 +39,7 @@ public class SesionDTO extends SesionNuevaDTO {
         return dto;
     }
 
+    //creo que aquí hay que hacer un Sesion sesion o algo
+    
+
 }
