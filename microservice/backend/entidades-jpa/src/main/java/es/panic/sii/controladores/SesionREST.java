@@ -49,9 +49,8 @@ public class SesionREST {
 
     @PutMapping("{id}")
     public void actualizarSesion(@PathVariable Long id, @RequestBody SesionDTO sesiondesdeDto){
-        Sesion entidadSesion = sesiondesdeDto.;
-		entidadSesion.setId(id);
-		sesion.editarSesion(entidadSesion);
+        Sesion entidadSesion = sesiondesdeDto.sesion();
+		sesion.editarSesion(entidadSesion, id);
     }
     //TODO
 

@@ -7,13 +7,22 @@ import lombok.experimental.SuperBuilder;
 import java.net.URI;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
 @SuperBuilder
 public class SesionDTO extends SesionNuevaDTO {
     public Long id;
+    public Timestamp inicio;
+    public Timestamp fin;
+    public String trabajoRealizado;
+    public List<String> multimedia;
+    public String descripcion;
+    public Boolean presencial;
+    public List<String> datosSalud;
 
     /*
     Si @SuperBuilder da problemas, eliminar annotation en ambos DTO y añadir aqui @Builder
@@ -40,6 +49,18 @@ public class SesionDTO extends SesionNuevaDTO {
     }
 
     //creo que aquí hay que hacer un Sesion sesion o algo
-    
+    public Sesion sesion() {
+		var ses = new Sesion();
+		ses.setInicio(inicio);
+        ses.setFin(fin);
+		ses.setId(id);
+		ses.setDescripcion(descripcion);
+        ses.setDatosSalud(datosSalud);
+        ses.setPresencial(presencial);
+        ses.setTrabajoRealizado(trabajoRealizado);
+		ses.setMultimedia(multimedia);
+		return ses;
+	}
+
 
 }
