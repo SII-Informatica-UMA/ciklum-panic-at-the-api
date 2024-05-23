@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 @SuperBuilder
 public class SesionDTO extends SesionNuevaDTO {
     public Long id;
+    //Añadí todas estas variables para poder llamarlas desde sesion
+    //No pueden ser privadas o daría problemas con el superBuilder
     public Timestamp inicio;
     public Timestamp fin;
     public String trabajoRealizado;
@@ -49,6 +51,7 @@ public class SesionDTO extends SesionNuevaDTO {
     }
 
     //creo que aquí hay que hacer un Sesion sesion o algo
+    //Añadí sesion para poder llamarlo desde SesionREST
     public Sesion sesion() {
 		var ses = new Sesion();
 		ses.setInicio(inicio);
