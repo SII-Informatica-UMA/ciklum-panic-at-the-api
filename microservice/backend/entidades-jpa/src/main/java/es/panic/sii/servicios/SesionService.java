@@ -55,6 +55,10 @@ public class SesionService {
         }
     }
 
+    public List<Sesion> obtenerTodasLasSesiones() {
+        return repo.findAll();
+    }
+
     public List<Sesion> obtenerSesionPorPlan(Long plan){
         return repo.findSesionesByPlan(plan);
 

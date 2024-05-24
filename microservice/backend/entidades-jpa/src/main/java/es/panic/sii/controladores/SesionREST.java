@@ -2,12 +2,15 @@ package es.panic.sii.controladores;
 
 
 import java.net.URI;
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,14 +62,28 @@ public class SesionREST {
         sesion.borrarSesion(id);
     }
 
-    /*
-    TODO
     
-    GET
-    /sesion
+    
+    
+    // GET /sesion
+    @GetMapping
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<SesionDTO> obtenerTodasLasSesiones(UriComponentsBuilder uriBuilder) {
+        List<Sesion> sesiones = sesion.obtenerTodasLasSesiones();
+        return sesiones.stream()
+                .map(s -> SesionDTO.fromSesion(s, productoUriBuilder(uriBuilder.build())))
+                .collect(Collectors.toList());
+    }
 
-    POST
-    /sesion
-     */
+    // POST /sesion
+
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public SesionDTO crearSesion(@RequestBody SesionDTO nuevaSesionDTO, UriComponentsBuilder uriBuilder) {
+        Sesion nuevaSesion = nuevaSesionDTO.sesion();
+        Sesion sesionCreada = sesion.agregarSesion(nuevaSesion);
+        return SesionDTO.fromSesion(sesionCreada, productoUriBuilder(uriBuilder.build()));
+    }
+    
     
 }
