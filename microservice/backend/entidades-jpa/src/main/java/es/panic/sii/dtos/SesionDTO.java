@@ -7,9 +7,9 @@ import lombok.experimental.SuperBuilder;
 import java.net.URI;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
+
 import java.util.function.Function;
-import java.util.stream.Collectors;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,6 +18,7 @@ public class SesionDTO extends SesionNuevaDTO {
     public Long id;
     //Añadí todas estas variables para poder llamarlas desde sesion
     //No pueden ser privadas o daría problemas con el superBuilder
+    /*
     public Timestamp inicio;
     public Timestamp fin;
     public String trabajoRealizado;
@@ -25,7 +26,7 @@ public class SesionDTO extends SesionNuevaDTO {
     public String descripcion;
     public Boolean presencial;
     public List<String> datosSalud;
-
+*/
     /*
     Si @SuperBuilder da problemas, eliminar annotation en ambos DTO y añadir aqui @Builder
      */
@@ -49,7 +50,7 @@ public class SesionDTO extends SesionNuevaDTO {
         dto.setPlan(s.getPlan());
         return dto;
     }
-
+/* 
     //creo que aquí hay que hacer un Sesion sesion o algo
     //Añadí sesion para poder llamarlo desde SesionREST
     public Sesion sesion() {
@@ -65,5 +66,5 @@ public class SesionDTO extends SesionNuevaDTO {
 		return ses;
 	}
 
-
+*/
 }

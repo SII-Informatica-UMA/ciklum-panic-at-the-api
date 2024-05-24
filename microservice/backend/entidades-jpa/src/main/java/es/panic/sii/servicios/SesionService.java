@@ -39,13 +39,13 @@ public class SesionService {
         }
         
     }
-    public Sesion editarSesion(Sesion s, Long id){ //quiero editar el id
-        if(repo.existsById(s.getId())){
-            s.id = id;
-            return s;
-        }else{
-            return null;
-        }
+    //me pasan un id y una sesion y sustituyo la sesion que tenga ese id por el sesion
+    public void editarSesion(Sesion s){ //quiero editar el id
+        if (repo.existsById(s.getId())) {
+			repo.save(s);
+		} else {
+			throw new SesionNoExistente();
+		}
     }
     public Sesion obtenerSesionPorId(Long id){
         if(repo.existsById(id)){
