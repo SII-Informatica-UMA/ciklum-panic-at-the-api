@@ -39,10 +39,10 @@ public class SesionREST {
     //quiero los detalles de la sesion
     public SesionDTO detallesSesionPorId(@PathVariable Long id, UriComponentsBuilder uriBuilder){
         var sesionCualquiera = sesion.obtenerSesionPorId(id);
-        return SesionDTO.fromSesion(sesionCualquiera, productoUriBuilder(uriBuilder.build()));
+        return SesionDTO.fromSesion(sesionCualquiera, sesionesUriBuilder(uriBuilder.build()));
 
     }
-    public static Function<Long, URI> productoUriBuilder(UriComponents uriBuilder) {
+    public static Function<Long, URI> sesionesUriBuilder(UriComponents uriBuilder) {
         ;
 		return id -> UriComponentsBuilder.newInstance().uriComponents(uriBuilder).path("/sesion")
 				.path(String.format("/%d", id))
@@ -71,7 +71,7 @@ public class SesionREST {
     public List<SesionDTO> obtenerTodasLasSesiones(UriComponentsBuilder uriBuilder) {
         List<Sesion> sesiones = sesion.obtenerTodasLasSesiones();
         return sesiones.stream()
-                .map(s -> SesionDTO.fromSesion(s, productoUriBuilder(uriBuilder.build())))
+                .map(s -> SesionDTO.fromSesion(s, sesionesUriBuilder(uriBuilder.build())))
                 .collect(Collectors.toList());
     }
 
