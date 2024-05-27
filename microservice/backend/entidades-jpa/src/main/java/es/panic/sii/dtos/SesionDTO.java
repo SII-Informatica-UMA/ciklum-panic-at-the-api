@@ -50,21 +50,22 @@ public class SesionDTO extends SesionNuevaDTO {
         dto.setPlan(s.getPlan());
         return dto;
     }
-/* 
+
     //creo que aquí hay que hacer un Sesion sesion o algo
     //Añadí sesion para poder llamarlo desde SesionREST
     public Sesion sesion() {
-		var ses = new Sesion();
-		ses.setInicio(inicio);
-        ses.setFin(fin);
-		ses.setId(id);
-		ses.setDescripcion(descripcion);
-        ses.setDatosSalud(datosSalud);
-        ses.setPresencial(presencial);
-        ses.setTrabajoRealizado(trabajoRealizado);
-		ses.setMultimedia(multimedia);
+		
+        var ses = new Sesion();
+		ses.setInicio(this.getInicio());
+        ses.setFin(this.getFin());
+		ses.setId(this.getId());
+		ses.setDescripcion(this.getDescripcion());
+        ses.setDatosSalud(this.getDatosSalud());
+        ses.setPresencial(this.getPresencial());
+        ses.setTrabajoRealizado(this.getTrabajoRealizado());
+		ses.setMultimedia(this.getMultimedia());
 		return ses;
+
 	}
 
-*/
 }
