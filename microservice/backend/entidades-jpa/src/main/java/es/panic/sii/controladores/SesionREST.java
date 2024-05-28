@@ -34,7 +34,6 @@ public class SesionREST {
         return ResponseEntity.of(sesionCualquiera);
     }
 
-
     public static Function<Sesion, URI> sesionUriBuilder(UriComponents uriBuilder) {
 		return sesion -> UriComponentsBuilder.newInstance().uriComponents(uriBuilder)
                 .path("/sesion")
@@ -64,7 +63,7 @@ public class SesionREST {
     public List<SesionDTO> obtenerLasSesionesPorPlan(@RequestParam Long plan) {
         List<Sesion> sesiones = sesionRepository.obtenerSesiones(plan);
         return sesiones.stream()
-                .map(s -> SesionDTO.fromSesion(s, productoUriBuilder(uriBuilder.build())))
+                .map(s -> SesionDTO.fromSesion(s, sesionesUriBuilder(uriBuilder.build())))
                 .collect(Collectors.toList());
     }
     */

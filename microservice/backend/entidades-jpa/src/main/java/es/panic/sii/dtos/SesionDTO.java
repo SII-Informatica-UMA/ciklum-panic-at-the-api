@@ -47,5 +47,7 @@ public class SesionDTO extends SesionNuevaDTO {
         dto.setIdPlan(s.getIdPlan());
         return dto;
     }
+    
+
 
 }
