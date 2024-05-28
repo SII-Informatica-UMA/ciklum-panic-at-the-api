@@ -3,19 +3,12 @@ package es.panic.sii.controladores;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -27,62 +20,68 @@ import es.panic.sii.servicios.SesionService;
 @RequestMapping({"/sesion"})
 public class SesionREST {
 
-    private SesionService sesion;
+    private SesionService sesionService;
 
     public SesionREST(SesionService sesion){
-        this.sesion = sesion;
+        this.sesionService = sesion;
     }
-    //GET
-    @GetMapping("{id}")
-    @ResponseStatus(code=HttpStatus.OK)
-    //no estoy segura de ponerlo
-    //quiero los detalles de la sesion
-    public SesionDTO detallesSesionPorId(@PathVariable Long id, UriComponentsBuilder uriBuilder){
-        var sesionCualquiera = sesion.obtenerSesionPorId(id);
-        return SesionDTO.fromSesion(sesionCualquiera, productoUriBuilder(uriBuilder.build()));
 
+
+    //GET
+    @GetMapping("/{idSesion}")
+    public ResponseEntity<SesionDTO> detallesSesionPorId(@PathVariable Long idSesion) {
+        Optional<SesionDTO> sesionCualquiera = this.sesionService.obtenerSesionPorId(idSesion).map(SesionDTO ::convertirSesionToDTO);
+        return ResponseEntity.of(sesionCualquiera);
     }
-    public static Function<Long, URI> productoUriBuilder(UriComponents uriBuilder) {
-        ;
-		return id -> UriComponentsBuilder.newInstance().uriComponents(uriBuilder).path("/sesion")
-				.path(String.format("/%d", id))
+
+
+    public static Function<Sesion, URI> sesionUriBuilder(UriComponents uriBuilder) {
+		return sesion -> UriComponentsBuilder.newInstance().uriComponents(uriBuilder)
+                .path("/sesion")
+				.path(String.format("/%d", sesion.getId()))
 				.build()
 				.toUri();
 	}
+
+
     //PUT
-    @PutMapping("{id}")
-    public void actualizarSesion(@PathVariable Long id, @RequestBody SesionDTO sesiondesdeDto){
-        Sesion entidadSesion = sesiondesdeDto.sesion();
-		entidadSesion.setId(id);
-		sesion.editarSesion(entidadSesion);
+    @PutMapping("/{idSesion}")
+    public ResponseEntity<SesionDTO> actualizarSesion(@PathVariable Long idSesion, @RequestBody SesionDTO sesion){
+        sesion.setId(idSesion);
+        Sesion ses = this.sesionService.agregarSesion(sesion.convertToSesion());
+        return ResponseEntity.ok(SesionDTO.convertirSesionToDTO(ses));
     }
     //DELETE
-    @DeleteMapping("{id}")
-    public void eliminarSesion(@PathVariable Long id){
-        sesion.borrarSesion(id);
+    @DeleteMapping("/{idSesion}")
+    public void eliminarSesion(@PathVariable Long idSesion){
+        sesionService.borrarSesion(idSesion);
     }
 
-    
-    
-    
+
     // GET /sesion
+    /*
     @GetMapping
-    @ResponseStatus(code = HttpStatus.OK)
-    public List<SesionDTO> obtenerTodasLasSesiones(UriComponentsBuilder uriBuilder) {
-        List<Sesion> sesiones = sesion.obtenerTodasLasSesiones();
+    public List<SesionDTO> obtenerLasSesionesPorPlan(@RequestParam Long plan) {
+        List<Sesion> sesiones = sesionRepository.obtenerSesiones(plan);
         return sesiones.stream()
                 .map(s -> SesionDTO.fromSesion(s, productoUriBuilder(uriBuilder.build())))
                 .collect(Collectors.toList());
     }
+    */
+
+    @GetMapping
+    public List<SesionDTO> obtenerSesionesPorPlan(@RequestParam Long plan){
+        return this.sesionService.obtenerSesionPorPlan(plan).stream().map(SesionDTO::convertirSesionToDTO).toList();
+    }
+
 
     // POST /sesion
-
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public SesionDTO crearSesion(@RequestBody SesionDTO nuevaSesionDTO, UriComponentsBuilder uriBuilder) {
-        Sesion nuevaSesion = nuevaSesionDTO.sesion();
-        Sesion sesionCreada = sesion.agregarSesion(nuevaSesion);
-        return SesionDTO.fromSesion(sesionCreada, productoUriBuilder(uriBuilder.build()));
+        Sesion nuevaSesion = nuevaSesionDTO.convertirSesionToDTO();
+        Sesion sesionCreada = sesionService.agregarSesion(nuevaSesion);
+        return SesionDTO.convertirSesionToDTO(sesionCreada);
     }
     
     

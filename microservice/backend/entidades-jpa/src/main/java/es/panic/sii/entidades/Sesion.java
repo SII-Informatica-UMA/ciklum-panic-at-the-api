@@ -35,12 +35,12 @@ public class Sesion {
     )
     private List<String> datosSalud = new ArrayList<String>(3);
     @Column(nullable = false)
-    private Long plan;
+    private Long idPlan;
 
     public Sesion(){}
 
     public Sesion(Long id, Date inicio, Date fin, String trabajoRealizado, String descripcion,
-                  List<String> multimedia, Boolean presencial, List<String> datosSalud, Long plan){
+                  List<String> multimedia, Boolean presencial, List<String> datosSalud, Long idPlan){
         this.id = id;
         this.inicio = inicio;
         this.fin = fin;
@@ -49,7 +49,7 @@ public class Sesion {
         this.multimedia = multimedia;
         this.presencial = presencial;
         this.datosSalud = datosSalud;
-        this.plan = plan;
+        this.idPlan = idPlan;
     }
 
     public Long getId(){ return this.id; }
@@ -83,12 +83,12 @@ public class Sesion {
 
     public void setDatosSalud(List<String> datosSalud) { this.datosSalud = datosSalud; }
 
-    public Long getPlan() {
-        return this.plan;
+    public Long getIdPlan() {
+        return this.idPlan;
     }
 
-    public void setPlan(Long plan) {
-        this.plan = plan;
+    public void setIdPlan(Long idPlan) {
+        this.idPlan = idPlan;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class Sesion {
         result = prime * result + ((multimedia == null) ? 0 : multimedia.hashCode());
         result = prime * result + ((presencial == null) ? 0 : presencial.hashCode());
         result = prime * result + ((datosSalud == null) ? 0 : datosSalud.hashCode());
-        result = prime * result + ((plan == null) ? 0 : plan.hashCode());
+        result = prime * result + ((idPlan == null) ? 0 : idPlan.hashCode());
         return result;
     }
 
@@ -156,10 +156,10 @@ public class Sesion {
                 return false;
         } else if (!datosSalud.equals(other.datosSalud))
             return false;
-        if (plan == null) {
-            if (other.plan != null)
+        if (idPlan == null) {
+            if (other.idPlan != null)
                 return false;
-        } else if (!plan.equals(other.plan))
+        } else if (!idPlan.equals(other.idPlan))
             return false;
         return true;
     }
@@ -168,7 +168,7 @@ public class Sesion {
     public String toString() {
         return "Sesion [idSesion=" + id + ", inicio=" + inicio + ", fin=" + fin + ", trabajoRealizado="
                 + trabajoRealizado + ", descripcion=" + descripcion + ", multimedia=" + multimedia + ", presencial="
-                + presencial + ", datosSalud=" + datosSalud + ", plan=" + plan + "]";
+                + presencial + ", datosSalud=" + datosSalud + ", plan=" + idPlan + "]";
     }
 
     

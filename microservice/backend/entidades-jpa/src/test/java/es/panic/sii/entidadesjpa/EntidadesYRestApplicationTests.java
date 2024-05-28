@@ -7,7 +7,7 @@ import es.panic.sii.repositorios.SesionRepository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import es.panic.sii.servicios.excepciones.SesionNoExistente;
+import es.panic.sii.servicios.excepciones.SesionNoExiste;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -126,7 +126,7 @@ class EntidadesYRestApplicationTests {
 		public void putSesionByIdNoExist() {
 			var sesion = SesionDTO.builder()
 					.id(1L)
-					.plan(1L)
+					.idPlan(1L)
 					.inicio(new Timestamp(2024, 5, 12, 13, 41, 50, 10))
 					.fin(new Timestamp(2024, 5, 12, 14, 41, 0, 20))
 					.trabajoRealizado("Espalda")
@@ -141,7 +141,7 @@ class EntidadesYRestApplicationTests {
 			});
 
 			assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-			new SesionNoExistente();
+			//new SesionNoExiste();
 		}
     	//DELETE/sesion/{idSesion}
 		@Disabled

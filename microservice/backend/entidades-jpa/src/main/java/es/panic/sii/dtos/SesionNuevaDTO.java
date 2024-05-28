@@ -13,7 +13,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 public class SesionNuevaDTO {
-    private Long plan;
+    private Long idPlan;
     private Timestamp inicio;
     private Timestamp fin;
     private String trabajoRealizado;

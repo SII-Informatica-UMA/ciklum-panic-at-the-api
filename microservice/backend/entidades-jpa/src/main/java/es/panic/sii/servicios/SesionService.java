@@ -1,13 +1,12 @@
 package es.panic.sii.servicios;
 
-import es.panic.sii.controladores.SesionREST;
 import es.panic.sii.entidades.Sesion;
 import es.panic.sii.repositorios.SesionRepository;
-import es.panic.sii.servicios.excepciones.SesionNoExistente;
-import jakarta.persistence.EntityExistsException;
+import es.panic.sii.servicios.excepciones.SesionNoExiste;
 import jakarta.transaction.Transactional;
-import es.panic.sii.entidades.Sesion;
+
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ public class SesionService {
 
     public SesionService(SesionRepository repo) {
         this.repo = repo;
-    } //ta perfe
+    }
 
 
     public Sesion agregarSesion(Sesion s){
@@ -35,7 +34,7 @@ public class SesionService {
         if (repo.existsById(id)) {
             repo.deleteById(id);
         }else{
-            throw new SesionNoExistente();
+            throw new SesionNoExiste();
         }
         
     }
@@ -44,14 +43,14 @@ public class SesionService {
         if (repo.existsById(s.getId())) {
 			repo.save(s);
 		} else {
-			throw new SesionNoExistente();
+			throw new SesionNoExiste();
 		}
     }
-    public Sesion obtenerSesionPorId(Long id){
+    public Optional<Sesion> obtenerSesionPorId(Long id){
         if(repo.existsById(id)){
-            return repo.getReferenceById(id);
+            return repo.findById(id);
         }else{
-            return null;
+            throw new SesionNoExiste();
         }
     }
 
@@ -60,7 +59,7 @@ public class SesionService {
     }
 
     public List<Sesion> obtenerSesionPorPlan(Long plan){
-        return repo.findSesionesByPlan(plan);
+        return repo.findSesionesByIdPlan(plan);
 
     }
 }

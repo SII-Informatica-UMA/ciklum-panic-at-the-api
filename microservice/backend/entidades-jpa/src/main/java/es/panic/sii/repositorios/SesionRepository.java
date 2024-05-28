@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface SesionRepository extends JpaRepository<Sesion, Long>{
-    List<Sesion> findSesionesByPlan(Long plan);
+    List<Sesion> findSesionesByIdPlan(Long idPlan);
 }
