@@ -27,7 +27,7 @@ public class SesionREST {
     }
 
 
-    //GET
+    //GET ID
     @GetMapping("/{idSesion}")
     public ResponseEntity<SesionDTO> detallesSesionPorId(@PathVariable Long idSesion) {
         Optional<SesionDTO> sesionCualquiera = this.sesionService.obtenerSesionPorId(idSesion).map(SesionDTO ::convertirSesionToDTO);
@@ -43,21 +43,20 @@ public class SesionREST {
 	}
 
 
-    //PUT
+    //PUT ID
     @PutMapping("/{idSesion}")
     public ResponseEntity<SesionDTO> actualizarSesion(@PathVariable Long idSesion, @RequestBody SesionDTO sesion){
         sesion.setId(idSesion);
         Sesion ses = this.sesionService.agregarSesion(sesion.convertToSesion());
         return ResponseEntity.ok(SesionDTO.convertirSesionToDTO(ses));
     }
-    //DELETE
+    //DELETE ID
     @DeleteMapping("/{idSesion}")
     public void eliminarSesion(@PathVariable Long idSesion){
         sesionService.borrarSesion(idSesion);
     }
 
 
-    // GET /sesion
     /*
     @GetMapping
     public List<SesionDTO> obtenerLasSesionesPorPlan(@RequestParam Long plan) {
@@ -67,20 +66,29 @@ public class SesionREST {
                 .collect(Collectors.toList());
     }
     */
-
+    //GET
     @GetMapping
     public List<SesionDTO> obtenerSesionesPorPlan(@RequestParam Long plan){
-        return this.sesionService.obtenerSesionPorPlan(plan).stream().map(SesionDTO::convertirSesionToDTO).toList();
+        return this.sesionService.obtenerSesionPorPlan(plan)
+                .stream()
+                .map(SesionDTO::convertirSesionToDTO)
+                .toList();
     }
 
 
-    // POST /sesion
+    //POST
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public SesionDTO crearSesion(@RequestBody SesionDTO nuevaSesionDTO, UriComponentsBuilder uriBuilder) {
-        Sesion nuevaSesion = nuevaSesionDTO.convertirSesionToDTO();
+    public ResponseEntity<SesionDTO> crearSesion(@RequestBody SesionDTO nuevaSesionDTO, @PathVariable Long idSesion) {
+        //tengo que del sesionService sacar la sesion
+       /* Optional<Sesion> nuevaSesion = this.sesionService.obtenerSesionPorId(idSesion);  
+        Sesion nuevaSesionDTO.convertirSesionToDTO(nuevaSesion);
         Sesion sesionCreada = sesionService.agregarSesion(nuevaSesion);
         return SesionDTO.convertirSesionToDTO(sesionCreada);
+*/
+        nuevaSesionDTO.setId(idSesion);
+        Sesion s = this.sesionService.agregarSesion(nuevaSesionDTO.convertToSesion());
+        return ResponseEntity.ok(SesionDTO.convertirSesionToDTO(s));
     }
     
     
