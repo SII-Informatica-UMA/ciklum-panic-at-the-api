@@ -1,5 +1,6 @@
 package es.panic.sii.dtos;
 
+import es.panic.sii.entidades.Sesion;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import java.sql.Timestamp;
@@ -21,4 +22,10 @@ public class SesionNuevaDTO {
     private List<String> multimedia;
     private Boolean presencial;
     private List<String> datosSalud;
+
+    public Sesion convertToSesion(){
+        return Sesion.builder().idPlan(this.getIdPlan()).inicio(this.getInicio()).fin(this.getFin()).trabajoRealizado(this.getTrabajoRealizado())
+                .descripcion(this.getDescripcion()).multimedia(this.getMultimedia()).presencial(this.getPresencial())
+                .datosSalud(this.getDatosSalud()).build();
+    }
 }

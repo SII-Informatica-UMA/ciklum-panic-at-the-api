@@ -20,8 +20,14 @@ public class SesionDTO extends SesionNuevaDTO {
     }
 
 
-    //Métodos que podrían servir para el controlador REST
+    //Métodospara el controlador REST
+    @Override
     public Sesion convertToSesion(){
+        return Sesion.builder().id(this.getId()).idPlan(this.getIdPlan()).inicio(this.getInicio()).fin(this.getFin()).trabajoRealizado(this.getTrabajoRealizado())
+                .descripcion(this.getDescripcion()).multimedia(this.getMultimedia()).presencial(this.getPresencial())
+                .datosSalud(this.getDatosSalud()).build();
+    }
+    /*public Sesion convertToSesion(){
         Sesion s = new Sesion();
         s.setId(this.getId());
         s.setInicio(this.getInicio());
@@ -33,7 +39,14 @@ public class SesionDTO extends SesionNuevaDTO {
         s.setDatosSalud(this.getDatosSalud());
         s.setIdPlan(this.getIdPlan());
         return s;
+    }*/
+
+    public static SesionDTO convertirSesionToDTO(Sesion s){
+        return builder().id(s.getId()).idPlan(s.getIdPlan()).inicio( (Timestamp) s.getInicio()).fin( (Timestamp) s.getFin()).trabajoRealizado(s.getTrabajoRealizado())
+                .descripcion(s.getDescripcion()).multimedia(s.getMultimedia()).presencial(s.getPresencial())
+                .datosSalud(s.getDatosSalud()).build();
     }
+    /*
     public static SesionDTO convertirSesionToDTO(Sesion s){
         var dto = new SesionDTO();
         dto.setId(s.getId());
@@ -47,6 +60,8 @@ public class SesionDTO extends SesionNuevaDTO {
         dto.setIdPlan(s.getIdPlan());
         return dto;
     }
+
+     */
     
 
 

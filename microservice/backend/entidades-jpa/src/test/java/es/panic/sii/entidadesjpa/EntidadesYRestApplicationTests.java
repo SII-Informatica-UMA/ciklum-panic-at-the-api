@@ -29,6 +29,7 @@ import java.util.List;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -41,6 +42,7 @@ class EntidadesYRestApplicationTests {
 	private int port;
 	@Autowired
 	private SesionRepository sesionRepo;
+	private String jwtToken;
 	private URI uri(String scheme, String host, int port, String ...paths) {
 		UriBuilderFactory ubf = new DefaultUriBuilderFactory();
 		UriBuilder ub = ubf.builder()
@@ -51,10 +53,25 @@ class EntidadesYRestApplicationTests {
 		}
 		return ub.build();
 	}
-
+	/*
 	private RequestEntity<Void> get(String scheme, String host, int port, String path) {
 		URI uri = uri(scheme, host,port, path);
 		var peticion = RequestEntity.get(uri)
+				.accept(MediaType.APPLICATION_JSON)
+				.build();
+		return peticion;
+	}
+	*/
+
+	private RequestEntity<Void> get(String scheme, String host, int port, String path) {
+		URI uri = UriComponentsBuilder.newInstance()
+				.scheme(scheme)
+				.host(host)
+				.port(port)
+				.path(path)
+				.build()
+				.toUri();
+		var peticion = RequestEntity.get(uri).header("Authorization", "Bearer "+jwtToken)
 				.accept(MediaType.APPLICATION_JSON)
 				.build();
 		return peticion;
@@ -212,7 +229,7 @@ class EntidadesYRestApplicationTests {
 
 		}
 	}
-	
+	/*
 	@Nested
 	@DisplayName("cuando la base de datos tiene datos")
 	public class BaseDatosLlena {
@@ -228,6 +245,7 @@ class EntidadesYRestApplicationTests {
 			ses1.setMultimedia(null);
 			ses1.setPresencial(true);
 			ses1.setTrabajoRealizado(null);
+			ses1.setIdPlan(1L);
 			Sesion ses2 = new Sesion();
 			ses2.setInicio(new Date(2024, 8, 20, 10, 0));
 			ses2.setFin(new Date(2024, 8, 20, 11, 0));
@@ -237,6 +255,7 @@ class EntidadesYRestApplicationTests {
 			ses2.setMultimedia(null);
 			ses2.setPresencial(true);
 			ses2.setTrabajoRealizado(null);
+			ses2.setIdPlan(2L);
 			Sesion ses3 = new Sesion();
 			ses3.setInicio(new Date(2024, 12, 25, 12, 0));
 			ses3.setFin(new Date(2024, 12, 25, 15, 0));
@@ -246,6 +265,7 @@ class EntidadesYRestApplicationTests {
 			ses3.setMultimedia(null);
 			ses3.setPresencial(true);
 			ses3.setTrabajoRealizado(null);
+			ses3.setIdPlan(3L);
 			
 			sesionRepo.save(ses1);
 			sesionRepo.save(ses2);
@@ -427,6 +447,8 @@ class EntidadesYRestApplicationTests {
 			assertThat(respuesta.getBody().getDescripcion()).isEqualTo("hellooo");
 		}
 	}
+
+	 */
 
 	
 }

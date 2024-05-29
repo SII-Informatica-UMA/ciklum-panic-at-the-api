@@ -1,10 +1,12 @@
 package es.panic.sii.entidades;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+
 import java.util.ArrayList;
 import  java.util.Date;
 import java.util.List;
-
+@Builder
 @Entity
 @Table(name="sesion")
 public class Sesion {
