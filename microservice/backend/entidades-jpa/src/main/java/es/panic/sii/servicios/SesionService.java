@@ -22,12 +22,8 @@ public class SesionService {
 
 
     public Sesion agregarSesion(Sesion s){
-        if (repo.existsById(s.getId())) {
 			repo.save(s);
 			return s;
-		} else {
-            return null;
-		}
     }
 //mejor borrarla dado un id
     public void borrarSesion(Long id){
