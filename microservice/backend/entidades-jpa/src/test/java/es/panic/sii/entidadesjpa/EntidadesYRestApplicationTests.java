@@ -7,15 +7,20 @@ import es.panic.sii.repositorios.SesionRepository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+
 import es.panic.sii.servicios.excepciones.SesionNoExiste;
+import org.apache.tomcat.util.http.parser.HttpParser;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriBuilderFactory;
@@ -32,6 +37,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.test.web.client.MockRestServiceServer;
+
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
 
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -40,11 +49,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 class EntidadesYRestApplicationTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
+	@Autowired
+	private RestTemplate otrosServicios;
 	@Value(value="${local.server.port}")
 	private int port;
 	@Autowired
 	private SesionRepository sesionRepo;
 	private String jwtToken;
+
+	private MockRestServiceServer mockServer;
 	private URI uri(String scheme, String host, int port, String ...paths) {
 		UriBuilderFactory ubf = new DefaultUriBuilderFactory();
 		UriBuilder ub = ubf.builder()
@@ -55,15 +68,7 @@ class EntidadesYRestApplicationTests {
 		}
 		return ub.build();
 	}
-	/*
-	private RequestEntity<Void> get(String scheme, String host, int port, String path) {
-		URI uri = uri(scheme, host,port, path);
-		var peticion = RequestEntity.get(uri)
-				.accept(MediaType.APPLICATION_JSON)
-				.build();
-		return peticion;
-	}
-	*/
+
 
 	private RequestEntity<Void> get(String scheme, String host, int port, String path) {
 		URI uri = UriComponentsBuilder.newInstance()
@@ -120,8 +125,111 @@ class EntidadesYRestApplicationTests {
 	}
 
 	@BeforeEach
-	public void limpiarBaseDatos(){
+	public void init(){
 		sesionRepo.deleteAll();
+
+		mockServer = MockRestServiceServer.createServer(otrosServicios);
+
+		//MOCK ENTRENADOR
+		mockServer.expect(
+				requestTo(UriComponentsBuilder.fromUriString("http://localhost:8080/entrenador?centro=1").build().toUri()))
+				.andExpect(method(HttpMethod.GET)).andRespond(withStatus(HttpStatus.OK)
+						.contentType(MediaType.APPLICATION_JSON)
+						.body("[\n" +
+								"  {\n" +
+								"    \"idUsuario\": 1,\n" +
+								"    \"telefono\": \"123456789\",\n" +
+								"    \"direccion\": \"Corregidor Francisco\",\n" +
+								"    \"dni\": \"454545458\",\n" +
+								"    \"fechaNacimiento\": \"2024-05-30T17:00:48.131Z\",\n" +
+								"    \"fechaAlta\": \"2024-05-30T17:00:48.131Z\",\n" +
+								"    \"fechaBaja\": \"2024-05-30T17:00:48.131Z\",\n" +
+								"    \"especialidad\": \"Cardio\",\n" +
+								"    \"titulacion\": \"Grado Superior de Deporte\",\n" +
+								"    \"experiencia\": \"2 años\",\n" +
+								"    \"observaciones\": \"Ninguna\",\n" +
+								"    \"id\": 1\n" +
+								"  }\n" +
+								"]")
+		);
+		//MOCK CLIENTE
+		mockServer.expect(
+				requestTo(UriComponentsBuilder.fromUriString("http://localhost:8080/cliente?centro=1").build().toUri()))
+				.andExpect(method(HttpMethod.GET)).andRespond(withStatus(HttpStatus.OK)
+						.contentType(MediaType.APPLICATION_JSON)
+						.body("[\n" +
+								"  	{\n" +
+								"    \"idUsuario\": 2,\n" +
+								"    \"telefono\": \"987654321\",\n" +
+								"    \"direccion\": \"Alameda Principal, 5 \",\n" +
+								"    \"dni\": \"12345678V\",\n" +
+								"    \"fechaNacimiento\": \"2024-05-30T17:15:13.717Z\",\n" +
+								"    \"sexo\": \"HOMBRE\",\n" +
+								"    \"id\": 2\n" +
+								"  }\n" +
+								"]")
+				);
+		//MOCK ENTRENA
+		mockServer.expect(
+				requestTo(UriComponentsBuilder.fromUriString("http://localhost:8080/entrena?entrenador=1").build().toUri()))
+				.andExpect(method(HttpMethod.GET)).andRespond(withStatus(HttpStatus.OK)
+						.contentType(MediaType.APPLICATION_JSON)
+						.body("[\n" +
+								"  {\n" +
+								"    \"idEntrenador\": 1,\n" +
+								"    \"idCliente\": 2,\n" +
+								"    \"especialidad\": \"Cardio\",\n" +
+								"    \"id\": 1,\n" +
+								"    \"planes\": [\n" +
+								"      {\n" +
+								"        \"fechaInicio\": \"2024-05-30T17:18:52.551Z\",\n" +
+								"        \"fechaFin\": \"2024-05-30T17:18:52.551Z\",\n" +
+								"        \"reglaRecurrencia\": \"Fines de semana\",\n" +
+								"        \"idRutina\": 1,\n" +
+								"        \"id\": 1\n" +
+								"      }\n" +
+								"    ]\n" +
+								"  }\n" +
+								"]")
+				);
+
+		mockServer.expect(
+						requestTo(UriComponentsBuilder.fromUriString("http://localhost:8080/entrena?cliente=1").build().toUri()))
+				.andExpect(method(HttpMethod.GET)).andRespond(withStatus(HttpStatus.OK)
+						.contentType(MediaType.APPLICATION_JSON)
+						.body("[\n" +
+								"  {\n" +
+								"    \"idEntrenador\": 1,\n" +
+								"    \"idCliente\": 2,\n" +
+								"    \"especialidad\": \"Cardio\",\n" +
+								"    \"id\": 1,\n" +
+								"    \"planes\": [\n" +
+								"      {\n" +
+								"        \"fechaInicio\": \"2024-05-30T17:18:52.551Z\",\n" +
+								"        \"fechaFin\": \"2024-05-30T17:18:52.551Z\",\n" +
+								"        \"reglaRecurrencia\": \"Fines de semana\",\n" +
+								"        \"idRutina\": 1,\n" +
+								"        \"id\": 1\n" +
+								"      }\n" +
+								"    ]\n" +
+								"  }\n" +
+								"]")
+				);
+
+		//MOCK CENTROS
+		mockServer.expect(
+				requestTo(UriComponentsBuilder.fromUriString("http://localhost:8080/centro").build().toUri()))
+				.andExpect(method(HttpMethod.GET)).andRespond(withStatus(HttpStatus.OK)
+						.contentType(MediaType.APPLICATION_JSON)
+						.body("[	\n" +
+									 "  {\n" +
+								"    \"nombre\": \"ETSII\",\n" +
+								"    \"direccion\": \" Blvr. Louis Pasteur, 35, Puerto de la Torre, 29071 Málaga\",\n" +
+								"    \"idCentro\": 1\n" +
+								"  		}\n" +
+									  "]")
+				);
+
 	}
 
 	@Nested
