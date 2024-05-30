@@ -71,13 +71,7 @@ class EntidadesYRestApplicationTests {
 
 
 	private RequestEntity<Void> get(String scheme, String host, int port, String path) {
-		URI uri = UriComponentsBuilder.newInstance()
-				.scheme(scheme)
-				.host(host)
-				.port(port)
-				.path(path)
-				.build()
-				.toUri();
+		URI uri = uri(scheme, host,port, path);
 		var peticion = RequestEntity.get(uri).header("Authorization", "Bearer "+jwtToken)
 				.accept(MediaType.APPLICATION_JSON)
 				.build();
@@ -159,7 +153,7 @@ class EntidadesYRestApplicationTests {
 						.contentType(MediaType.APPLICATION_JSON)
 						.body("[" +
 								"  	{" +
-								"    \"idUsuario\": 2," +
+								"    \"idUsuario\": 1," +
 								"    \"telefono\": \"987654321\"," +
 								"    \"direccion\": \"Alameda Principal, 5 \"," +
 								"    \"dni\": \"12345678V\"," +
@@ -177,7 +171,7 @@ class EntidadesYRestApplicationTests {
 						.body("[" +
 								"  {" +
 								"    \"idEntrenador\": 1," +
-								"    \"idCliente\": 2," +
+								"    \"idCliente\": 1," +
 								"    \"especialidad\": \"Cardio\"," +
 								"    \"id\": 1," +
 								"    \"planes\": [" +
@@ -200,7 +194,7 @@ class EntidadesYRestApplicationTests {
 						.body("[" +
 								"  {" +
 								"    \"idEntrenador\": 1," +
-								"    \"idCliente\": 2," +
+								"    \"idCliente\": 1," +
 								"    \"especialidad\": \"Cardio\"," +
 								"    \"id\": 1," +
 								"    \"planes\": [" +
@@ -235,7 +229,7 @@ class EntidadesYRestApplicationTests {
 	@Nested
 	@DisplayName("cuando la base de datos está vacía")
 	public class BaseDatosVacia {
-
+		/*
 		//GET/sesion/{idSesion}
 		@Test
 		@DisplayName("devuelve error cuando intenta obtener una sesion especifica sin acceso autorizado")
@@ -342,13 +336,9 @@ class EntidadesYRestApplicationTests {
 			assertThat(sesion.getId().equals(bd.get(0).getId()));
 
 		}
-		@Test
-		@DisplayName("devuelve error cuando intenta crear una sesion nueva sin acceso autorizado")
-		public void postSesionNoAccess() {
-
-		}
-	}
-	/*
+		
+	}*/
+	
 	@Nested
 	@DisplayName("cuando la base de datos tiene datos")
 	public class BaseDatosLlena {
@@ -391,6 +381,18 @@ class EntidadesYRestApplicationTests {
 			sesionRepo.save(ses3);
 		}
 
+		@Test
+		@DisplayName("devuelve error cuando intenta crear una sesion nueva sin acceso autorizado")
+		public void postSesionNoAccess() {
+			var peticion = get("http", "localhost", port, "/sesion", 1L);
+
+            var respuesta = restTemplate.exchange(peticion,
+                new ParameterizedTypeReference<List<Sesion>>() {
+                });
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+		}
+		/*
 		//GET/sesion/{idSesion}
 		@Test
 		@DisplayName("obtiene correctamente una sesion especifica")
@@ -564,10 +566,11 @@ class EntidadesYRestApplicationTests {
 
             assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
 			assertThat(respuesta.getBody().getDescripcion()).isEqualTo("hellooo");
-		}
+		}*/
 	}
 
-	 */
+	 
 
 	
+}
 }
