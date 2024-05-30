@@ -27,42 +27,12 @@ public class SesionDTO extends SesionNuevaDTO {
                 .descripcion(this.getDescripcion()).multimedia(this.getMultimedia()).presencial(this.getPresencial())
                 .datosSalud(this.getDatosSalud()).build();
     }
-    /*public Sesion convertToSesion(){
-        Sesion s = new Sesion();
-        s.setId(this.getId());
-        s.setInicio(this.getInicio());
-        s.setFin((Timestamp) this.getFin()); //Probablemente no funcione, esto es una prueba
-        s.setTrabajoRealizado(this.getTrabajoRealizado());
-        s.setDescripcion(this.getDescripcion());
-        s.setMultimedia(this.getMultimedia());
-        s.setPresencial(this.getPresencial());
-        s.setDatosSalud(this.getDatosSalud());
-        s.setIdPlan(this.getIdPlan());
-        return s;
-    }*/
 
     public static SesionDTO convertirSesionToDTO(Sesion s){
         return builder().id(s.getId()).idPlan(s.getIdPlan()).inicio( (Timestamp) s.getInicio()).fin( (Timestamp) s.getFin()).trabajoRealizado(s.getTrabajoRealizado())
                 .descripcion(s.getDescripcion()).multimedia(s.getMultimedia()).presencial(s.getPresencial())
                 .datosSalud(s.getDatosSalud()).build();
     }
-    /*
-    public static SesionDTO convertirSesionToDTO(Sesion s){
-        var dto = new SesionDTO();
-        dto.setId(s.getId());
-        dto.setInicio((Timestamp) s.getInicio());
-        dto.setFin((Timestamp) s.getFin()); //Probablemente no funcione, esto es una prueba
-        dto.setTrabajoRealizado(s.getTrabajoRealizado());
-        dto.setDescripcion(s.getDescripcion());
-        dto.setMultimedia(s.getMultimedia());
-        dto.setPresencial(s.getPresencial());
-        dto.setDatosSalud(s.getDatosSalud());
-        dto.setIdPlan(s.getIdPlan());
-        return dto;
-    }
-
-     */
-    
 
 
 }
