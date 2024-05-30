@@ -123,9 +123,7 @@ public class SesionService {
 	}
 
     public void checkSeguridad(Sesion sesion){
-        if(sesion.getIdPlan()==null){
-            throw new AccesoNoAutorizado();
-        }
+        if(sesion.getIdPlan()==null) throw new AccesoNoAutorizado();
 
         Set<Long> planesRel = new HashSet<>();
         Optional<UserDetails> usuario = SecurityConfguration.getAuthenticatedUser();
@@ -134,56 +132,50 @@ public class SesionService {
         var petCentros = get("http","localhost",8080,"/centro",jwtToken);
         
         restTemplate.exchange(petCentros,
-        new ParameterizedTypeReference<List<Map<String, Object>>>() {
-        }).getBody().stream()
-            .forEach(centro -> {
+        new ParameterizedTypeReference<List<Map<String, Object>>>() {}).getBody().stream().forEach(centro -> {
                 Long idCentro = Long.parseLong(centro.get("idCentro").toString());
+
                 var petClientes = get("http","localhost",8080,"/cliente",jwtToken, "centro", idCentro);
+                
                 restTemplate.exchange(petClientes,
-                new ParameterizedTypeReference<List<Map<String, Object>>>(){
-                }).getBody().stream().forEach(cliente -> {
+                new ParameterizedTypeReference<List<Map<String, Object>>>(){}).getBody().stream().forEach(cliente -> {
                     if(Long.valueOf(cliente.get("idUsuario").toString()).equals(Long.valueOf(usuario.get().getUsername()))){
                         Long idCliente = Long.parseLong(cliente.get("id").toString());
+                        
                         var petEntrena = get("http","localhost",8080,"/entrena",jwtToken, "cliente", idCliente);
+                        
                         restTemplate.exchange(petEntrena, new ParameterizedTypeReference<List<Map<String,Object>>>() {           
                         }).getBody().stream().forEach(entrena -> {
                             @SuppressWarnings("unchecked")
-                            List<Map<String, Object>> planes = (List<Map<String, Object>>) entrena.get("planes");
-                            planes.stream().forEach(plan -> {
+                            List<Map<String, Object>> listaPlanes = (List<Map<String, Object>>) entrena.get("planes");
+                            listaPlanes.stream().forEach(plan -> {
                                 planesRel.add(Long.valueOf(plan.get("id").toString()));
-                            }
-                            );
-                        } 
-                        );
+                            });
+                        });
                     }
-                }
-                );
+                });
                 var petEntrenadores = get("http","localhost",8080,"/entrenador",jwtToken, "centro", idCentro);
                 
                 restTemplate.exchange(petEntrenadores,
-                new ParameterizedTypeReference<List<Map<String, Object>>>(){
-                }).getBody().stream().forEach(entrenador -> {
+                new ParameterizedTypeReference<List<Map<String, Object>>>(){}).getBody().stream().forEach(entrenador -> {
+                    
                     if(Long.valueOf(entrenador.get("idUsuario").toString()).equals(Long.valueOf(usuario.get().getUsername()))){
                         Long idEntrenador = Long.parseLong(entrenador.get("id").toString());
+                        
                         var petEntrena = get("http","localhost",8080,"/entrena",jwtToken, "entrenador", idEntrenador);
+                        
                         restTemplate.exchange(petEntrena, new ParameterizedTypeReference<List<Map<String,Object>>>() {  
                         }).getBody().stream().forEach(entrena -> {
                             @SuppressWarnings("unchecked")
-                            List<Map<String, Object>> planes = (List<Map<String, Object>>) entrena.get("planes");
-                            planes.stream().forEach(plan -> {
+                            List<Map<String, Object>> listaPlanes = (List<Map<String, Object>>) entrena.get("planes");
+                            listaPlanes.stream().forEach(plan -> {
                                 planesRel.add(Long.valueOf(plan.get("id").toString()));
-                            }
-                            );
-                        } 
-                        );
+                            });
+                        });
                     }
-                }
-                );
-            }
-        );
+                });
+            });
 
-        if(!planesRel.contains(sesion.getIdPlan())){
-            throw new AccesoNoAutorizado();
-        }
+        if (!planesRel.contains(sesion.getIdPlan())) throw new AccesoNoAutorizado();
     }
 }
