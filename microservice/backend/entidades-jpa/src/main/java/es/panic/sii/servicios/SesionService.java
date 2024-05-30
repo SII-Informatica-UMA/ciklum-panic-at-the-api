@@ -33,7 +33,6 @@ public class SesionService {
 
     private SesionRepository repo; //solo hay un repositorio porque solo hay una entidad
     private JwtUtil jwtUtil;
-
     @Autowired
 	private RestTemplate restTemplate;
 
