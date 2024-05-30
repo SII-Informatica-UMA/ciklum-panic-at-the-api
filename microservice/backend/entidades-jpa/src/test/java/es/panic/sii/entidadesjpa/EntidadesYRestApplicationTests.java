@@ -135,21 +135,21 @@ class EntidadesYRestApplicationTests {
 				requestTo(UriComponentsBuilder.fromUriString("http://localhost:8080/entrenador?centro=1").build().toUri()))
 				.andExpect(method(HttpMethod.GET)).andRespond(withStatus(HttpStatus.OK)
 						.contentType(MediaType.APPLICATION_JSON)
-						.body("[\n" +
-								"  {\n" +
-								"    \"idUsuario\": 1,\n" +
-								"    \"telefono\": \"123456789\",\n" +
-								"    \"direccion\": \"Corregidor Francisco\",\n" +
-								"    \"dni\": \"454545458\",\n" +
-								"    \"fechaNacimiento\": \"2024-05-30T17:00:48.131Z\",\n" +
-								"    \"fechaAlta\": \"2024-05-30T17:00:48.131Z\",\n" +
-								"    \"fechaBaja\": \"2024-05-30T17:00:48.131Z\",\n" +
-								"    \"especialidad\": \"Cardio\",\n" +
-								"    \"titulacion\": \"Grado Superior de Deporte\",\n" +
-								"    \"experiencia\": \"2 años\",\n" +
-								"    \"observaciones\": \"Ninguna\",\n" +
-								"    \"id\": 1\n" +
-								"  }\n" +
+						.body("[" +
+								"  {" +
+								"    \"idUsuario\": 1," +
+								"    \"telefono\": \"123456789\"," +
+								"    \"direccion\": \"Corregidor Francisco\"," +
+								"    \"dni\": \"454545458\"," +
+								"    \"fechaNacimiento\": \"2024-05-30T17:00:48.131Z\"," +
+								"    \"fechaAlta\": \"2024-05-30T17:00:48.131Z\"," +
+								"    \"fechaBaja\": \"2024-05-30T17:00:48.131Z\"," +
+								"    \"especialidad\": \"Cardio\"," +
+								"    \"titulacion\": \"Grado Superior de Deporte\"," +
+								"    \"experiencia\": \"2 años\"," +
+								"    \"observaciones\": \"Ninguna\"," +
+								"    \"id\": 1" +
+								"  }" +
 								"]")
 		);
 		//MOCK CLIENTE
@@ -157,16 +157,16 @@ class EntidadesYRestApplicationTests {
 				requestTo(UriComponentsBuilder.fromUriString("http://localhost:8080/cliente?centro=1").build().toUri()))
 				.andExpect(method(HttpMethod.GET)).andRespond(withStatus(HttpStatus.OK)
 						.contentType(MediaType.APPLICATION_JSON)
-						.body("[\n" +
-								"  	{\n" +
-								"    \"idUsuario\": 2,\n" +
-								"    \"telefono\": \"987654321\",\n" +
-								"    \"direccion\": \"Alameda Principal, 5 \",\n" +
-								"    \"dni\": \"12345678V\",\n" +
-								"    \"fechaNacimiento\": \"2024-05-30T17:15:13.717Z\",\n" +
-								"    \"sexo\": \"HOMBRE\",\n" +
-								"    \"id\": 2\n" +
-								"  }\n" +
+						.body("[" +
+								"  	{" +
+								"    \"idUsuario\": 2," +
+								"    \"telefono\": \"987654321\"," +
+								"    \"direccion\": \"Alameda Principal, 5 \"," +
+								"    \"dni\": \"12345678V\"," +
+								"    \"fechaNacimiento\": \"2024-05-30T17:15:13.717Z\"," +
+								"    \"sexo\": \"HOMBRE\"," +
+								"    \"id\": 2" +
+								"  }" +
 								"]")
 				);
 		//MOCK ENTRENA
@@ -174,22 +174,22 @@ class EntidadesYRestApplicationTests {
 				requestTo(UriComponentsBuilder.fromUriString("http://localhost:8080/entrena?entrenador=1").build().toUri()))
 				.andExpect(method(HttpMethod.GET)).andRespond(withStatus(HttpStatus.OK)
 						.contentType(MediaType.APPLICATION_JSON)
-						.body("[\n" +
-								"  {\n" +
-								"    \"idEntrenador\": 1,\n" +
-								"    \"idCliente\": 2,\n" +
-								"    \"especialidad\": \"Cardio\",\n" +
-								"    \"id\": 1,\n" +
-								"    \"planes\": [\n" +
-								"      {\n" +
-								"        \"fechaInicio\": \"2024-05-30T17:18:52.551Z\",\n" +
-								"        \"fechaFin\": \"2024-05-30T17:18:52.551Z\",\n" +
-								"        \"reglaRecurrencia\": \"Fines de semana\",\n" +
-								"        \"idRutina\": 1,\n" +
-								"        \"id\": 1\n" +
-								"      }\n" +
-								"    ]\n" +
-								"  }\n" +
+						.body("[" +
+								"  {" +
+								"    \"idEntrenador\": 1," +
+								"    \"idCliente\": 2," +
+								"    \"especialidad\": \"Cardio\"," +
+								"    \"id\": 1," +
+								"    \"planes\": [" +
+								"      {" +
+								"        \"fechaInicio\": \"2024-05-30T17:18:52.551Z\"," +
+								"        \"fechaFin\": \"2024-05-30T17:18:52.551Z\"," +
+								"        \"reglaRecurrencia\": \"Fines de semana\"," +
+								"        \"idRutina\": 1," +
+								"        \"id\": 1" +
+								"      }" +
+								"    ]" +
+								"  }" +
 								"]")
 				);
 
@@ -197,22 +197,22 @@ class EntidadesYRestApplicationTests {
 						requestTo(UriComponentsBuilder.fromUriString("http://localhost:8080/entrena?cliente=1").build().toUri()))
 				.andExpect(method(HttpMethod.GET)).andRespond(withStatus(HttpStatus.OK)
 						.contentType(MediaType.APPLICATION_JSON)
-						.body("[\n" +
-								"  {\n" +
-								"    \"idEntrenador\": 1,\n" +
-								"    \"idCliente\": 2,\n" +
-								"    \"especialidad\": \"Cardio\",\n" +
-								"    \"id\": 1,\n" +
-								"    \"planes\": [\n" +
+						.body("[" +
+								"  {" +
+								"    \"idEntrenador\": 1," +
+								"    \"idCliente\": 2," +
+								"    \"especialidad\": \"Cardio\"," +
+								"    \"id\": 1," +
+								"    \"planes\": [" +
 								"      {\n" +
-								"        \"fechaInicio\": \"2024-05-30T17:18:52.551Z\",\n" +
-								"        \"fechaFin\": \"2024-05-30T17:18:52.551Z\",\n" +
-								"        \"reglaRecurrencia\": \"Fines de semana\",\n" +
-								"        \"idRutina\": 1,\n" +
-								"        \"id\": 1\n" +
-								"      }\n" +
-								"    ]\n" +
-								"  }\n" +
+								"        \"fechaInicio\": \"2024-05-30T17:18:52.551Z\"," +
+								"        \"fechaFin\": \"2024-05-30T17:18:52.551Z\"," +
+								"        \"reglaRecurrencia\": \"Fines de semana\"," +
+								"        \"idRutina\": 1," +
+								"        \"id\": 1" +
+								"      }" +
+								"    ]" +
+								"  }" +
 								"]")
 				);
 
@@ -221,12 +221,12 @@ class EntidadesYRestApplicationTests {
 				requestTo(UriComponentsBuilder.fromUriString("http://localhost:8080/centro").build().toUri()))
 				.andExpect(method(HttpMethod.GET)).andRespond(withStatus(HttpStatus.OK)
 						.contentType(MediaType.APPLICATION_JSON)
-						.body("[	\n" +
-									 "  {\n" +
-								"    \"nombre\": \"ETSII\",\n" +
-								"    \"direccion\": \" Blvr. Louis Pasteur, 35, Puerto de la Torre, 29071 Málaga\",\n" +
-								"    \"idCentro\": 1\n" +
-								"  		}\n" +
+						.body("[	" +
+									 "  {" +
+								"    \"nombre\": \"ETSII\"," +
+								"    \"direccion\": \" Blvr. Louis Pasteur, 35, Puerto de la Torre, 29071 Málaga\"," +
+								"    \"idCentro\": 1" +
+								"  		}" +
 									  "]")
 				);
 
