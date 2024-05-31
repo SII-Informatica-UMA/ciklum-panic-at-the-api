@@ -231,6 +231,7 @@ class EntidadesYRestApplicationTests {
 	private RequestEntity<Void> delete(String scheme, String host, int port, String path) {
 		URI uri = uri(scheme, host,port, path);
 		var peticion = RequestEntity.delete(uri)
+				.header("Authorization", "Bearer "+jwtToken)
 				.build();
 		return peticion;
 	}
@@ -239,6 +240,7 @@ class EntidadesYRestApplicationTests {
 		URI uri = uri(scheme, host,port, path);
 		var peticion = RequestEntity.post(uri)
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("Authorization", "Bearer "+jwtToken)
 				.body(object);
 		return peticion;
 	}
@@ -247,6 +249,7 @@ class EntidadesYRestApplicationTests {
 		URI uri = uri(scheme, host,port, path);
 		var peticion = RequestEntity.put(uri)
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("Authorization", "Bearer "+jwtToken)
 				.body(object);
 		return peticion;
 	}
