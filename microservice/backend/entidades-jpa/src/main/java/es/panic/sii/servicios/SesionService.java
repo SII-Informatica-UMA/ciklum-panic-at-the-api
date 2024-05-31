@@ -58,10 +58,11 @@ public class SesionService {
 
     }
     //me pasan un id y una sesion y sustituyo la sesion que tenga ese id por el sesion
-    public void editarSesion(Sesion s){ //quiero editar el id
+    public Sesion editarSesion(Sesion s){ //quiero editar el id
         checkSeguridad(s);
         if (repo.existsById(s.getId())) {
 			repo.save(s);
+            return s;
 		} else {
 			throw new SesionNoExiste();
 		}

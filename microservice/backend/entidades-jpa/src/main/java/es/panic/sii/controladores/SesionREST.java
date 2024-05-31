@@ -67,7 +67,7 @@ public class SesionREST {
     @PutMapping("/{idSesion}")
     public ResponseEntity<SesionDTO> actualizarSesion(@PathVariable Long idSesion, @RequestBody SesionDTO sesion){
         sesion.setId(idSesion);
-        Sesion ses = this.sesionService.agregarSesion(sesion.convertToSesion());
+        Sesion ses = this.sesionService.editarSesion(sesion.convertToSesion());
         return ResponseEntity.ok(SesionDTO.convertirSesionToDTO(ses));
     }
     //DELETE ID
