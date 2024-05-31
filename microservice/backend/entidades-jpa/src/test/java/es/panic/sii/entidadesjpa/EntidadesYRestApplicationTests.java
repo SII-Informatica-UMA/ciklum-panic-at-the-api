@@ -381,11 +381,11 @@ class EntidadesYRestApplicationTests {
 			sesionRepo.save(s1);
 
 		}
-		@Disabled
+
 		@Test
 		@DisplayName("devuelve las sesiones asociadas a un plan")
-		public void getSesionNoAccess() {
-			var peticion = get("http", "localhost", port, "/sesion/1");
+		public void getSesionIdWithAccess() {
+			var peticion = get("http", "localhost", port, "/sesion/6");
 
 			var respuesta = restTemplate.exchange(peticion,
 					new ParameterizedTypeReference<SesionDTO>() {
@@ -396,7 +396,55 @@ class EntidadesYRestApplicationTests {
 
 		@Test
 		@DisplayName("devuelve las sesiones asociadas a un plan")
-		public void getSesionWithAccess() {
+		public void postSesionWithAccess() {
+
+			Sesion s1 = Sesion.builder().idPlan(1L)
+							.inicio(new Date(2023, 5, 12, 10, 0)).fin(new Date(2024, 6, 12, 10, 0))
+							.trabajoRealizado("muchisimo").presencial(false).descripcion("Calor").multimedia(null).datosSalud(null)
+							.build();
+
+			var peticion = post("http", "localhost", port, "/sesion", s1);
+
+			var respuesta = restTemplate.exchange(peticion,
+					new ParameterizedTypeReference<SesionDTO>() {
+					});
+
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+		}
+
+		@Test
+		@DisplayName("devuelve las sesiones asociadas a un plan")
+		public void putSesionWithAccess() {
+
+			Sesion s1 = Sesion.builder().idPlan(1L)
+							.inicio(new Date(2023, 5, 12, 10, 0)).fin(new Date(2023, 6, 12, 10, 0))
+							.trabajoRealizado("poco").presencial(true).descripcion("Calor").multimedia(null).datosSalud(null)
+							.build();
+
+			var peticion = put("http", "localhost", port, "/sesion/6", s1);
+
+			var respuesta = restTemplate.exchange(peticion,
+					new ParameterizedTypeReference<SesionDTO>() {
+					});
+
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
+		}
+
+		@Test
+		@DisplayName("devuelve las sesiones asociadas a un plan")
+		public void deleteSesionIdWithAccess() {
+			var peticion = delete("http", "localhost", port, "/sesion/6");
+
+			var respuesta = restTemplate.exchange(peticion,
+					new ParameterizedTypeReference<SesionDTO>() {
+					});
+
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+		}
+
+		@Test
+		@DisplayName("devuelve las sesiones asociadas a un plan")
+		public void getSesionPlanWithAccess() {
 			var peticion = get("http", "localhost", port, "/sesion", 1L);
 
             var respuesta = restTemplate.exchange(peticion,
