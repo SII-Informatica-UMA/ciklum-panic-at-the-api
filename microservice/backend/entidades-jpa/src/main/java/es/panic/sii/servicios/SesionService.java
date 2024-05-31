@@ -43,14 +43,14 @@ public class SesionService {
 
 
     public Sesion agregarSesion(Sesion s){
-        checkSeguridad(s);
+        checkSeguridad(s.getIdPlan());
 		repo.save(s);
 		return s;
     }
 //mejor borrarla dado un id
     public void borrarSesion(Long id){
         if (repo.existsById(id)) {
-            checkSeguridad(repo.getReferenceById(id));
+            checkSeguridad(repo.getReferenceById(id).getIdPlan());
             repo.deleteById(id);
         }else{
             throw new SesionNoExiste();
@@ -59,7 +59,7 @@ public class SesionService {
     }
     //me pasan un id y una sesion y sustituyo la sesion que tenga ese id por el sesion
     public Sesion editarSesion(Sesion s){ //quiero editar el id
-        checkSeguridad(s);
+        checkSeguridad(s.getIdPlan());
         if (repo.existsById(s.getId())) {
 			repo.save(s);
             return s;
@@ -69,22 +69,22 @@ public class SesionService {
     }
     public Optional<Sesion> obtenerSesionPorId(Long id){
         if(repo.existsById(id)){
-            checkSeguridad(repo.getReferenceById(id));
+            checkSeguridad(repo.getReferenceById(id).getIdPlan());
             return repo.findById(id);
         }else{
             throw new SesionNoExiste();
         }
     }
-
-    public List<Sesion> obtenerTodasLasSesiones() {
+    /*
+   public List<Sesion> obtenerTodasLasSesiones() {
         return repo.findAll();
     }
+     */
 
     public List<Sesion> obtenerSesionPorPlan(Long plan){
+        checkSeguridad(plan);
         List<Sesion> lista = repo.findSesionesByIdPlan(plan);
-        for(Sesion sesion : lista){
-            checkSeguridad(sesion);
-        }return lista;
+        return lista;
 
     }
 
@@ -122,9 +122,8 @@ public class SesionService {
 		return peticion;
 	}
 
-    public void checkSeguridad(Sesion sesion){
+    public void checkSeguridad(Long idPlan){
 
-            if(sesion.getIdPlan()==null) throw new AccesoNoAutorizado();
 
             Set<Long> planesRel = new HashSet<>();
             Optional<UserDetails> usuario = SecurityConfguration.getAuthenticatedUser();
@@ -177,7 +176,7 @@ public class SesionService {
                 });
             });
 
-            if (!planesRel.contains(sesion.getIdPlan())) throw new AccesoNoAutorizado();
+            if (!planesRel.contains(idPlan)) throw new AccesoNoAutorizado();
         }
 }
 

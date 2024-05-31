@@ -41,6 +41,7 @@ public class SesionREST {
     //POST
     @PostMapping
     public ResponseEntity<SesionDTO> crearSesion(@RequestParam(name="plan",required = true) Long idPlan, @RequestBody SesionNuevaDTO nueva, UriComponentsBuilder uriBuilder) {
+       // if (idPlan == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         Sesion s = nueva.convertToSesion();
         s.setIdPlan(idPlan);
         Sesion ses = this.sesionService.agregarSesion(s);
@@ -54,13 +55,6 @@ public class SesionREST {
         return ResponseEntity.of(sesionCualquiera);
     }
 
-    public static Function<Sesion, URI> sesionUriBuilder(UriComponents uriBuilder) {
-		return (s) -> UriComponentsBuilder.newInstance().uriComponents(uriBuilder)
-                .path("/sesion")
-				.path(String.format("/%d", s.getId()))
-				.build()
-				.toUri();
-	}
 
 
     //PUT ID

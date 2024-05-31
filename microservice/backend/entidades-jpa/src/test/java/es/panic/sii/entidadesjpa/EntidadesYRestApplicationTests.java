@@ -26,6 +26,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,7 +54,7 @@ class EntidadesYRestApplicationTests {
 	private int port;
 	@Autowired
 	private SesionRepository sesionRepo;
-	private String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE3MTcxMjE4LCJleHAiOjE3MTcxNzE4MTh9.ycacoagAKXztoXI4Ld1flo4bTpiXONZT3q__-Rmexo9wOqumnxKr88UL5FvGe_o_Ths_-_nITKdvTEbn1jfxKg";
+	private String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE3MTc3MjAwLCJleHAiOjE3MTcxNzc4MDB9.WwbZONcjo4BTZHUrrOApIqlkJXjJCphJnazlW1XKKE13xcR2Z4KL6wL3rtC6NPgW3wnJKCtgMCU8UXVRGBfFDg";
 	private MockRestServiceServer mockServer;
 
 
@@ -263,13 +264,7 @@ class EntidadesYRestApplicationTests {
 	@Nested
 	@DisplayName("cuando la base de datos está vacía")
 	public class BaseDatosVacia {
-		
-		//GET/sesion/{idSesion}
-		@Test
-		@DisplayName("devuelve error cuando intenta obtener una sesion especifica sin acceso autorizado")
-		public void getSesionByIdNoAccess() {
 
-		}
 		@Test
 		@DisplayName("devuelve error cuando intenta obtener una sesion especifica que no existe")
 		public void getSesionByIdNoExist() {
@@ -279,12 +274,7 @@ class EntidadesYRestApplicationTests {
 
 			assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 		}
-    	//PUT/sesion/{idSesion}
-		@Test
-		@DisplayName("devuelve error cuando intenta modificar una sesion especifica sin acceso autorizado")
-		public void putSesionByIdNoAccess() {
 
-		}
 		@Test
 		@DisplayName("devuelve error cuando intenta modificar una sesion especifica que no existe")
 		public void putSesionByIdNoExist() {
@@ -308,12 +298,7 @@ class EntidadesYRestApplicationTests {
 			assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 			//new SesionNoExiste();
 		}
-    	//DELETE/sesion/{idSesion}
-		@Test
-		@DisplayName("devuelve error cuando intenta eliminar una sesion especifica sin acceso autorizado")
-		public void deleteSesionByIdNoAccess() {
 
-		}
 		@Test
 		@DisplayName("devuelve error cuando intenta eliminar una sesion especifica que no existe")
 		public void deleteSesionByIdNoExist() {
@@ -321,30 +306,17 @@ class EntidadesYRestApplicationTests {
 			var respuesta = restTemplate.exchange(peticion, Void.class);
 			assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 		}
-    	//GET/sesion
-		@Test
-		@DisplayName("obtiene correctamente las sesiones asociadas a un plan")
-		public void getSesionByPlan() {
 
-		}
 		@Test
-		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan sin acceso autorizado")
-		public void getSesionByPlanNoAccess() {
-
-		}
-		@Disabled
-		@Test
-		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan que no existe")
-		public void getSesionByPlanNoExist() {
-			var peticion = get("http", "localhost", port, "/sesion", 3L);
+		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan no válido")
+		public void getSesionByPlanNoValid() {
+			var peticion = get("http", "localhost", port, "/sesion", 12L);
 			var respuesta = restTemplate.exchange(peticion, new ParameterizedTypeReference<List<Sesion>>() {});
 
-			assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-			assertThat(respuesta.getBody()).isEmpty();
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(401);
 		}
 
-    	//POST/sesion
-		@Disabled
+
 		@Test
 		@DisplayName("crea correctamente una sesion nueva")
 		public void postSesion() {
@@ -372,81 +344,21 @@ class EntidadesYRestApplicationTests {
 							.build();
 			sesionRepo.save(s1);
 
+			Sesion s2 = Sesion.builder().idPlan(2L)
+					.inicio(new Date(2024, 5, 12, 10, 0)).fin(new Date(2024, 5, 12, 10, 0))
+					.trabajoRealizado("muchisimo").presencial(false).descripcion("Calor").multimedia(null).datosSalud(null)
+					.build();
+			sesionRepo.save(s2);
+
+			Sesion s3 = Sesion.builder().idPlan(3L)
+					.inicio(new Date(2024, 5, 12, 10, 0)).fin(new Date(2024, 5, 12, 10, 0))
+					.trabajoRealizado("muchisimo").presencial(false).descripcion("Calor").multimedia(null).datosSalud(null)
+					.build();
+			sesionRepo.save(s3);
+
 		}
 
-		@Test
-		@DisplayName("devuelve las sesiones asociadas a un plan1")
-		public void getSesionIdWithAccess() {
-			var peticion = get("http", "localhost", port, "/sesion/6");
 
-			var respuesta = restTemplate.exchange(peticion,
-					new ParameterizedTypeReference<SesionDTO>() {
-					});
-
-			assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-		}
-
-		@Test
-		@DisplayName("devuelve las sesiones asociadas a un plan2")
-		public void postSesionWithAccess() {
-
-			Sesion s1 = Sesion.builder().idPlan(1L)
-							.inicio(new Date(2023, 5, 12, 10, 0)).fin(new Date(2024, 6, 12, 10, 0))
-							.trabajoRealizado("muchisimo").presencial(false).descripcion("Calor").multimedia(null).datosSalud(null)
-							.build();
-
-			var peticion = post("http", "localhost", port, "/sesion", s1, 1L);
-
-			var respuesta = restTemplate.exchange(peticion,
-					new ParameterizedTypeReference<SesionDTO>() {
-					});
-
-			assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
-		}
-
-		@Test
-		@DisplayName("devuelve las sesiones asociadas a un plan3")
-		public void putSesionWithAccess() {
-
-			Sesion s1 = Sesion.builder().idPlan(1L)
-							.inicio(new Date(2023, 5, 12, 10, 0)).fin(new Date(2023, 6, 12, 10, 0))
-							.trabajoRealizado("poco").presencial(true).descripcion("Calor").multimedia(null).datosSalud(null)
-							.build();
-
-			var peticion = put("http", "localhost", port, "/sesion/6", s1);
-
-			var respuesta = restTemplate.exchange(peticion,
-					new ParameterizedTypeReference<SesionDTO>() {
-					});
-
-			assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-		}
-
-		@Test
-		@DisplayName("devuelve las sesiones asociadas a un plan4")
-		public void deleteSesionIdWithAccess() {
-			var peticion = delete("http", "localhost", port, "/sesion/6");
-
-			var respuesta = restTemplate.exchange(peticion,
-					new ParameterizedTypeReference<SesionDTO>() {
-					});
-
-			assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-		}
-
-		@Test
-		@DisplayName("devuelve las sesiones asociadas a un plan5")
-		public void getSesionPlanWithAccess() {
-			var peticion = get("http", "localhost", port, "/sesion", 1L);
-
-            var respuesta = restTemplate.exchange(peticion,
-                new ParameterizedTypeReference<List<SesionDTO>>() {
-                });
-
-            assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-		}
-		
-		//GET/sesion/{idSesion}
 		@Test
 		@DisplayName("obtiene correctamente una sesion especifica")
 		public void getSesionById() {
@@ -462,7 +374,13 @@ class EntidadesYRestApplicationTests {
 		@Test
 		@DisplayName("devuelve error cuando intenta obtener una sesion especifica sin acceso autorizado")
 		public void getSesionByIdNoAccess() {
+			var peticion = get("http", "localhost", port, "/sesion/7");
 
+			var respuesta = restTemplate.exchange(peticion,
+					new ParameterizedTypeReference<Sesion>() {
+					});
+
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(401);
 		}
 		@Test
 		@DisplayName("devuelve error cuando intenta obtener una sesion especifica que no existe")
@@ -493,16 +411,32 @@ class EntidadesYRestApplicationTests {
 			var peticion = put("http", "localhost", port, "/sesion/6", tmp);
 
             var respuesta = restTemplate.exchange(peticion,
-                new ParameterizedTypeReference<Sesion>() {
+                new ParameterizedTypeReference<SesionDTO>() {
                 });
 
             assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
 			assertThat(respuesta.getBody().getDescripcion()).isEqualTo("editado con exito");
-			assertThat(respuesta.getBody().equals(tmp)).isEqualTo(true);
 		}
 		@Test
 		@DisplayName("devuelve error cuando intenta modificar una sesion especifica sin acceso autorizado")
 		public void putSesionByIdNoAccess() {
+			Sesion tmp = new Sesion();
+			tmp.setInicio(new Date(2024, 3, 5, 10, 0));
+			tmp.setFin(new Date(2024, 3, 6, 11, 0));
+			tmp.setDatosSalud(null);
+			tmp.setDescripcion("editado con exito");
+			tmp.setMultimedia(null);
+			tmp.setPresencial(true);
+			tmp.setTrabajoRealizado(null);
+			tmp.setIdPlan(3L);
+
+			var peticion = put("http", "localhost", port, "/sesion/8", tmp);
+
+			var respuesta = restTemplate.exchange(peticion,
+					new ParameterizedTypeReference<SesionDTO>() {
+					});
+
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(401);
 
 		}
 		@Test
@@ -542,12 +476,20 @@ class EntidadesYRestApplicationTests {
 		@Test
 		@DisplayName("devuelve error cuando intenta eliminar una sesion especifica sin acceso autorizado")
 		public void deleteSesionByIdNoAccess() {
+			var peticion = delete("http", "localhost", port, "/sesion/7");
 
+			var respuesta = restTemplate.exchange(peticion,
+					new ParameterizedTypeReference<Sesion>() {
+					});
+
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(401);
 		}
+
+
 		@Test
 		@DisplayName("devuelve error cuando intenta eliminar una sesion especifica que no existe")
 		public void deleteSesionByIdNoExist() {
-			var peticion = delete("http", "localhost", port, "/sesion/8");
+			var peticion = delete("http", "localhost", port, "/sesion/10");
 
             var respuesta = restTemplate.exchange(peticion,
                 new ParameterizedTypeReference<Sesion>() {
@@ -559,37 +501,49 @@ class EntidadesYRestApplicationTests {
 		@Test
 		@DisplayName("obtiene correctamente las sesiones asociadas a un plan")
 		public void getSesionByPlan() {
-			
+			var peticion = get("http", "localhost", port, "/sesion", 1L);
+
+			var respuesta = restTemplate.exchange(peticion,
+					new ParameterizedTypeReference<List<SesionDTO>>() {
+					});
+
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
 		}
+
 		@Test
 		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan sin acceso autorizado")
 		public void getSesionByPlanNoAccess() {
+			var peticion = get("http", "localhost", port, "/sesion", 2L);
 
+			var respuesta = restTemplate.exchange(peticion,
+					new ParameterizedTypeReference<List<SesionDTO>>() {
+					});
+
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(401);
 		}
 		@Test
-		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan que no existe")
-		public void getSesionByPlanNoExist() {
+		@DisplayName("devuelve error cuando intenta obtener las sesiones asociadas a un plan que no es válido")
+		public void getSesionByPlanNoValid() {
+			var peticion = get("http", "localhost", port, "/sesion", 12L);
 
+			var respuesta = restTemplate.exchange(peticion,
+					new ParameterizedTypeReference<List<SesionDTO>>() {
+					});
+
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(401);
 		}
 
-    	//POST/sesion
 		@Test
 		@DisplayName("crea correctamente una sesion nueva")
 		public void postSesion() {
-			Sesion tmp = new Sesion();
-			tmp.setInicio(new Date(2024, 3, 5, 10, 0));
-			tmp.setFin(new Date(2024, 3, 6, 11, 0));
-			tmp.setDatosSalud(null);
-			tmp.setDescripcion("hellooo");
-			tmp.setId(4L);
-			tmp.setMultimedia(null);
-			tmp.setPresencial(true);
-			tmp.setTrabajoRealizado(null);
+			var tmp = Sesion.builder().idPlan(1L).inicio(new Date())
+					.fin( new Date()).descripcion("").presencial(true).trabajoRealizado("Espalda")
+					.multimedia(null).datosSalud(null).build();
 
 			var peticion = post("http", "localhost", port, "/sesion", tmp, 1L);
 
             var respuesta = restTemplate.exchange(peticion,
-                new ParameterizedTypeReference<Sesion>() {
+                new ParameterizedTypeReference<SesionDTO>() {
                 });
 
             assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
@@ -597,35 +551,28 @@ class EntidadesYRestApplicationTests {
 		@Test
 		@DisplayName("devuelve error cuando intenta crear una sesion nueva sin acceso autorizado")
 		public void postSesionNoAccess() {
+			var tmp = Sesion.builder().idPlan(3L).inicio(new Date())
+					.fin( new Date()).descripcion("").presencial(true).trabajoRealizado("Espalda")
+					.multimedia(null).datosSalud(null).build();
 
+			var peticion = post("http", "localhost", port, "/sesion", tmp, 3L);
+
+			var respuesta = restTemplate.exchange(peticion,
+					new ParameterizedTypeReference<SesionDTO>() {
+					});
+
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(401);
 		}
-		@Test
-		@DisplayName("devuelve error cuando intenta crear una sesion que ya existe")
-		public void postSesionNoExist() {
-			Sesion tmp = new Sesion();
-			tmp.setInicio(new Date(2024, 5, 12, 10, 0));
-			tmp.setFin(new Date(2024, 5, 12, 11, 0));
-			tmp.setDatosSalud(null);
-			tmp.setDescripcion("esta es la primera sesion");
-			tmp.setId(1L);
-			tmp.setMultimedia(null);
-			tmp.setPresencial(true);
-			tmp.setTrabajoRealizado(null);
-			tmp.setIdPlan(1L);
-			var peticion = post("http", "localhost", port, "/sesion", tmp, 1L);
 
-            var respuesta = restTemplate.exchange(peticion,
-                new ParameterizedTypeReference<Sesion>() {
-                });
-
-            assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
-		}
 		@Test
-		@DisplayName("Extra test")
-		public void extraTest(){
+		@DisplayName("devuelve confirmación de que dos sesiones son distintas dependiendo del plan")
+		public void devuelveConfirmacionSesionesDistintas(){
 			SesionNuevaDTO tmp = SesionNuevaDTO.builder().idPlan(1L).build();
 			tmp.equals(SesionNuevaDTO.builder().idPlan(1L).build());
 			tmp.equals(SesionNuevaDTO.builder().idPlan(2L).build());
+
+			assertThat(tmp.equals(SesionNuevaDTO.builder().idPlan(1L).build())).isEqualTo(true);
+			assertThat(tmp.equals(SesionNuevaDTO.builder().idPlan(2L).build())).isEqualTo(false);
 		}
 	}
 
