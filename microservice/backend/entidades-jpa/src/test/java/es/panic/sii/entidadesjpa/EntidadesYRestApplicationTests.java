@@ -1,6 +1,7 @@
 package es.panic.sii.entidadesjpa;
 
 import es.panic.sii.dtos.SesionDTO;
+import es.panic.sii.dtos.SesionNuevaDTO;
 import es.panic.sii.entidades.Sesion;
 import es.panic.sii.repositorios.SesionRepository;
 
@@ -52,7 +53,7 @@ class EntidadesYRestApplicationTests {
 	private int port;
 	@Autowired
 	private SesionRepository sesionRepo;
-	private String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE3MTY5NjczLCJleHAiOjE3MTcxNzAyNzN9.8pU62UH8ZZL7lkCH3s6q1NWeVVZZpffRrWQpAkxo7GIurXldUPXPJek9C-sfgUGXU5i46vfWJkYIakuoAZHKGQ";
+	private String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE3MTcxMjE4LCJleHAiOjE3MTcxNzE4MTh9.ycacoagAKXztoXI4Ld1flo4bTpiXONZT3q__-Rmexo9wOqumnxKr88UL5FvGe_o_Ths_-_nITKdvTEbn1jfxKg";
 	private MockRestServiceServer mockServer;
 
 
@@ -483,7 +484,7 @@ class EntidadesYRestApplicationTests {
 			tmp.setFin(new Date(2024, 3, 6, 11, 0));
 			tmp.setDatosSalud(null);
 			tmp.setDescripcion("editado con exito");
-			tmp.setId(1L);
+			tmp.setId(6L);
 			tmp.setMultimedia(null);
 			tmp.setPresencial(true);
 			tmp.setTrabajoRealizado(null);
@@ -497,6 +498,7 @@ class EntidadesYRestApplicationTests {
 
             assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
 			assertThat(respuesta.getBody().getDescripcion()).isEqualTo("editado con exito");
+			assertThat(respuesta.getBody().equals(tmp)).isEqualTo(true);
 		}
 		@Test
 		@DisplayName("devuelve error cuando intenta modificar una sesion especifica sin acceso autorizado")
@@ -617,6 +619,13 @@ class EntidadesYRestApplicationTests {
                 });
 
             assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
+		}
+		@Test
+		@DisplayName("Extra test")
+		public void extraTest(){
+			SesionNuevaDTO tmp = SesionNuevaDTO.builder().idPlan(1L).build();
+			tmp.equals(SesionNuevaDTO.builder().idPlan(1L).build());
+			tmp.equals(SesionNuevaDTO.builder().idPlan(2L).build());
 		}
 	}
 
