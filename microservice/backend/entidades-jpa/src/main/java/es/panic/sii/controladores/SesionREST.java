@@ -10,6 +10,7 @@ import es.panic.sii.dtos.SesionNuevaDTO;
 import es.panic.sii.servicios.excepciones.AccesoNoAutorizado;
 import es.panic.sii.servicios.excepciones.SesionNoExiste;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
@@ -43,7 +44,7 @@ public class SesionREST {
         Sesion s = nueva.convertToSesion();
         s.setIdPlan(idPlan);
         Sesion ses = this.sesionService.agregarSesion(s);
-        return ResponseEntity.ok(SesionDTO.convertirSesionToDTO(ses));
+        return ResponseEntity.status(HttpStatus.CREATED).body(SesionDTO.convertirSesionToDTO(ses));
     }
 
     //GET ID

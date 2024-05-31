@@ -52,7 +52,7 @@ class EntidadesYRestApplicationTests {
 	private int port;
 	@Autowired
 	private SesionRepository sesionRepo;
-	private String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE3MTQxNTI5LCJleHAiOjE3MTcxNDIxMjl9.mNQ9EwqO8uDIyUEbeE12MJzyyEnGp762nLdhuHJaiiyNp0beVFRdsyHIdlvyVNjN_bSAeT08Ummh3IxAYtPb_g";
+	private String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE3MTQ2NzAzLCJleHAiOjE3MTcxNDczMDN9.LRCCLcchEI0SWbOmpOlt1TCwy62qPAwAaY17mKB-OiDLGaPaOBvAwf65xCBQZJOZFWvalESxc0YpfH3J9xFzEA";
 	private MockRestServiceServer mockServer;
 
 
@@ -236,9 +236,14 @@ class EntidadesYRestApplicationTests {
 		return peticion;
 	}
 
-	private <T> RequestEntity<T> post(String scheme, String host, int port, String path, T object) {
+	private <T> RequestEntity<T> post(String scheme, String host, int port, String path, T object, Long plan) {
 		URI uri = uri(scheme, host,port, path);
-		var peticion = RequestEntity.post(uri)
+
+		String urlTemplate = UriComponentsBuilder.fromHttpUrl(uri.toString())
+                .queryParam("plan", plan)
+                .encode()
+                .toUriString();
+		var peticion = RequestEntity.post(urlTemplate)
 				.contentType(MediaType.APPLICATION_JSON)
 				.header("Authorization", "Bearer "+jwtToken)
 				.body(object);
@@ -383,7 +388,7 @@ class EntidadesYRestApplicationTests {
 		}
 
 		@Test
-		@DisplayName("devuelve las sesiones asociadas a un plan")
+		@DisplayName("devuelve las sesiones asociadas a un plan1")
 		public void getSesionIdWithAccess() {
 			var peticion = get("http", "localhost", port, "/sesion/6");
 
@@ -395,7 +400,7 @@ class EntidadesYRestApplicationTests {
 		}
 
 		@Test
-		@DisplayName("devuelve las sesiones asociadas a un plan")
+		@DisplayName("devuelve las sesiones asociadas a un plan2")
 		public void postSesionWithAccess() {
 
 			Sesion s1 = Sesion.builder().idPlan(1L)
@@ -403,17 +408,17 @@ class EntidadesYRestApplicationTests {
 							.trabajoRealizado("muchisimo").presencial(false).descripcion("Calor").multimedia(null).datosSalud(null)
 							.build();
 
-			var peticion = post("http", "localhost", port, "/sesion", s1);
+			var peticion = post("http", "localhost", port, "/sesion", s1, 1L);
 
 			var respuesta = restTemplate.exchange(peticion,
 					new ParameterizedTypeReference<SesionDTO>() {
 					});
 
-			assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
 		}
 
 		@Test
-		@DisplayName("devuelve las sesiones asociadas a un plan")
+		@DisplayName("devuelve las sesiones asociadas a un plan3")
 		public void putSesionWithAccess() {
 
 			Sesion s1 = Sesion.builder().idPlan(1L)
@@ -427,11 +432,11 @@ class EntidadesYRestApplicationTests {
 					new ParameterizedTypeReference<SesionDTO>() {
 					});
 
-			assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
 		}
 
 		@Test
-		@DisplayName("devuelve las sesiones asociadas a un plan")
+		@DisplayName("devuelve las sesiones asociadas a un plan4")
 		public void deleteSesionIdWithAccess() {
 			var peticion = delete("http", "localhost", port, "/sesion/6");
 
@@ -443,7 +448,7 @@ class EntidadesYRestApplicationTests {
 		}
 
 		@Test
-		@DisplayName("devuelve las sesiones asociadas a un plan")
+		@DisplayName("devuelve las sesiones asociadas a un plan5")
 		public void getSesionPlanWithAccess() {
 			var peticion = get("http", "localhost", port, "/sesion", 1L);
 
