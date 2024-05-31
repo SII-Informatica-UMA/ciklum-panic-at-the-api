@@ -40,7 +40,7 @@ public class SesionREST {
 
     //POST
     @PostMapping
-    public ResponseEntity<SesionDTO> crearSesion(@RequestParam(name="plan",required = true) Long idPlan, @RequestBody SesionNuevaDTO nueva, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<SesionDTO> crearSesion(@RequestParam(name="plan",required = true) Long idPlan, @RequestBody SesionNuevaDTO nueva) {
        // if (idPlan == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         Sesion s = nueva.convertToSesion();
         s.setIdPlan(idPlan);

@@ -69,11 +69,21 @@ class EntidadesYRestApplicationTests {
 						.contentType(MediaType.APPLICATION_JSON)
 						.body("[	" +
 								"  {" +
-								"    \"nombre\": \"ETSII\"," +
-								"    \"direccion\": \" Blvr. Louis Pasteur, 35, Puerto de la Torre, 29071 Málaga\"," +
+								"    \"nombre\": \"Gimnasio LifeFit\"," +
+								"    \"direccion\": \" C/ Mare de Déu de Montserrat, 4, 08780 Pallejà, Barcelona\"," +
 								"    \"idCentro\": 1" +
-								"  		}" +
-								"]")
+								"  		},"
+									+ "{"
+										+ "\"nombre\": \"Vals Sport\"," +
+											"\"direccion\": \" Avda Juan XXIII, 73, 29006 Málaga\"," +
+											"\"idCentro\": 2"
+										+ "}, "
+								+ "{"
+								+ "\"nombre\": \"GO fit Huelin\"," +
+								"\"direccion\": \" Paseo de Antonio de Machado, s/n, Carretera de Cádiz, 29002, Málaga\"," +
+								"\"idCentro\": 3"
+								+ "}"
+								+ "]")
 				);
 		//MOCK CLIENTE CENTRO
 		mockServer.expect(
