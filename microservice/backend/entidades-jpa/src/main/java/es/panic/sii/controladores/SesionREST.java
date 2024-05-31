@@ -40,7 +40,7 @@ public class SesionREST {
 
     //POST
     @PostMapping
-    public ResponseEntity<SesionDTO> crearSesion(@RequestParam(name="plan",required = true) Long idPlan, @RequestBody SesionNuevaDTO nueva, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<SesionDTO> crearSesion(@RequestParam(name="plan",required = true) Long idPlan, @RequestBody SesionNuevaDTO nueva) {
        // if (idPlan == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         Sesion s = nueva.convertToSesion();
         s.setIdPlan(idPlan);
@@ -80,12 +80,9 @@ public class SesionREST {
                 .collect(Collectors.toList());
     }
     */
-    //GET
-
-
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+ 
     @ExceptionHandler({SesionNoExiste.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public void handleSesionNoExiste(SesionNoExiste e) {
     }
 

@@ -54,7 +54,9 @@ class EntidadesYRestApplicationTests {
 	private int port;
 	@Autowired
 	private SesionRepository sesionRepo;
-	private String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE3MTc3MjAwLCJleHAiOjE3MTcxNzc4MDB9.WwbZONcjo4BTZHUrrOApIqlkJXjJCphJnazlW1XKKE13xcR2Z4KL6wL3rtC6NPgW3wnJKCtgMCU8UXVRGBfFDg";
+
+	//VALIDEZ DEL TOKEN MUY CORTA, GENERAR NUEVO CUANDO SE VAYA A EJECUTAR LOS TESTS
+	private String jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE3MTgxMjQ4LCJleHAiOjE3MTcxODE4NDh9.RdqrOhAdfab0B7Q-hyYJ63RY4cz0-qKzkvjWa8IDs4RglflsKHZXmXVfniW3vVtMmRAnV94sF05PvtQCZwgN_g";
 	private MockRestServiceServer mockServer;
 
 
@@ -69,8 +71,8 @@ class EntidadesYRestApplicationTests {
 						.contentType(MediaType.APPLICATION_JSON)
 						.body("[	" +
 								"  {" +
-								"    \"nombre\": \"ETSII\"," +
-								"    \"direccion\": \" Blvr. Louis Pasteur, 35, Puerto de la Torre, 29071 Málaga\"," +
+								"    \"nombre\": \"Vals Sport\"," +
+								"    \"direccion\": \" Calle Poeta Agustín Romano, 35, Puerto de la Torre, 29071 Málaga\"," +
 								"    \"idCentro\": 1" +
 								"  		}" +
 								"]")
@@ -83,20 +85,20 @@ class EntidadesYRestApplicationTests {
 						.body("["
 								+ "{"
 								+ "\"idUsuario\": 1,"
-								+ "\"telefono\": \"string\","
-								+ "\"direccion\": \"string\","
-								+ "\"dni\": \"string\","
-								+ "\"fechaNacimiento\": \"2024-05-28\","
+								+ "\"telefono\": \"123456789\","
+								+ "\"direccion\": \"Avenida Virgen de la Cabeza, 5\","
+								+ "\"dni\": \"1111111E\","
+								+ "\"fechaNacimiento\": \"1998-01-01\","
 								+ "\"sexo\": \"HOMBRE\","
 								+ "\"id\": 1"
 								+ "},"
 								+ "{"
 								+ "\"idUsuario\": 2,"
-								+ "\"telefono\": \"string\","
-								+ "\"direccion\": \"string\","
-								+ "\"dni\": \"string\","
-								+ "\"fechaNacimiento\": \"2024-05-28\","
-								+ "\"sexo\": \"HOMBRE\","
+								+ "\"telefono\": \"987654321\","
+								+ "\"direccion\": \"Calle Cayetano de Marques, 14\","
+								+ "\"dni\": \"22222222F\","
+								+ "\"fechaNacimiento\": \"1974-05-11\","
+								+ "\"sexo\": \"MUJER\","
 								+ "\"id\": 2"
 								+ "}"
 								+ "]")
@@ -110,13 +112,13 @@ class EntidadesYRestApplicationTests {
 								+ "{"
 								+ "\"idEntrenador\": 1,"
 								+ "\"idCliente\": 1,"
-								+ "\"especialidad\": \"piernas\","
+								+ "\"especialidad\": \"Espalda\","
 								+ "\"id\": 1,"
 								+ "\"planes\": ["
 								+ "{"
-								+ "\"fechaInicio\": \"2024-05-28\","
-								+ "\"fechaFin\": \"2024-05-28\","
-								+ "\"reglaRecurrencia\": \"string\","
+								+ "\"fechaInicio\": \"2024-05-31\","
+								+ "\"fechaFin\": \"2024-06-01\","
+								+ "\"reglaRecurrencia\": \"A diario\","
 								+ "\"idRutina\": 1,"
 								+ "\"id\": 1"
 								+ "}"
@@ -132,30 +134,30 @@ class EntidadesYRestApplicationTests {
 						.body("["
 								+ "{"
 								+ "\"idUsuario\": 1,"
-								+ "\"telefono\": \"string\","
-								+ "\"direccion\": \"string\","
-								+ "\"dni\": \"string\","
-								+ "\"fechaNacimiento\": \"2024-05-28T21:51:14.178Z\","
-								+ "\"fechaAlta\": \"2024-05-28T21:51:14.178Z\","
-								+ "\"fechaBaja\": \"2024-05-28T21:51:14.178Z\","
-								+ "\"especialidad\": \"string\","
-								+ "\"titulacion\": \"string\","
-								+ "\"experiencia\": \"string\","
-								+ "\"observaciones\": \"string\","
+								+ "\"telefono\": \"33333444G\","
+								+ "\"direccion\": \"Calle Corregidor Francisco de Molina, 12\","
+								+ "\"dni\": \"K981234D\","
+								+ "\"fechaNacimiento\": \"2002-05-31T12:13:12.000Z\","
+								+ "\"fechaAlta\": \"2024-05-31T12:13:12.000Z\","
+								+ "\"fechaBaja\": \"2024-06-30T12:13:12.000Z\","
+								+ "\"especialidad\": \"Cargar peso\","
+								+ "\"titulacion\": \"FP de grado medio de Deporte \","
+								+ "\"experiencia\": \"2 lustros\","
+								+ "\"observaciones\": \"ninguna\","
 								+ "\"id\": 1"
 								+ "},"
 								+ "{"
 								+ "\"idUsuario\": 2,"
-								+ "\"telefono\": \"string\","
-								+ "\"direccion\": \"string\","
-								+ "\"dni\": \"string\","
-								+ "\"fechaNacimiento\": \"2024-05-28T21:51:14.178Z\","
-								+ "\"fechaAlta\": \"2024-05-28T21:51:14.178Z\","
-								+ "\"fechaBaja\": \"2024-05-28T21:51:14.178Z\","
-								+ "\"especialidad\": \"string\","
-								+ "\"titulacion\": \"string\","
-								+ "\"experiencia\": \"string\","
-								+ "\"observaciones\": \"string\","
+								+ "\"telefono\": \"871831299\","
+								+ "\"direccion\": \"Calle Pino, 1\","
+								+ "\"dni\": \"123456789A\","
+								+ "\"fechaNacimiento\": \"2002-05-30T12:13:12.000Z\","
+								+ "\"fechaAlta\": \"2002-05-31T12:13:12.000Z\","
+								+ "\"fechaBaja\": \"2002-07-31T12:13:12.000Z\","
+								+ "\"especialidad\": \"Nadar\","
+								+ "\"titulacion\": \"Bachillerato\","
+								+ "\"experiencia\": \"5 meses\","
+								+ "\"observaciones\": \"Ninguna\","
 								+ "\"id\": 2"
 								+ "}"
 								+ "]")
@@ -170,13 +172,13 @@ class EntidadesYRestApplicationTests {
 								+ "{"
 								+ "\"idEntrenador\": 1,"
 								+ "\"idCliente\": 1,"
-								+ "\"especialidad\": \"piernas\","
+								+ "\"especialidad\": \"Espalda\","
 								+ "\"id\": 1,"
 								+ "\"planes\": ["
 								+ "{"
-								+ "\"fechaInicio\": \"2024-05-28\","
-								+ "\"fechaFin\": \"2024-05-28\","
-								+ "\"reglaRecurrencia\": \"string\","
+								+ "\"fechaInicio\": \"2024-05-31\","
+								+ "\"fechaFin\": \"2024-07-31\","
+								+ "\"reglaRecurrencia\": \"Semanal\","
 								+ "\"idRutina\": 1,"
 								+ "\"id\": 1"
 								+ "}"

@@ -9,11 +9,7 @@ import es.panic.sii.servicios.excepciones.SesionNoExiste;
 import jakarta.transaction.Transactional;
 
 import java.net.URI;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -135,16 +131,16 @@ public class SesionService {
                     new ParameterizedTypeReference<List<Map<String, Object>>>() {}).getBody().stream().forEach(centro -> {
                 Long idCentro = Long.parseLong(centro.get("idCentro").toString());
                 
-                addPlanesCliente(planesRel,jwtToken, idCentro, usuario);
-                addPlanesEntrenador(planesRel,jwtToken, idCentro, usuario);
+                planesRel.addAll(addPlanesCliente(planesRel,jwtToken, idCentro, usuario));
+                planesRel.addAll(addPlanesEntrenador(planesRel,jwtToken, idCentro, usuario));
             });
 
             if (!planesRel.contains(idPlan)) throw new AccesoNoAutorizado();
         }
 
-    private void addPlanesEntrenador(Set<Long> planesRel, String jwtToken, Long idCentro, Optional<UserDetails> usuario) {
+    private Set<Long> addPlanesCliente(Set<Long> planesRel, String jwtToken, Long idCentro, Optional<UserDetails> usuario) {
         var petClientes = get("http","localhost",8100,"/cliente",jwtToken, "centro", idCentro);
-
+        Set<Long> c = new HashSet<>();
                 restTemplate.exchange(petClientes,
                         new ParameterizedTypeReference<List<Map<String, Object>>>(){}).getBody().stream().forEach(cliente -> {
                     if(Long.valueOf(cliente.get("idUsuario").toString()).equals(Long.valueOf(usuario.get().getUsername()))){
@@ -157,16 +153,17 @@ public class SesionService {
                             @SuppressWarnings("unchecked")
                             List<Map<String, Object>> listaPlanes = (List<Map<String, Object>>) entrena.get("planes");
                             listaPlanes.stream().forEach(plan -> {
-                                planesRel.add(Long.valueOf(plan.get("id").toString()));
+                                c.add(Long.valueOf(plan.get("id").toString()));
                             });
                         });
                     }
                 });
+                return c;
     }
 
-    private void addPlanesCliente(Set<Long> planesRel, String jwtToken, Long idCentro, Optional<UserDetails> usuario) {
+    private Set<Long> addPlanesEntrenador(Set<Long> planesRel, String jwtToken, Long idCentro, Optional<UserDetails> usuario) {
         var petEntrenadores = get("http","localhost",8140,"/entrenador",jwtToken, "centro", idCentro);
-
+        Set<Long> c = new HashSet<>();
                 restTemplate.exchange(petEntrenadores,
                         new ParameterizedTypeReference<List<Map<String, Object>>>(){}).getBody().stream().forEach(entrenador -> {
 
@@ -180,10 +177,11 @@ public class SesionService {
                             @SuppressWarnings("unchecked")
                             List<Map<String, Object>> listaPlanes = (List<Map<String, Object>>) entrena.get("planes");
                             listaPlanes.stream().forEach(plan -> {
-                                planesRel.add(Long.valueOf(plan.get("id").toString()));
+                                c.add(Long.valueOf(plan.get("id").toString()));
                             });
                         });
                     }
                 });
+        return c;
     }
 }
