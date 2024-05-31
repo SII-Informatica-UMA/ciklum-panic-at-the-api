@@ -134,8 +134,16 @@ public class SesionService {
             restTemplate.exchange(petCentros,
                     new ParameterizedTypeReference<List<Map<String, Object>>>() {}).getBody().stream().forEach(centro -> {
                 Long idCentro = Long.parseLong(centro.get("idCentro").toString());
+                
+                addPlanesCliente(planesRel,jwtToken, idCentro, usuario);
+                addPlanesEntrenador(planesRel,jwtToken, idCentro, usuario);
+            });
 
-                var petClientes = get("http","localhost",8100,"/cliente",jwtToken, "centro", idCentro);
+            if (!planesRel.contains(idPlan)) throw new AccesoNoAutorizado();
+        }
+
+    private void addPlanesEntrenador(Set<Long> planesRel, String jwtToken, Long idCentro, Optional<UserDetails> usuario) {
+        var petClientes = get("http","localhost",8100,"/cliente",jwtToken, "centro", idCentro);
 
                 restTemplate.exchange(petClientes,
                         new ParameterizedTypeReference<List<Map<String, Object>>>(){}).getBody().stream().forEach(cliente -> {
@@ -154,7 +162,10 @@ public class SesionService {
                         });
                     }
                 });
-                var petEntrenadores = get("http","localhost",8140,"/entrenador",jwtToken, "centro", idCentro);
+    }
+
+    private void addPlanesCliente(Set<Long> planesRel, String jwtToken, Long idCentro, Optional<UserDetails> usuario) {
+        var petEntrenadores = get("http","localhost",8140,"/entrenador",jwtToken, "centro", idCentro);
 
                 restTemplate.exchange(petEntrenadores,
                         new ParameterizedTypeReference<List<Map<String, Object>>>(){}).getBody().stream().forEach(entrenador -> {
@@ -174,9 +185,5 @@ public class SesionService {
                         });
                     }
                 });
-            });
-
-            if (!planesRel.contains(idPlan)) throw new AccesoNoAutorizado();
-        }
+    }
 }
-
