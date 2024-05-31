@@ -49,10 +49,10 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtil {
 
     @Value("${jwt.secret}")
-    private String secret;
+    private String secret = "sistemasinformacioninternet20232024sistemasinformacioninternet20232024";
 
     @Value("${jwt.token.validity}")
-    private long tokenValidity;
+    private long tokenValidity = 600000000;
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
